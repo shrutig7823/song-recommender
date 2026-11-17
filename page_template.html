@@ -821,10 +821,10 @@ function renderMapRoute() {
       const grid = el("div", "heatgrid");
       MOMENTS.forEach((m, k) => {
         if (m.group !== g) return;
-        const n = counts[k], soon = n < 4;
+        const n = counts[k], soon = n < 1;
         const t = el("button", "hm"); t.type = "button";
         t.style.background = "rgba(255,122,89," + (0.07 + 0.78 * Math.sqrt(n / max)).toFixed(2) + ")";
-        t.append(el("b", null, m.name), el("span", null, m.sub), el("small", null, soon ? "More songs coming soon" : n.toLocaleString() + " songs"));
+        t.append(el("b", null, m.name), el("span", null, m.sub), el("small", null, soon ? "More songs coming soon" : n.toLocaleString() + (n === 1 ? " song" : " songs")));
         if (soon) t.classList.add("dim");
         t.addEventListener("click", () => {
           if (soon) { go(() => view.append(soonCard("We only have a few songs for “" + m.name + "” so far.")), "soon"); return; }
@@ -876,6 +876,31 @@ function renderBlendRoute() {
   const pool = () => DATA.map((_, j) => j).filter(j => DATA[j][11] >= minPop() && (profile.lang === "any" || DATA[j][4] === profile.lang));
   // how well a song sits inside ALL the chosen moods: the geometric mean of its closeness to each one
   const fit = (j, moods) => { let prod = 1; for (const m of moods) prod *= Math.max(0, 1 - Math.hypot(point[j][0] - MAP[m][0], point[j][1] - MAP[m][1]) / R); return Math.pow(prod, 1 / moods.length); };
+  // always shows something: first the songs inside the overlap; if too few, the songs closest to the middle of the blend;
+  // if the popularity setting leaves too few, lesser-known songs are allowed in
+  function blendList(moods) {
+    const cx = moods.reduce((a, m) => a + MAP[m][0], 0) / moods.length, cy = moods.reduce((a, m) => a + MAP[m][1], 0) / moods.length;
+    let out = { list: [], note: "" };
+    for (const minP of [minPop(), 1]) {
+      const p = DATA.map((_, j) => j).filter(j => DATA[j][11] >= minP && (profile.lang === "any" || DATA[j][4] === profile.lang));
+      const strict = p.map(j => ({ j, f: fit(j, moods) })).filter(x => x.f > 0.12).map(x => ({ j: x.j, score: x.f * 0.85 + 0.15 * popScore(x.j) })).sort((a, b) => b.score - a.score);
+      let list = diversify(strict, 10, 2), note = "";
+      if (list.length < 5) {
+        const soft = p.map(j => {
+          let c = 0; for (const m of moods) c += Math.max(0, 1 - Math.hypot(point[j][0] - MAP[m][0], point[j][1] - MAP[m][1]) / 0.9); c /= moods.length;
+          const mid = Math.max(0, 1 - Math.hypot(point[j][0] - cx, point[j][1] - cy) / 0.9);
+          return { j, score: 0.5 * c + 0.35 * mid + 0.15 * popScore(j) };
+        }).sort((a, b) => b.score - a.score);
+        const have = new Set(list.map(x => x.j));
+        list = list.concat(diversify(soft.filter(x => !have.has(x.j)), 10 - list.length, 2));
+        if (moods.length > 1) note = "These moods sit far apart, so here are the songs closest to the middle of your blend.";
+      }
+      out = { list, note };
+      if (minP !== minPop()) out.note = (out.note ? out.note + " " : "") + "Including lesser-known songs, because few popular ones matched.";
+      if (list.length >= 5) break;
+    }
+    return out;
+  }
   function update() {
     const p = pool(), fits = sel.length ? p.map(j => [j, fit(j, sel)]) : [];
     // background dots: every song, brighter when it sits in the overlap
@@ -896,12 +921,12 @@ function renderBlendRoute() {
     // live list
     res.replaceChildren();
     const top = el("div", "sec"); top.style.marginTop = "0";
-    const ranked = fits.filter(([, f]) => f > 0.12).map(([j, f]) => ({ j, score: f * 0.85 + 0.15 * popScore(j), f })).sort((a, b) => b.score - a.score);
-    const list = diversify(ranked, 10, 2);
     top.append(el("h2", null, sel.length ? "Songs in your blend" : "Your blend"), el("span", "meta", sel.length ? sel.join(" + ") : ""));
     res.append(top);
     if (!sel.length) { res.append(el("p", "meta", "Pick one mood for songs that match it, or two or three to find songs that sit where they overlap. The list changes as you tap.")); return; }
-    if (!list.length) { res.append(soonCard("No songs sit in that blend yet" + (profile.lang !== "any" ? " in " + profile.lang : "") + ".")); return; }
+    const { list, note } = blendList(sel);
+    if (!list.length) { res.append(soonCard("We have no songs yet" + (profile.lang !== "any" ? " in " + profile.lang : "") + ".")); return; }
+    if (note) { const n = el("p", "meta", note); n.style.margin = "0 0 10px"; res.append(n); }
     const rows = el("div", "rows"); list.forEach(x => rows.append(row(x.j, openSong))); res.append(rows);
     const more = el("button", "btn go", "More like this →"); more.type = "button"; more.style.marginTop = "12px";
     more.addEventListener("click", () => { profile.label = sel.join(" and "); profile.occasion = ""; profile.moment = null; go(renderStacks, "stacks"); });
@@ -914,8 +939,8 @@ function renderBlendRoute() {
 
 // ---- stacks: themed groups of songs picked for your answers ----
 const near = (j, pt) => Math.hypot(point[j][0] - pt[0], point[j][1] - pt[1]);
-function buildStacks(P) {
-  const ok = j => DATA[j][11] >= minPop() && (P.lang === "any" || DATA[j][4] === P.lang);
+function buildStacks(P, opt = {}) {
+  const ok = j => DATA[j][11] >= (opt.minPop || minPop()) && (opt.anyLang || P.lang === "any" || DATA[j][4] === P.lang);
   const pool = DATA.map((_, j) => j).filter(ok);
   const base = P.moment ? P.moment.test : () => true;                          // a chosen moment already says which songs fit
   const nearOk = (j, lim) => P.moment ? true : near(j, P.point) < lim;
@@ -930,14 +955,14 @@ function buildStacks(P) {
     make("reel", "Reel favourites", "Trending on reels and shorts", j => DATA[j][14] >= 4 && nearOk(j, 0.5)),
     make("throw", "Throwbacks", "Older songs, same feeling", j => DATA[j][7] <= 2015 && nearOk(j, 0.4)),
     make("new", "Fresh and new", "Released in the last few years", j => DATA[j][7] >= 2022 && nearOk(j, 0.4)),
-  ].filter(Boolean).filter(s => s.songs.length >= 3);
+  ].filter(Boolean).filter(s => s.songs.length >= 1);
   // one more stack for the style that shows up most in the first stack
   const first = stacks[0] && stacks[0].songs;
   if (first && first.length) {
     const count = {}; first.forEach(j => count[DATA[j][12]] = (count[DATA[j][12]] || 0) + 1);
     const top = Object.entries(count).sort((a, b) => b[1] - a[1])[0][0];
     const st = make("style", "More " + (STYLE_NAME[top] || "pop") + " songs", "The sound you seem to like", j => DATA[j][12] === top && nearOk(j, 0.55));
-    if (st.songs.length >= 3) stacks.push(st);
+    if (st.songs.length >= 2) stacks.push(st);
   }
   // drop a stack that is nearly the same list as one already shown
   const seenSig = new Set();
@@ -945,8 +970,12 @@ function buildStacks(P) {
 }
 function renderStacks() {
   const head = el("div", "sec"); head.append(el("h2", null, "Picked for you"), el("span", "meta", "Open a stack, then tap a song to get songs like it"));
-  const stacks = buildStacks(profile);
-  if (!stacks.length) { view.append(soonCard("We have no songs for that exact mix yet.")); return; }
+  // never leave the screen empty: first allow lesser-known songs, then any language, and say so
+  let stacks = buildStacks(profile), note = "";
+  if (!stacks.length) { stacks = buildStacks(profile, { minPop: 1 }); if (stacks.length) note = "Few popular songs matched, so these include lesser-known ones."; }
+  if (!stacks.length && profile.lang !== "any") { stacks = buildStacks(profile, { minPop: 1, anyLang: true }); if (stacks.length) note = "We only have a few " + profile.lang + " songs for this, so these are in any language. More " + profile.lang + " songs coming soon."; }
+  if (!stacks.length) { view.append(soonCard("We have no songs for that yet.")); return; }
+  if (note) { const n = el("p", "meta", note); n.style.margin = "0 0 12px"; view.append(n); }
   const grid = el("div", "stackgrid");
   stacks.forEach(st => {
     const c = el("button", "stackcard"); c.type = "button";
