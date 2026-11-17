@@ -1,5 +1,5 @@
 // Builds song_recommender.ipynb (Colab notebook) and song_emotions.csv (the emotion labels).
-// Run:  node build_notebook.js "C:\path\to\ALL_2000_Songs.csv"
+// Run:  node build_notebook.js "C:\path\to\songs_merged.csv"
 const fs = require("fs");
 const { songs } = require("./step2_make_tags.js");
 
@@ -45,7 +45,7 @@ md(String.raw`
 
 **How to use this notebook in Google Colab**
 - Run the cells from top to bottom (click a cell, press Shift+Enter).
-- When Step 1 asks, upload three files: **ALL_2000_Songs.csv**, **song_emotions.csv** and **song_context.csv**.
+- When Step 1 asks, upload three files: **songs_merged.csv**, **song_emotions.csv** and **song_context.csv**.
 - Every step has a **Try this** box. Change something and run it again. That is how you learn.
 `);
 
@@ -78,7 +78,7 @@ try:
 except ImportError:
     pass
 
-songs = pd.read_csv("ALL_2000_Songs.csv")
+songs = pd.read_csv("songs_merged.csv")
 print(songs.shape)          # (rows, columns)
 songs.head()                # the first 5 rows
 `);
@@ -321,6 +321,10 @@ era_sim = np.clip(1 - np.abs(years[:, None] - years[None, :]) / 25, 0, 1)
 
 # theme and occasion count equally
 context_sim = 0.5 * theme_sim + 0.5 * occasion_sim
+
+# --- language score: 1 for the same language, 0 otherwise ---
+langs = songs["language"].to_numpy()
+language_sim = (langs[:, None] == langs[None, :]).astype(float)
 songs[["track_name", "year", "lyric_theme", "occasions"]].head()
 `);
 
@@ -329,15 +333,16 @@ md(String.raw`
 
 Each factor has a **weight**, which is how much it counts. The weights do not need to add up to 100.
 
-Final score = (tags x weight + emotion x weight + context x weight + era x weight) / total of the weights
+Final score = (tags x weight + emotion x weight + context x weight + era x weight + language x weight) / total of the weights
 
 **Artist variety.** Songs by the same artist share many tags, so without a rule one artist can fill the whole list. ${"`one_per_artist=True`"} walks down the ranking and skips any song whose artist is already in your 5. Set it to ${"`False`"} to see the difference.
 `.replace(/\$\{"(`[^`]*`)"\}/g, "$1"));
 code(String.raw`
-def recommend_all(title, tags=40, emotion=30, context=20, era=10, n=5, one_per_artist=True):
+def recommend_all(title, tags=35, emotion=25, context=20, era=5, lang=15, n=5, one_per_artist=True):
     i = find(title)
-    total = tags + emotion + context + era
-    score = (tags * text_sim[i] + emotion * emotion_sim[i] + context * context_sim[i] + era * era_sim[i]) / total
+    total = tags + emotion + context + era + lang
+    score = (tags * text_sim[i] + emotion * emotion_sim[i] + context * context_sim[i]
+             + era * era_sim[i] + lang * language_sim[i]) / total
     order, used = [], set()
     for j in np.argsort(-score):
         if j == i:
@@ -360,7 +365,7 @@ display(recommend_all("Khairiyat"))
 `);
 md(String.raw`
 > **Try this:**
-> - Make one factor count alone: ${"`recommend_all('Khairiyat', tags=0, emotion=0, context=100, era=0)`"}. Which songs show up? Then try ${"`era=100`"} alone.
+> - Make one factor count alone: ${"`recommend_all('Khairiyat', tags=0, emotion=0, context=100, era=0, lang=0)`"}. Which songs show up? Then try ${"`era=100`"} alone.
 > - Pick a party song and set ${"`context=100`"}. Do you get songs that would be played together at the same party?
 > - Which weights give recommendations you like best? Ask a friend to rate 5 recommendations from two different weight settings. That is how you tune a model.
 `.replace(/\$\{"(`[^`]*`)"\}/g, "$1"));

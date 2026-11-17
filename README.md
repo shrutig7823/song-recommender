@@ -2,11 +2,11 @@
 
 Pick a song you like and get 5 similar songs. A beginner-friendly machine learning project: it turns each song into numbers and recommends the songs whose numbers are closest. It does not listen to audio.
 
-**Open `index.html` in a browser** to use it. No installs, no internet needed (fonts fall back to system fonts offline).
+**Open `index.html` in a browser** to use it. No installs needed. Press **Play** on a song to listen: it opens a Spotify player on the page (30-second previews for free listeners, full songs when signed in to Spotify). Songs without a stored Spotify id get a **Find on Spotify** link instead. The player needs the page to be served over the web (GitHub Pages works), not opened from a Claude artifact.
 
 ## How it works
 
-1. **Load** the song list (`ALL_2000_Songs.csv`, 2,000 songs).
+1. **Load** the song list (`songs_merged.csv`: 2,000 original songs plus about 1,300 pulled from Spotify, 3,292 in total).
 2. **Clean and describe.** Remove empty and duplicate rows. Join genre, artists, mood tags, language and album into one lowercase line per song, with spaces removed inside names (`Arijit Singh` becomes `arijitsingh`).
 3. **Turn text into numbers.** Count how often each word appears per song (the same idea as scikit-learn's `CountVectorizer`).
 4. **Compare songs** with cosine similarity: 0 means nothing in common, 1 means identical.
@@ -14,7 +14,8 @@ Pick a song you like and get 5 similar songs. A beginner-friendly machine learni
 6. **Emotion.** Every song has a main and a second emotion. Each emotion is a point on a map (how positive it feels, how intense it feels), so "sad" is close to "nostalgic" and far from "euphoric".
 7. **Mix.** Combine tags and emotion with weights.
 8. **Theme, occasion, year.** Lyric theme (what the words are about), where the song is played (party, workout, long drive...), and release year.
-9. **Final score** = each factor's match x its weight, added up, divided by the total weight. The page has one slider per factor.
+9. **Language.** Songs in the same language get a bonus.
+10. **Final score** = each factor's match x its weight, added up, divided by the total weight. The page has one slider per factor, plus an **artist variety** rule so one artist cannot fill all five results.
 
 ## Files
 
@@ -31,21 +32,22 @@ Pick a song you like and get 5 similar songs. A beginner-friendly machine learni
 | `pull_spotify.js` | Pulls songs released 2011-2025 from the Spotify Web API into `new_songs.csv`. |
 | `emotions/out/`, `context/out/` | The raw label files the build scripts read. |
 
-`ALL_2000_Songs.csv` (the source song list) is not included in this repo. Put it in the project folder yourself if you are allowed to share it.
+More files: `build_merged.js` merges the original songs with the labelled Spotify songs into `songs_merged.csv`. `prepare_new_batches.js`, `prune_new_songs.js` and `csv_util.js` are helpers for the Spotify pull and labelling.
+
+`ALL_2000_Songs.csv` (the original source list), `songs_merged.csv` and `new_songs*.csv` are not included in this repo. Keep them on your computer. The song list is still visible in `index.html`, because the page needs it.
 
 ## Run it
 
-Needs Node 18 or newer.
+Needs Node 18 or newer. Run these from the project folder, with `songs_merged.csv` next to the scripts.
 
 ```bash
-node step5_recommend.js ALL_2000_Songs.csv "Khairiyat"
-node step7_context.js ALL_2000_Songs.csv "Khairiyat"
-node build_web.js ALL_2000_Songs.csv
+node step7_context.js songs_merged.csv "Khairiyat"
+node build_web.js songs_merged.csv
 ```
 
-The last command rebuilds `index.html`.
+The second command rebuilds `index.html`.
 
-**Notebook:** upload `song_recommender.ipynb` to https://colab.research.google.com, run the cells from the top, and upload `ALL_2000_Songs.csv`, `song_emotions.csv` and `song_context.csv` when Step 1 asks.
+**Notebook:** upload `song_recommender.ipynb` to https://colab.research.google.com, run the cells from the top, and upload `songs_merged.csv`, `song_emotions.csv` and `song_context.csv` when Step 1 asks.
 
 ## Put it online with GitHub Pages (free, personal account)
 
@@ -64,8 +66,10 @@ The public page contains the song list and labels, because they are built into `
 ```bash
 $env:SPOTIFY_CLIENT_ID="..."
 $env:SPOTIFY_CLIENT_SECRET="..."
-node pull_spotify.js ALL_2000_Songs.csv 1500
+node pull_spotify.js songs_merged.csv 2200
 ```
+
+It collects Hindi, Punjabi and English songs from 2010 to 2026, and saves a Spotify id for each song, which is what lets the page play it. Spotify has a daily request limit. When it runs out, the script says so and you run it again the next day; it resumes.
 
 Spotify limited the API for new apps in 2026 (Premium required, search returns 10 songs per request), so check https://developer.spotify.com/documentation/web-api if it stops working. New songs then need emotion, theme, occasion and language labels like the existing ones.
 

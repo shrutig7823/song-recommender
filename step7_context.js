@@ -32,17 +32,18 @@ const contextSim = (a, b) => 0.5 * themeSim(ctx[a].theme, ctx[b].theme) + 0.5 * 
 const eraSim = (a, b) => Math.max(0, 1 - Math.abs(ctx[a].y - ctx[b].y) / 25);
 
 // weights are "how much it counts", relative to each other (they do not need to add up to 1)
-const DEFAULT = { tags: 40, emotion: 30, context: 20, era: 10 };
+const DEFAULT = { tags: 35, emotion: 25, context: 20, era: 5, lang: 15 };
 const artistsOf = j => songs[j].artist.split(";").map(a => a.trim().toLowerCase());
 
 // variety: "mix" = at most 1 song per artist, "strict" = also never the picked song's artists, "off" = no rule
 function recommend(title, wt = DEFAULT, variety = "mix", count = 5) {
   const i = songs.findIndex(s => s.track_name.toLowerCase() === title.toLowerCase());
   if (i === -1) return null;
-  const total = wt.tags + wt.emotion + wt.context + wt.era;
+  const total = wt.tags + wt.emotion + wt.context + wt.era + wt.lang;
   const ranked = songs.map((s, j) => {
-    const parts = { tags: cosine(vectors[i], vectors[j]), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j) };
-    const score = (wt.tags * parts.tags + wt.emotion * parts.emotion + wt.context * parts.context + wt.era * parts.era) / total;
+    const parts = { tags: cosine(vectors[i], vectors[j]), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j),
+      lang: songs[i].language === s.language ? 1 : 0 };   // same language = 1
+    const score = (wt.tags * parts.tags + wt.emotion * parts.emotion + wt.context * parts.context + wt.era * parts.era + wt.lang * parts.lang) / total;
     return { j, song: s, parts, score };
   }).filter(x => x.j !== i).sort((a, b) => b.score - a.score);
   if (variety === "off") return ranked.slice(0, count);

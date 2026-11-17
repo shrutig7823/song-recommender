@@ -20,6 +20,7 @@ const data = songs.map((s, i) => [
   ctx[i].y,
   ctx[i].theme,
   ctx[i].occ,
+  s.spotify_id || "",
 ]);
 
 const html = fs.readFileSync("page_template.html", "utf8").replace("/*DATA*/null", JSON.stringify(data));

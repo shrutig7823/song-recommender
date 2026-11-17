@@ -1,4 +1,4 @@
-// Pulls songs released 2011-2025 from Spotify and saves them as new_songs.csv.
+// Pulls Hindi, Punjabi and English songs released 2010-2026 from Spotify and saves them as new_songs.csv.
 //
 // Before running, set your Spotify app's keys in YOUR terminal (never paste them into chat):
 //   PowerShell:  $env:SPOTIFY_CLIENT_ID="your id";  $env:SPOTIFY_CLIENT_SECRET="your secret"
@@ -18,14 +18,22 @@ if (!ID || !SECRET) {
   process.exit(1);
 }
 const EXISTING = process.argv[2];
-const TARGET = Number(process.argv[3] || 1500);
+const TARGET = Number(process.argv[3] || 2000);
 const OUT = "new_songs.csv";
-const YEARS = Array.from({ length: 15 }, (_, i) => 2011 + i);
-const GENRES = ["pop", "rock", "hip-hop", "r-n-b", "dance", "edm", "house", "techno", "latin", "reggaeton", "salsa",
-  "k-pop", "indian", "bollywood", "indie", "alternative", "metal", "punk", "country", "folk", "acoustic",
-  "singer-songwriter", "jazz", "blues", "classical", "ambient", "chill", "piano", "soul", "funk", "afrobeat",
-  "j-pop", "trance", "dubstep", "drum-and-bass", "emo", "grunge", "disco", "gospel", "reggae"];
-const PER_PAIR = 20;   // at most 20 songs per (genre, year), so the mix stays even
+const YEARS = Array.from({ length: 17 }, (_, i) => 2010 + i);   // 2010 to 2026
+
+// Only Hindi, Punjabi and English. Spotify has no "language" filter, so we search genres that belong to each
+// language, and a later labelling step confirms the language of every song (anything else is dropped).
+// cap = most songs kept per (genre, year), so the three languages stay balanced.
+const QUERIES = [
+  ...["bollywood", "filmi", "modern bollywood", "hindi indie", "indian indie", "desi hip hop", "hindi hip hop", "sufi"]
+    .map(g => ({ g, lang: "Hindi", cap: 8 })),
+  ...["punjabi pop", "punjabi hip hop", "bhangra", "desi pop", "punjabi folk", "punjabi"]
+    .map(g => ({ g, lang: "Punjabi", cap: 8 })),
+  ...["pop", "rock", "hip hop", "r&b", "dance pop", "indie pop", "alternative rock", "edm", "country", "soul",
+      "singer-songwriter", "folk", "metal", "punk", "house", "pop rap", "trap", "acoustic"]
+    .map(g => ({ g, lang: "English", cap: 3 })),
+];
 
 const q = t => '"' + String(t ?? "").replace(/"/g, '""') + '"';
 function readCsv(path) {
@@ -90,23 +98,33 @@ async function search(genre, year, offset) {
 
 (async () => {
   let requests = 0;
-  for (const year of YEARS) for (const genre of GENRES) {
+  // every (year, genre) pair in a fixed random order, so stopping at any point still gives an even mix of years and genres
+  const pairs = [];
+  for (const y of YEARS) for (const qy of QUERIES) pairs.push([y, qy]);
+  let seed = 12345;
+  for (let i = pairs.length - 1; i > 0; i--) {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    const k = seed % (i + 1);
+    [pairs[i], pairs[k]] = [pairs[k], pairs[i]];
+  }
+  for (const [year, { g: genre, lang, cap }] of pairs) {
     let got = 0;
-    for (let offset = 0; offset < PER_PAIR * 2 && got < PER_PAIR; offset += 10) {
+    for (let offset = 0; offset < 50 && got < cap; offset += 10) {
       if (rows.length >= TARGET) { save(); console.log("Reached target:", rows.length); return finish(); }
       const items = await search(genre, year, offset);
       requests++;
       if (items === "quota") { save(); return finish(); }
       if (!items.length) break;
       for (const t of items) {
+        if (got >= cap) break;
         if (!t || !t.name || !t.artists?.length || seenId.has(t.id)) continue;
         const artist = t.artists.map(a => a.name).join(";");
         const k = key(t.name, artist);
         if (seen.has(k)) continue;
         const date = t.album?.release_date || "";
-        if (date && Number(date.slice(0, 4)) < 2011) continue;   // keep only 2011 onward
+        if (date && Number(date.slice(0, 4)) < 2010) continue;   // keep only 2010 onward
         seen.add(k); seenId.add(t.id); got++;
-        rows.push({ track_name: t.name, artist, genre, album_name: t.album?.name || "", tags: "", description: "", language: "",
+        rows.push({ track_name: t.name, artist, genre, album_name: t.album?.name || "", tags: "", description: "", language: lang,
           release_date: date, spotify_id: t.id, spotify_url: t.external_urls?.spotify || "" });
       }
       await sleep(250);

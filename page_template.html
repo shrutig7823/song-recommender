@@ -1,98 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Song Recommender</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Pick a song you like and get five similar songs from different artists, matched by emotion, lyric theme, occasion and release year. Listen right on the page.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-/* Layout: one centred column. Search on top, five result rows, then a "how it works" panel. */
+/* Layout: a stage-lit dark app. Top bar, hero search, your song, five result cards that play inline, a collapsible tuner, then "how it works". */
 :root{
-  --bg:#f3f5f8; --surface:#ffffff; --fg:#161b26; --muted:#5b6475; --line:#dde2ea;
-  --accent:#0f766e; --accent-soft:#d9f0ed; --accent-fg:#ffffff; --bar:#c9d3df;
+  --bg:#f4f1ec; --bg2:#ebe7e0; --surface:#ffffff; --surface2:#f6f3ee; --fg:#15171c; --muted:#5f6573; --line:#ddd8cf;
+  --accent:#d9480f; --accent-fg:#ffffff; --accent-soft:#fde7dc; --glow:rgba(217,72,15,.10);
   --font-head:"Space Grotesk","Segoe UI",system-ui,sans-serif;
   --font-body:"Inter","Segoe UI",system-ui,sans-serif;
+  --shadow:0 1px 2px rgba(20,20,30,.06),0 8px 24px rgba(20,20,30,.06);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#10141c; --surface:#181e29; --fg:#e8ecf3; --muted:#96a0b3; --line:#2a3342;
-  --accent:#4fd1c5; --accent-soft:#16363a; --accent-fg:#06201e; --bar:#2c3647; color-scheme:dark}}
+  --bg:#0c0d11; --bg2:#13151b; --surface:#181b22; --surface2:#1f232c; --fg:#eef0f4; --muted:#9aa2b1; --line:#2b303b;
+  --accent:#ffa94d; --accent-fg:#1b1204; --accent-soft:#3a2a14; --glow:rgba(255,169,77,.13);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#10141c; --surface:#181e29; --fg:#e8ecf3; --muted:#96a0b3; --line:#2a3342;
-  --accent:#4fd1c5; --accent-soft:#16363a; --accent-fg:#06201e; --bar:#2c3647; color-scheme:dark}
+  --bg:#0c0d11; --bg2:#13151b; --surface:#181b22; --surface2:#1f232c; --fg:#eef0f4; --muted:#9aa2b1; --line:#2b303b;
+  --accent:#ffa94d; --accent-fg:#1b1204; --accent-soft:#3a2a14; --glow:rgba(255,169,77,.13);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35); color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 56px}
-main{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-h1{font-family:var(--font-head);font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
-h2{font-family:var(--font-head);font-size:18px;margin:0 0 12px}
-.lead{color:var(--muted);margin:0;max-width:60ch}
-.search{display:flex;gap:10px;flex-wrap:wrap}
-.search input{flex:1 1 280px;min-width:0;padding:12px 14px;font:inherit;color:var(--fg);background:var(--surface);
-  border:1px solid var(--line);border-radius:8px}
-button{font:inherit;font-weight:600;padding:12px 18px;border-radius:8px;border:1px solid var(--line);
-  background:var(--surface);color:var(--fg);cursor:pointer}
-button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
-button:hover{filter:brightness(1.06)}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5;
+  background-image:radial-gradient(900px 380px at 50% -120px,var(--glow),transparent);background-repeat:no-repeat;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:900px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-head);margin:0;text-wrap:balance}
+button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.mix{display:flex;flex-direction:column;gap:6px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-.mix .row{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;font-size:13px}
-.mix select{font:inherit;min-width:0;padding:8px 10px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px}
-.mix output{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
-@media (max-width:480px){.mix .row{grid-template-columns:1fr 44px}.mix .row label{grid-column:1 / 3}}
-.mix input[type=range]{width:100%;accent-color:var(--accent)}
-.chip.emo{background:var(--accent);color:var(--accent-fg)}
-.picked{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-.picked b{font-family:var(--font-head);font-size:18px}
-.meta{color:var(--muted);font-size:13px}
-ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-li.rec{display:grid;grid-template-columns:28px 1fr 84px;gap:6px 14px;align-items:center;padding:14px 16px;
-  background:var(--surface);border:1px solid var(--line);border-radius:10px}
-.rank{font-family:var(--font-head);font-weight:700;color:var(--accent);font-size:20px}
-.rec .t{font-weight:600;overflow-wrap:anywhere}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.chip{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--fg)}
-.score{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
-.bar{height:6px;border-radius:99px;background:var(--bar);margin-top:6px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent)}
-.why{grid-column:2 / 4;font-size:13px;color:var(--muted)}
-details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:16px}
-.steps{display:flex;flex-direction:column;gap:12px;margin-top:14px}
-.step b{display:block}
-code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--bg);padding:2px 6px;border-radius:5px;overflow-wrap:anywhere}
-@media (max-width:480px){li.rec{grid-template-columns:24px 1fr}.score{grid-column:2;text-align:left;display:flex;gap:10px;align-items:center}.bar{flex:1;margin:0}.why{grid-column:2}}
-</style>
 
-<main>
-  <header>
-    <h1>Song Recommender</h1>
-    <p class="lead">Pick a song you like. It suggests 5 similar songs from a library of <span id="count"></span> songs, by comparing artist, genre, mood and language.</p>
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:18px}
+.mark{display:flex;align-items:flex-end;gap:3px;height:22px}
+.mark i{display:block;width:4px;border-radius:2px;background:var(--accent)}
+.mark i:nth-child(1){height:10px}.mark i:nth-child(2){height:22px}.mark i:nth-child(3){height:15px}.mark i:nth-child(4){height:19px}
+.pill{font-size:13px;color:var(--muted);padding:5px 12px;border:1px solid var(--line);border-radius:99px;background:var(--surface)}
+
+/* hero */
+.hero{padding-block:30px 22px;display:flex;flex-direction:column;gap:16px}
+.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;letter-spacing:-.01em;max-width:16ch}
+.hero p{margin:0;color:var(--muted);max-width:56ch;font-size:16px}
+.search{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.field{flex:1 1 300px;min-width:0;display:flex;align-items:center;gap:10px;padding:0 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.field svg{flex:none;color:var(--muted)}
+.field input{flex:1;min-width:0;border:0;background:transparent;padding:15px 0;outline:none}
+.field:focus-within{border-color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.07)}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);color:var(--fg);white-space:nowrap}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--accent))}
+.chip.soft{color:var(--muted)}
+.meta{color:var(--muted);font-size:13px}
+
+/* your song */
+.you{display:grid;grid-template-columns:1fr;gap:14px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);margin-top:8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.you h2{font-size:clamp(22px,4vw,30px);line-height:1.15}
+.you .top{display:flex;flex-direction:column;gap:6px}
+
+/* results */
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:30px 0 12px}
+.sec h2{font-size:20px}
+ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.card{display:grid;grid-template-columns:38px 1fr 68px;gap:6px 14px;align-items:center;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.rank{font-family:var(--font-head);font-weight:700;font-size:26px;color:var(--accent);text-align:center}
+.card .t{font-weight:600;font-size:16px;overflow-wrap:anywhere}
+.card .info{display:flex;flex-direction:column;gap:7px;min-width:0}
+.ring{--p:0;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--line) 0)}
+.ring b{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--surface);font-family:var(--font-head);font-size:15px;font-variant-numeric:tabular-nums}
+.actions{grid-column:2 / 4;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.play{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--accent);color:var(--accent-fg);border:0;font-weight:600;cursor:pointer;font-size:14px;text-decoration:none}
+.play.alt{background:var(--surface2);color:var(--fg);border:1px solid var(--line)}
+.play:hover{filter:brightness(1.07)}
+.why{font-size:13px;color:var(--muted);cursor:pointer;background:none;border:0;padding:6px 4px;text-decoration:underline;text-underline-offset:3px}
+.why-box{grid-column:2 / 4;font-size:13px;color:var(--muted);background:var(--surface2);border-radius:12px;padding:10px 12px}
+.player{grid-column:1 / 4;border-radius:14px;overflow:hidden;margin-top:4px}
+.player iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;background:var(--surface2)}
+
+/* tuner and how it works */
+details{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:4px 18px;box-shadow:var(--shadow)}
+details+details{margin-top:12px}
+summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:17px;padding:14px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;color:var(--muted)}
+details[open] summary::after{content:"\2212"}
+.tuner{display:flex;flex-direction:column;gap:12px;padding-bottom:18px}
+.row{display:grid;grid-template-columns:170px 1fr 40px;gap:12px;align-items:center;font-size:14px}
+.row input[type=range]{width:100%;accent-color:var(--accent)}
+.row output{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.row select{min-width:0;padding:9px 10px;background:var(--surface2);border:1px solid var(--line);border-radius:10px}
+.steps{display:flex;flex-direction:column;gap:14px;padding-bottom:18px}
+.step b{display:block;margin-bottom:2px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(--surface2);padding:2px 6px;border-radius:6px;overflow-wrap:anywhere}
+.foot{margin-top:28px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:6px}
+.foot a{color:var(--muted)}
+@media (max-width:560px){
+  .card{grid-template-columns:30px 1fr}
+  .ring{grid-column:2;grid-row:auto;width:auto;height:auto;border-radius:99px;background:none;justify-self:start}
+  .ring b{width:auto;height:auto;padding:2px 10px;border-radius:99px;background:var(--accent-soft);font-size:13px}
+  .actions,.why-box{grid-column:1 / 3}.player{grid-column:1 / 3}
+  .row{grid-template-columns:1fr 36px}.row label{grid-column:1 / 3}
+  .rank{font-size:22px}
+}
+@media (prefers-reduced-motion:no-preference){.card,.you{animation:rise .3s ease both}@keyframes rise{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Song Recommender</div>
+    <span class="pill"><span id="count"></span> songs</span>
   </header>
 
-  <form class="search" id="form">
-    <input id="q" list="songs" autocomplete="off" placeholder="Type a song name, then pick it from the list" aria-label="Song name">
-    <datalist id="songs"></datalist>
-    <button class="primary" type="submit">Recommend</button>
-    <button type="button" id="rand">Surprise me</button>
-  </form>
-
-  <div class="mix">
-    <b>How much should each factor count?</b>
-    <div class="row"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="10" value="40"><output id="o_tags"></output></div>
-    <div class="row"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="10" value="30"><output id="o_emotion"></output></div>
-    <div class="row"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="10" value="20"><output id="o_context"></output></div>
-    <div class="row"><label for="w_era">Release year</label><input type="range" id="w_era" min="0" max="100" step="10" value="10"><output id="o_era"></output></div>
-    <div class="row"><label for="variety">Artist variety</label><select id="variety"><option value="mix">Mix: 1 song per artist</option><option value="strict">Strict: not the artist I picked</option><option value="off">Off: same artist allowed</option></select><span></span></div>
-  </div>
+  <section class="hero">
+    <h1>Find songs that feel the same.</h1>
+    <p>Pick a song you love. You get five more from different artists, matched by emotion, what the lyrics are about, where people play it, and when it came out. Press play to listen.</p>
+    <form class="search" id="form">
+      <label class="field" for="q">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" list="songs" autocomplete="off" placeholder="Type a song name and pick it from the list" aria-label="Song name">
+      </label>
+      <datalist id="songs"></datalist>
+      <button class="btn primary" type="submit">Recommend</button>
+      <button class="btn" type="button" id="rand">Surprise me</button>
+    </form>
+  </section>
 
   <section id="out" aria-live="polite"></section>
 
-  <details>
-    <summary>How this works, step by step</summary>
-    <div class="steps" id="how"></div>
-  </details>
-</main>
+  <section style="margin-top:30px">
+    <details>
+      <summary>Tune the mix</summary>
+      <div class="tuner">
+        <div class="meta">Choose how much each factor counts. The numbers are relative, so they do not need to add up to 100.</div>
+        <div class="row"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="5" value="35"><output id="o_tags"></output></div>
+        <div class="row"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="5" value="25"><output id="o_emotion"></output></div>
+        <div class="row"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="5" value="20"><output id="o_context"></output></div>
+        <div class="row"><label for="w_era">Release year</label><input type="range" id="w_era" min="0" max="100" step="5" value="5"><output id="o_era"></output></div>
+        <div class="row"><label for="w_lang">Same language</label><input type="range" id="w_lang" min="0" max="100" step="5" value="15"><output id="o_lang"></output></div>
+        <div class="row"><label for="variety">Artist variety</label><select id="variety"><option value="mix">Mix: 1 song per artist</option><option value="strict">Strict: not the artist I picked</option><option value="off">Off: same artist allowed</option></select><span></span></div>
+      </div>
+    </details>
+    <details>
+      <summary>How this works, step by step</summary>
+      <div class="steps" id="how"></div>
+    </details>
+  </section>
+
+  <footer class="foot">
+    <span>Emotion, lyric theme and occasion labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
+    <span>Songs play through Spotify. Free listeners hear 30-second previews, and signed-in Spotify users hear full songs.</span>
+  </footer>
+</div>
 
 <script>
-const DATA = /*DATA*/null; // each song: [title, artists, genre, tags line, language, main emotion, second emotion, year, lyric theme, occasions]
+const DATA = /*DATA*/null; // each song: [title, artists, genre, tags line, language, main emotion, second emotion, year, lyric theme, occasions, spotify id]
 
 // ---- Step 3: vocabulary and vectors (same as CountVectorizer) ----
 const MAX_FEATURES = 5000;
@@ -108,7 +182,7 @@ const norm = vec.map(m => Math.sqrt([...m.values()].reduce((s, n) => s + n * n, 
 function cosine(a, b) {
   let dot = 0;
   for (const [c, n] of vec[a]) { const o = vec[b].get(c); if (o) dot += n * o; }
-  return dot / (norm[a] * norm[b]);
+  return dot / ((norm[a] * norm[b]) || 1);
 }
 
 // ---- Step 6: emotion. Each emotion is a point: [how positive, how intense], both 0 to 1 ----
@@ -117,17 +191,17 @@ const MAP = {
   romantic: [0.75, 0.35], happy: [0.85, 0.65], euphoric: [0.90, 0.95], confident: [0.70, 0.85],
   angry: [0.10, 0.90], intense: [0.20, 0.75], spiritual: [0.65, 0.15],
 };
+const EMO_COLOR = { heartbreak: "#e5484d", sad: "#5b8def", nostalgic: "#c08a3e", mellow: "#4fb3a6", romantic: "#e5669b", happy: "#f2b705",
+  euphoric: "#ff8a3d", confident: "#8e6bf2", angry: "#d1361f", intense: "#9b59b6", spiritual: "#3fb68b" };
 // a song's point = 70% main emotion + 30% second emotion
 const point = DATA.map(s => { const p = MAP[s[5]], q = MAP[s[6]] || p; return [0.7 * p[0] + 0.3 * q[0], 0.7 * p[1] + 0.3 * q[1]]; });
 // 1 = same feeling, 0 = opposite feelings
 const emotionSim = (a, b) => 1 - Math.hypot(point[a][0] - point[b][0], point[a][1] - point[b][1]) / Math.SQRT2;
 
 // ---- Step 7: lyric theme, occasion and release year ----
-// some themes are close cousins, so they get partial credit
 const RELATED = { "love|heartbreak": 0.4, "heartbreak|nostalgia": 0.4, "nostalgia|reflection": 0.5, "reflection|struggle": 0.4,
   "struggle|rebellion": 0.4, "ambition|party": 0.3, "party|freedom": 0.4, "devotion|reflection": 0.3 };
 const themeSim = (a, b) => a === b ? 1 : (RELATED[a + "|" + b] || RELATED[b + "|" + a] || 0);
-// occasions: shared / total different
 function occasionSim(a, b) {
   const A = new Set(DATA[a][9]), B = new Set(DATA[b][9]);
   const shared = [...A].filter(x => B.has(x)).length;
@@ -137,17 +211,16 @@ const contextSim = (a, b) => 0.5 * themeSim(DATA[a][8], DATA[b][8]) + 0.5 * occa
 // era: 1 for the same year, falling to 0 at 25 or more years apart
 const eraSim = (a, b) => Math.max(0, 1 - Math.abs(DATA[a][7] - DATA[b][7]) / 25);
 
-// ---- Step 5 + 7: recommend. wt = how much each factor counts (they do not need to add up to 100) ----
+// ---- Step 5 + 7: recommend. wt = how much each factor counts ----
 const artistsOf = i => DATA[i][1].split(", ").map(a => a.toLowerCase());
 function recommend(i, wt, variety = "mix", count = 5) {
-  const total = (wt.tags + wt.emotion + wt.context + wt.era) || 1;
+  const total = (wt.tags + wt.emotion + wt.context + wt.era + wt.lang) || 1;
   const ranked = DATA.map((_, j) => {
-    const p = { tags: cosine(i, j), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j) };
-    return { j, p, score: (wt.tags * p.tags + wt.emotion * p.emotion + wt.context * p.context + wt.era * p.era) / total };
+    const p = { tags: cosine(i, j), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j), lang: DATA[i][4] === DATA[j][4] ? 1 : 0 };
+    return { j, p, score: (wt.tags * p.tags + wt.emotion * p.emotion + wt.context * p.context + wt.era * p.era + wt.lang * p.lang) / total };
   }).filter(x => x.j !== i).sort((a, b) => b.score - a.score);
   if (variety === "off") return ranked.slice(0, count);
-  // variety: walk down the ranking and skip a song if any of its artists already appears in the list.
-  // "strict" also blocks the artists of the song you picked.
+  // variety: skip a song if any of its artists already appears in the list ("strict" also blocks the picked song's artists)
   const used = new Set(variety === "strict" ? artistsOf(i) : []);
   const out = [];
   for (const x of ranked) {
@@ -162,16 +235,48 @@ function recommend(i, wt, variety = "mix", count = 5) {
 
 // ---- Page ----
 const $ = id => document.getElementById(id);
-const labels = DATA.map((s, i) => s[0] + " — " + s[1].split(", ").slice(0, 2).join(", "));
+const labels = DATA.map(s => s[0] + " — " + s[1].split(", ").slice(0, 2).join(", "));
 const seenLabel = new Map();
-labels.forEach((l, i) => { if (seenLabel.has(l)) labels[i] = l + " (" + s2(i) + ")"; seenLabel.set(labels[i], i); });
-function s2(i) { return DATA[i][2]; }
+labels.forEach((l, i) => { if (seenLabel.has(l)) labels[i] = l + " (" + DATA[i][7] + ")"; seenLabel.set(labels[i], i); });
 const byLabel = new Map(labels.map((l, i) => [l.toLowerCase(), i]));
 $("count").textContent = DATA.length.toLocaleString();
 $("songs").append(...labels.map(l => Object.assign(document.createElement("option"), { value: l })));
 
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-function chips(parts) { const d = el("div", "chips"); parts.filter(Boolean).forEach(p => d.append(el("span", "chip", p))); return d; }
+function chip(text, cls, color) { const c = el("span", "chip" + (cls ? " " + cls : "")); if (color) { const d = el("i", "dot"); d.style.setProperty("--c", color); c.append(d); } c.append(text); return c; }
+function tagRow(i) {
+  const s = DATA[i], d = el("div", "chips");
+  d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(s[6], "soft", EMO_COLOR[s[6]]), chip("about " + s[8], "soft"));
+  s[9].forEach(o => d.append(chip("at " + o, "soft")));
+  return d;
+}
+function infoRow(i) {
+  const s = DATA[i], d = el("div", "chips");
+  [s[2], s[4], String(s[7])].filter(Boolean).forEach(x => d.append(chip(x)));
+  return d;
+}
+
+// ---- listening: Spotify embed when we have the song id, a Spotify search link otherwise ----
+const spotifySearch = i => "https://open.spotify.com/search/" + encodeURIComponent(DATA[i][0] + " " + DATA[i][1].split(", ")[0]);
+const playIcon = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("width", "14"); s.setAttribute("height", "14"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("fill", "currentColor"); const p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("d", "M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"); s.append(p); return s; };
+function playControl(i, playerHost) {
+  const id = DATA[i][10];
+  if (!id) {
+    const a = el("a", "play alt"); a.href = spotifySearch(i); a.target = "_blank"; a.rel = "noopener";
+    a.append(playIcon(), "Find on Spotify"); return a;
+  }
+  const b = el("button", "play"); b.type = "button"; b.append(playIcon(), "Play");
+  b.addEventListener("click", () => {
+    if (!playerHost.hidden && playerHost.firstChild) { playerHost.replaceChildren(); playerHost.hidden = true; b.lastChild.textContent = "Play"; return; }
+    document.querySelectorAll(".player").forEach(p => { p.replaceChildren(); p.hidden = true; });
+    document.querySelectorAll(".play:not(.alt)").forEach(x => x.lastChild.textContent = "Play");
+    const f = document.createElement("iframe");
+    f.src = "https://open.spotify.com/embed/track/" + id + "?utm_source=generator";
+    f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.loading = "lazy"; f.title = "Spotify player: " + DATA[i][0];
+    playerHost.replaceChildren(f); playerHost.hidden = false; b.lastChild.textContent = "Hide player";
+  });
+  return b;
+}
 
 function findSong(text) {
   const t = text.trim().toLowerCase();
@@ -184,31 +289,45 @@ function findSong(text) {
 }
 
 let current = 0;
-const FACTORS = ["tags", "emotion", "context", "era"];
+const FACTORS = ["tags", "emotion", "context", "era", "lang"];
 function weights() { const o = {}; FACTORS.forEach(f => { o[f] = Number($("w_" + f).value); $("o_" + f).textContent = o[f]; }); return o; }
-// emotion chips (accent colour), lyric theme, and where the song is played
-function emoChips(s) { const d = chips([s[5], s[6], "about " + s[8], ...s[9].map(o => "at " + o)]); d.firstChild.classList.add("emo"); return d; }
 
 function show(i) {
   current = i;
   const wt = weights();
   const out = $("out"); out.replaceChildren();
   const me = DATA[i];
-  const picked = el("div", "picked");
-  picked.append(el("div", "meta", "Because you like"), el("b", null, me[0]), el("div", "meta", me[1] + " · " + me[7]), chips([me[2], me[4]]), el("div", "meta", "Feels like, is about, and is played at:"), emoChips(me));
+
+  const you = el("div", "you");
+  const top = el("div", "top");
+  top.append(el("div", "eyebrow", "Because you like"), el("h2", null, me[0]), el("div", "meta", me[1]));
+  const youPlayer = el("div", "player"); youPlayer.hidden = true;
+  const youActions = el("div", "actions"); youActions.style.gridColumn = "auto"; youActions.append(playControl(i, youPlayer));
+  you.append(top, infoRow(i), tagRow(i), youActions, youPlayer);
+
   const list = el("ol");
   const mine = new Set(wordsOf(i));
   recommend(i, wt, $("variety").value).forEach((r, n) => {
-    const s = DATA[r.j], li = el("li", "rec");
+    const s = DATA[r.j], li = el("li", "card");
     li.append(el("div", "rank", String(n + 1)));
-    const body = el("div"); body.append(el("div", "t", s[0]), el("div", "meta", s[1] + " · " + s[7]), chips([s[2], s[4]]), emoChips(s));
-    const sc = el("div", "score"); sc.append(el("span", null, Math.round(r.score * 100) + "% match"));
-    const bar = el("div", "bar"), fill = el("i"); fill.style.width = Math.round(r.score * 100) + "%"; bar.append(fill); sc.append(bar);
+    const info = el("div", "info");
+    info.append(el("div", "t", s[0]), el("div", "meta", s[1]), infoRow(r.j), tagRow(r.j));
+    const pct = Math.round(r.score * 100);
+    const ring = el("div", "ring"); ring.style.setProperty("--p", pct); ring.title = pct + "% match"; ring.append(el("b", null, pct + "%"));
+    const player = el("div", "player"); player.hidden = true;
+    const actions = el("div", "actions");
+    actions.append(playControl(r.j, player));
     const shared = wordsOf(r.j).filter(w => mine.has(w));
-    li.append(body, sc, el("div", "why", "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · theme and occasion " + Math.round(r.p.context * 100) + "% · year " + Math.round(r.p.era * 100) + "%. Shared words: " + (shared.join(", ") || "none")));
+    const why = el("button", "why", "Why this match"); why.type = "button";
+    const box = el("div", "why-box"); box.hidden = true;
+    box.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · theme and occasion " + Math.round(r.p.context * 100) + "% · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
+    why.addEventListener("click", () => { box.hidden = !box.hidden; });
+    actions.append(why);
+    li.append(info, ring, actions, box, player);
     list.append(li);
   });
-  out.append(picked, el("h2", null, "5 songs you may like"), list);
+  const head = el("div", "sec"); head.append(el("h2", null, "Five songs you may like"), el("span", "meta", "from five different artists"));
+  out.append(you, head, list);
   explain(i);
   $("q").value = labels[i];
 }
@@ -221,15 +340,17 @@ function explain(i) {
   add("2. Turn the text into numbers", "Every song becomes a row of " + vocab.length.toLocaleString() + " counts, one per word in the vocabulary. This song has " + nz.length + " non-zero counts; the rest are 0.", nz.join(" = 1, ") + " = 1");
   add("3. Compare two songs", "Cosine similarity multiplies the two rows, adds it up, and divides by their lengths. It gives 0 for nothing in common and 1 for identical.");
   const pt = point[i].map(n => n.toFixed(2));
-  add("4. Add the emotion", "Each song has a main and a second emotion. Each emotion is a point on a map: how positive it feels and how intense it feels. This song sits at " + pt[0] + " positive, " + pt[1] + " intense. Songs whose points are close feel alike, so sad is near nostalgic and far from euphoric. The emotions were labelled by an AI from what it knows of each song, so some are guesses.");
-  add("5. Add theme, occasion and year", "Each song also has a lyric theme (what the words are about), the occasions it is played at (party, workout, long drive...), and a release year. Same theme and shared occasions raise the score, and so do songs released in the same era (25 or more years apart counts as 0). These labels were written by an AI from what it knows of each song, without copying lyrics, so some are guesses. For classical pieces the year is when it was composed.");
-  add("6. Recommend", "Final score = each factor's match multiplied by its slider, added up, and divided by the total of the sliders. Score the picked song against all " + DATA.length.toLocaleString() + " songs, skip itself, and show the 5 highest. Artist variety then walks down that list and skips any song whose artist is already in your 5, so one artist cannot fill the list.");
+  add("4. Add the emotion", "Each song has a main and a second emotion. Each emotion is a point on a map: how positive it feels and how intense it feels. This song sits at " + pt[0] + " positive, " + pt[1] + " intense. Songs whose points are close feel alike, so sad is near nostalgic and far from euphoric.");
+  add("5. Add theme, occasion and year", "Each song also has a lyric theme (what the words are about), the occasions it is played at, and a release year. Same theme and shared occasions raise the score, and so do songs from the same era (25 or more years apart counts as 0). Years of songs pulled from Spotify are real release dates. For classical pieces the year is when it was composed. Songs in the same language get a bonus too, so a Hindi song is not matched with a Japanese one.");
+  add("6. Recommend", "Final score = each factor's match multiplied by its slider, added up, and divided by the total of the sliders. Score the picked song against all " + DATA.length.toLocaleString() + " songs, skip itself, and show the 5 highest. Artist variety then skips any song whose artist is already in your 5.");
 }
 
-$("form").addEventListener("submit", e => { e.preventDefault(); const i = findSong($("q").value); if (i < 0) { $("out").replaceChildren(el("p", "lead", "No song found. Try another name, or pick one from the list.")); return; } show(i); });
+$("form").addEventListener("submit", e => { e.preventDefault(); const i = findSong($("q").value); if (i < 0) { $("out").replaceChildren(el("p", "meta", "No song found. Try another name, or pick one from the list.")); return; } show(i); });
 FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => show(current)));
 $("variety").addEventListener("change", () => show(current));
 $("rand").addEventListener("click", () => show(Math.floor(Math.random() * DATA.length)));
 $("q").addEventListener("change", () => { const i = byLabel.get($("q").value.trim().toLowerCase()); if (i != null) show(i); });
 show(Math.max(0, DATA.findIndex(s => s[0] === "Khairiyat")));
 </script>
+</body>
+</html>

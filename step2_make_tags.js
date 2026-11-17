@@ -54,7 +54,7 @@ const oneWord = text => text.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 const splitList = text => text.split(";").map(oneWord).filter(Boolean);
 
 // Same genre written two ways -> one name
-const GENRE_FIX = { latino: "latin" };
+const GENRE_FIX = { latino: "latin", rnb: "rb" };   // same genre written two ways -> one name
 const cleanGenre = g => { const w = oneWord(g); return GENRE_FIX[w] || w; };
 
 // ---------- Step 2c: build the tags line ----------

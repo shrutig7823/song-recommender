@@ -1,4 +1,8 @@
 ALL_2000_Songs.csv
+songs_merged.csv
+new_songs*.csv
+new/in/
+new/removed_rows.json
 .claude/
 node_modules/
 emotions/in/
