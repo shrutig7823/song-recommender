@@ -75,6 +75,9 @@ a{color:inherit}
 .blend{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:20px;align-items:start}
 .blend.compact{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:16px}
 .blend.compact #blend{max-height:330px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.filter{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 14px;font-size:13px;color:var(--muted)}
+.filter select{background:var(--panel2);border:0;border-radius:999px;padding:7px 12px;font-weight:600;color:var(--fg)}
 .options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 4px}
 .optcard{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
 .optcard b{font-family:var(--font-head);font-size:16px}
@@ -362,6 +365,7 @@ const artistsOf = i => DATA[i][1].split(", ").map(a => a.toLowerCase());
 const TIER = { 5: "Chart hit", 4: "Popular", 3: "Well known", 2: "Lesser known", 1: "Deep cut" };
 const STYLE_NAME = { "item-number": "item number", "classy-groove": "classy groove", "wedding-dance": "wedding dance", "club-edm": "club and EDM", "romantic-ballad": "romantic ballad", soulful: "soulful", "sad-ballad": "sad ballad", rap: "rap", "rock-band": "rock", "indie-acoustic": "indie and acoustic", retro: "retro", devotional: "devotional", instrumental: "instrumental", "viral-pop": "viral pop", other: "pop" };
 function diversify(ranked, count, perArtist, used) {
+  if (count <= 0) return [];
   const seen = new Map(); (used || []).forEach(n => seen.set(n, 99));
   const out = [];
   for (const x of ranked) {
@@ -764,7 +768,7 @@ function matchCharts(feeds) {
   feeds.forEach(({ cc, name, w, list }) => list.forEach(([title, artist], k) => {
     const cands = titleIndex.get(norm2(title)) || [], a = norm2(artist);
     const j = cands.find(c => { const first = norm2(DATA[c][1].split(", ")[0]); return first && (a.includes(first.slice(0, 6)) || first.includes(a.slice(0, 6))); });
-    if (j != null) { if (!chartHits.has(j)) chartHits.set(j, []); chartHits.get(j).push({ name, rank: k + 1, w: cc === myCountry ? w * 1.6 : w }); }   // the visitor's own country counts more
+    if (j != null) { if (!chartHits.has(j)) chartHits.set(j, []); chartHits.get(j).push({ cc, name, rank: k + 1, w: cc === myCountry ? w * 1.6 : w }); }   // the visitor's own country counts more
   }));
 }
 let chartsUpdated = "";
@@ -784,45 +788,33 @@ function trendScore(j) {
   const yr = DATA[j][7], recency = yr >= 2025 ? 0.35 : yr >= 2023 ? 0.2 : yr >= 2021 ? 0.1 : 0;
   return 1.1 * Math.min(chart, 1.5) + 0.35 * (DATA[j][14] - 1) / 4 + 0.4 * DATA[j][15] / 3 + (DATA[j][16] === "resurgence" ? 0.25 : 0) + recency + 0.25 * popScore(j);
 }
-function trendReason(j) {
+function trendReason(j, cc) {
   const hits = chartHits.get(j);
-  if (hits && hits.length) { const best = hits.slice().sort((a, b) => a.rank / a.w - b.rank / b.w)[0]; return "On the charts: #" + best.rank + " in " + best.name + (hits.length > 1 ? " and " + (hits.length - 1) + " more " + (hits.length === 2 ? "country" : "countries") : ""); }
+  if (hits && hits.length) { const best = (cc && hits.find(h => h.cc === cc)) || hits.slice().sort((a, b) => a.rank / a.w - b.rank / b.w)[0]; return "On the charts: #" + best.rank + " in " + best.name + (hits.length > 1 ? " and " + (hits.length - 1) + " more " + (hits.length === 2 ? "country" : "countries") : ""); }
   if (DATA[j][16] === "resurgence") return "Back in the spotlight";
   if (DATA[j][16] === "new-hit" || DATA[j][7] >= 2025) return "New and popular";
   if (DATA[j][14] >= 4) return "Big on reels";
   return "Popular everywhere";
 }
-function popularNow(n) {
-  const ranked = DATA.map((_, j) => j).filter(j => DATA[j][11] >= 4 || chartHits.has(j)).map(j => ({ j, score: trendScore(j) })).sort((a, b) => b.score - a.score);
-  return diversify(ranked, n, 1).map(x => x.j);
+// filter: { country: "all" or a chart country code, lang: "any" or a language }. Returns the songs and a note when the filter leaves few.
+const popFilter = { country: "all", lang: "any" };
+function popularNow(n, f = popFilter) {
+  const inLang = j => f.lang === "any" || DATA[j][4] === f.lang;
+  const generic = DATA.map((_, j) => j).filter(j => inLang(j) && (DATA[j][11] >= 4 || chartHits.has(j))).map(j => ({ j, score: trendScore(j) })).sort((a, b) => b.score - a.score);
+  if (f.country === "all") return { list: diversify(generic, n, 1).map(x => x.j), note: "" };
+  // one country: the songs on that country's chart first, best rank first, then the strongest others to fill the list
+  const onChart = [...chartHits.entries()].filter(([j, hs]) => inLang(j) && hs.some(h => h.cc === f.country))
+    .map(([j, hs]) => ({ j, rank: Math.min(...hs.filter(h => h.cc === f.country).map(h => h.rank)) })).sort((a, b) => a.rank - b.rank);
+  const first = diversify(onChart, n, 1), have = new Set(first.map(x => x.j));
+  const rest = diversify(generic.filter(x => !have.has(x.j)), n - first.length, 1);
+  const where = (CHARTS.find(c => c[0] === f.country) || [])[1] || "that country";
+  const note = !first.length ? "None of today's " + where + " chart songs are in our library" + (f.lang !== "any" ? " in " + f.lang : "") + " yet, so here are other popular songs. More songs coming soon."
+    : first.length < n ? "Only " + first.length + " of today's " + where + " chart " + (first.length === 1 ? "song is" : "songs are") + " in our library" + (f.lang !== "any" ? " in " + f.lang : "") + ". The rest are other popular songs." : "";
+  return { list: first.concat(rest).map(x => x.j), note, firstCount: first.length };
 }
 
 // ---- home: the blend map first, then other ways in ----
 const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any", moment: null };
-function renderHome() {
-  const h = el("section", "homehero");
-  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Tap up to three moods on the map below and watch songs appear where they overlap. Or search for any song above."));
-  const routes = el("div", "routes");
-  const r1 = el("button", "route"); r1.type = "button";
-  r1.append(el("span", "tag", "Not sure?"), el("h2", null, "Answer 3 quick questions"), el("p", null, "How you feel, what you are doing, and which language. That is all."), el("span", "go", "Start →"));
-  r1.addEventListener("click", () => go(() => renderQuiz(0), "quiz"));
-  const r2 = el("button", "route"); r2.type = "button";
-  r2.append(el("span", "tag", "Know the moment?"), el("h2", null, "Pick a moment on the map"), el("p", null, "Shower, late-night drive, gym, qawwali night, old ghazals. The brighter the tile, the more songs we have."), el("span", "go", "Open the map →"));
-  r2.addEventListener("click", () => go(renderMapRoute, "map"));
-  routes.append(r1, r2);
-  view.append(h);
-  renderBlendRoute({ preselect: ["nostalgic", "romantic"] });       // the blend map is the heart of the home page, already glowing
-  const other = el("div", "sec"); other.append(el("h2", null, "Other ways in"), el("span", "meta", "Not sure? Or know the moment?"));
-  view.append(other, routes);
-  // a taste of the library right on the home page
-  const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Live charts, reels and comebacks"));
-  const rows = el("div", "rows"); const note = el("p", "meta"); note.style.margin = "0 0 10px";
-  view.append(sec, note, rows);
-  const fill = () => { if (!rows.isConnected) return; rows.replaceChildren(); popularNow(8).forEach(i => rows.append(row(i, openSong, trendReason(i)))); note.textContent = chartsReady ? "Ranked from the most-played charts in India, the US, the UK and more (updated " + chartsUpdated + "), plus what is big on reels, new releases, and older songs making a comeback." : "Ranked from reel fame, new releases and older songs making a comeback. Loading the latest charts…"; };
-  fill();
-  loadCharts().then(fill);
-}
-
 // ---- the home page: three ways in side by side, then a compact blend map, then what is popular right now ----
 function renderHome2() {
   const h = el("section", "homehero");
@@ -838,8 +830,14 @@ function renderHome2() {
   renderBlendRoute({ preselect: ["nostalgic", "romantic"], compact: true, into: holder });
   const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Live charts, reels and comebacks"));
   const rows = el("div", "rows"); const note = el("p", "meta"); note.style.margin = "0 0 10px";
-  view.append(sec, note, rows);
-  const fill = () => { if (!rows.isConnected) return; rows.replaceChildren(); popularNow(6).forEach(i => rows.append(row(i, openSong, trendReason(i)))); note.textContent = chartsReady ? "Ranked from the most-played charts in India, the US, the UK and more (updated " + chartsUpdated + "), plus what is big on reels, new releases, and older songs making a comeback." : "Ranked from reel fame, new releases and older songs making a comeback. Loading the latest charts..."; };
+  // filters: put a country's chart first, or keep to one language
+  const filters = el("div", "filters");
+  const sel = (label, key, options) => { const w = el("label", "filter"); w.append(el("span", null, label)); const s = el("select"); options.forEach(([v, t]) => s.append(Object.assign(el("option", null, t), { value: v, selected: popFilter[key] === v }))); s.addEventListener("change", () => { popFilter[key] = s.value; fill(); }); w.append(s); return w; };
+  filters.append(
+    sel("Country", "country", [["all", "All countries"], ...CHARTS.filter(c => c[0] !== "br").map(c => [c[0], c[1].replace(/^the /, "")])]),
+    sel("Language", "lang", [["any", "Any language"], ["Hindi", "Hindi"], ["English", "English"], ["Punjabi", "Punjabi"], ["Spanish", "Spanish"]]));
+  view.append(sec, filters, note, rows);
+  const fill = () => { if (!rows.isConnected) return; rows.replaceChildren(); const r = popularNow(6); const cc = popFilter.country === "all" ? null : popFilter.country; r.list.forEach((i, k) => rows.append(row(i, openSong, trendReason(i, (cc && k < (r.firstCount || 0)) ? cc : null)))); if (!r.list.length) rows.append(el("p", "meta", "More songs coming soon. Stay tuned!")); const extra = r.note ? " " + r.note : ""; note.textContent = (chartsReady ? "Ranked from the most-played charts in India, the US, the UK and more (updated " + chartsUpdated + "), plus what is big on reels, new releases, and older songs making a comeback." : "Ranked from reel fame, new releases and older songs making a comeback. Loading the latest charts...") + extra; };
   fill();
   loadCharts().then(fill);
 }
