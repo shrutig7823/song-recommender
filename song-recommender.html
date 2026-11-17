@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090912">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Moodio">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>Moodio</title>
 <meta name="description" content="Moodio: tell us how you feel, or pick a song you love, and get songs that match the mood. Listen right on the page.">
 <meta name="color-scheme" content="dark">
@@ -21,7 +29,10 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+img,svg,iframe,video{max-width:100%}
+:root{--sat:env(safe-area-inset-top,0px);--sar:env(safe-area-inset-right,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px)}
 body{background-image:radial-gradient(900px 500px at 12% -10%,rgba(122,77,255,.22),transparent 60%),radial-gradient(800px 480px at 100% 0%,rgba(255,122,89,.14),transparent 60%);background-repeat:no-repeat;background-attachment:fixed}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -30,7 +41,7 @@ h1,h2,h3{font-family:var(--font-head);margin:0}
 .meta{color:var(--muted);font-size:13px}
 a{color:inherit}
 
-.top{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:12px;padding:12px 20px;background:rgba(9,9,18,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:12px;padding:calc(12px + var(--sat)) calc(20px + var(--sar)) 12px calc(20px + var(--sal));background:rgba(9,9,18,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:9px;font-family:var(--font-head);font-weight:700;font-size:21px;letter-spacing:-.01em;flex:none;background:none;border:0;padding:0}
 .mark{display:flex;align-items:flex-end;gap:3px;height:22px}
 .mark i{display:block;width:4px;border-radius:2px;background:linear-gradient(var(--accent2),var(--accent))}
@@ -46,7 +57,7 @@ a{color:inherit}
 .btn.go:hover{filter:brightness(1.06)}
 .btn.ghost{background:transparent}
 
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px 190px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 calc(20px + var(--sar)) calc(190px + var(--sab)) calc(20px + var(--sal))}
 .crumb:empty{display:none}
 .crumb{display:flex;align-items:center;gap:10px;padding:18px 0 4px;min-height:52px}
 .crumb button{border:0;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600}
@@ -201,7 +212,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .fullhint{margin-top:2px}
 .group{display:flex;flex-direction:column;gap:8px}
 .glabel{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.mini{cursor:pointer;position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
+.mini{cursor:pointer;position:fixed;right:calc(16px + var(--sar));bottom:calc(16px + var(--sab));width:min(390px,calc(100vw - 32px - var(--sal) - var(--sar)));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
 .mini .head{display:flex;gap:12px;align-items:center}
 .mini .art{width:52px;height:52px;border-radius:12px;font-size:22px}
 .mini .txt{min-width:0;flex:1}
@@ -214,14 +225,14 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .ctl input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
 .ctl time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:32px}
 .mini iframe{width:100%;height:152px;border:0;border-radius:12px}
-.fullcard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:51;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;background:var(--bg2);border:1px solid #38386a;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.fullcard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:51;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overscroll-behavior:contain;overflow:auto;background:var(--bg2);border:1px solid #38386a;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
 .fullcard .art{width:min(320px,70%);aspect-ratio:1;height:auto;border-radius:24px;font-size:110px;align-self:center}
 .fullcard h2{font-size:26px}
 .fullcard iframe{width:100%;height:352px;border:0;border-radius:14px}
 .fullhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 .scrim.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);z-index:41;background:var(--bg2);border-left:1px solid var(--line);padding:20px;overflow:auto;transform:translateX(102%);transition:transform .25s}
+.drawer{position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(380px,100%);z-index:41;background:var(--bg2);border-left:1px solid var(--line);padding:calc(20px + var(--sat)) calc(20px + var(--sar)) calc(20px + var(--sab)) 20px;overscroll-behavior:contain;overflow:auto;transform:translateX(102%);transition:transform .25s}
 .drawer.on{transform:none}
 .drawer h2{font-size:20px;display:flex;justify-content:space-between;align-items:center}
 .tuner{display:flex;flex-direction:column;gap:16px;margin-top:14px}
@@ -243,6 +254,33 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
   .trow,#listBody .trow{grid-template-columns:48px minmax(0,1fr) auto auto}
   .trow .tier{display:none}
 }
+@media (max-width:600px){
+  html,body{font-size:15px}
+  input,select,textarea{font-size:16px}                       /* stops iPhones zooming in when a field is tapped */
+  .top{padding:calc(8px + var(--sat)) calc(12px + var(--sar)) 8px calc(12px + var(--sal));gap:8px}
+  .brand{font-size:19px}
+  .wrap{padding-left:calc(14px + var(--sal));padding-right:calc(14px + var(--sar))}
+  .homehero{padding:20px 0 4px}
+  .btn{padding:10px 14px;min-height:42px}
+  .xbtn,.rplay{min-width:40px;min-height:40px}
+  .sec h2{font-size:19px}
+  .sec{flex-wrap:wrap;gap:2px 12px}
+  .song{flex-direction:column;align-items:flex-start;gap:14px}
+  .art.big{width:min(170px,46vw);height:min(170px,46vw)}
+  .btnrow{flex-wrap:wrap}
+  .mini{left:calc(10px + var(--sal));right:calc(10px + var(--sar));bottom:calc(10px + var(--sab));width:auto}
+  .mini iframe{height:80px}
+  .fullcard{left:0;right:0;top:auto;bottom:0;transform:none;width:100%;max-height:92vh;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + var(--sab))}
+  .fullcard iframe{height:232px}
+  .fullcard .art{width:min(240px,62%)}
+  .drawer{width:100%;border-left:0}
+  #toast{left:12px!important;right:12px!important;transform:none!important;bottom:calc(12px + var(--sab))!important;max-width:none!important}
+}
+@media (max-height:520px) and (orientation:landscape){
+  .fullcard{max-height:100dvh;border-radius:0}
+  .fullcard .art{display:none}
+}
+@media (display-mode:standalone){body{padding-bottom:0}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -743,6 +781,8 @@ async function sendToSpotify(idxs) {
 }
 // Switched on once https://shrutig7823.github.io/song-recommender/ is added as a Redirect URI in the Spotify app settings
 const SPOTIFY_CONNECT = true;
+// already signed in: get the Moodio player device ready in the background, so the first whole song starts without a wait
+if (SPOTIFY_CONNECT && spSaved()) spToken().then(t => { if (t) spPlayerReady().catch(() => {}); });
 
 // ---- the whole song, right here: Spotify's Web Playback SDK turns this page into a Spotify player ----
 // It needs a Spotify Premium account that is signed in here and allowed on this app (testing mode). Anyone else keeps the 30-second preview.
@@ -755,8 +795,10 @@ function spPlayerReady() {
       sp.player = player;
       player.addListener("ready", ({ device_id }) => { sp.deviceId = device_id; resolve(); });
       player.addListener("initialization_error", () => fail("unavailable"));
-      player.addListener("authentication_error", () => fail("auth"));
+      player.addListener("authentication_error", () => { sp.promise = null; fail("auth"); });
       player.addListener("account_error", () => fail("premium"));
+      player.addListener("not_ready", () => { sp.deviceId = null; sp.promise = null; });      // the device dropped: the next play reconnects
+      player.addListener("playback_error", e => { sp.lastErr = (e && e.message) || "playback error"; });
       player.addListener("player_state_changed", st => {
         if (!st) { sp.playing = false; refreshIcons(); return; }
         sp.playing = !st.paused; sp.dur = st.duration; paintSdk(st.position, st.duration, st.paused); refreshIcons();
@@ -792,14 +834,25 @@ async function spFullStart(i, host) {                               // true if t
     if (nowI !== i) return true;                                     // they tapped something else meanwhile
     const uri = DATA[i][10] ? "spotify:track:" + DATA[i][10] : await spFind(i);
     if (!uri) return false;
-    if (sp.player.activateElement) await sp.player.activateElement();
-    await spApi("PUT", "/me/player/play?device_id=" + sp.deviceId, { uris: [uri] });
-    sp.nowI = i; sp.playing = true; bindSdkControls(host);
+    if (sp.player.activateElement) { try { await sp.player.activateElement(); } catch (e) { /* needs a tap: the play call below still works */ } }
+    for (let tryNo = 0; ; tryNo++) {                                 // a fresh device can take a moment to be known to Spotify: wait and try again
+      try { await spApi("PUT", "/me/player/play?device_id=" + sp.deviceId, { uris: [uri] }); break; }
+      catch (e) {
+        if (e.status === 404 && tryNo < 3) {
+          try { await spApi("PUT", "/me/player", { device_ids: [sp.deviceId], play: false }); } catch (e2) { /* ignore, retry anyway */ }
+          await new Promise(r => setTimeout(r, 700 + tryNo * 500)); continue;
+        }
+        throw e;
+      }
+    }
+    sp.nowI = i; sp.playing = true; sp.ok = true; bindSdkControls(host);
     return true;
   } catch (e) {
-    if (e.code === "premium" || (e.status === 403 && /premium/i.test(e.message || ""))) { sp.ok = false; toast("Whole songs here need Spotify Premium, so this one plays as a preview.", false); }
-    else if (e.code === "auth" || e.status === 401) { sp.ok = false; toast("Please reconnect Spotify to play whole songs here: press Add to Spotify playlist, or the Connect link under the player.", true); spStore(null); }
-    else if (e.code === "unavailable" || e.code === "timeout") sp.ok = false;
+    const msg = e.message || "";
+    if (e.code === "premium" || (e.status === 403 && /premium/i.test(msg))) { sp.ok = false; toast("Whole songs here need Spotify Premium, so this one plays as a preview.", false); }
+    else if (e.status === 403) toast("Spotify did not allow whole-song playback for this account (" + msg + "). Moodio is in testing mode: the owner must add your Spotify email under User Management. Playing the preview instead.", true);
+    else if (e.code === "auth" || e.status === 401) { spStore(null); sp.promise = null; toast("Your Spotify sign-in ended. Press Connect Spotify Premium under the player to play whole songs again. Playing the preview for now.", true); }
+    else toast("Could not start the whole song (" + (msg || e.code || "unknown") + "). Playing the preview instead. Tap play again to retry.", false);
     return false;
   }
 }
