@@ -2,7 +2,7 @@
 
 Pick a song you like and get 5 similar songs. A beginner-friendly machine learning project: it turns each song into numbers and recommends the songs whose numbers are closest. It does not listen to audio.
 
-**Open `index.html` in a browser** to use it. No installs needed. Press **Play** on a song to listen: it opens a Spotify player on the page (30-second previews for free listeners, full songs when signed in to Spotify). Songs without a stored Spotify id get a **Find on Spotify** link instead. The player needs the page to be served over the web (GitHub Pages works), not opened from a Claude artifact.
+**Open `index.html` in a browser** to use it. No installs needed. Press **Play** on a song to listen, right on the page with no redirect. Songs pulled from Spotify (they have a stored Spotify id) use Spotify's player: 30-second previews, or full songs when signed in to Spotify. The other songs play a 30-second preview found through the free iTunes Search API, looked up when you press Play (it matched 58 of 60 songs in a test). The page must be served over the web, such as GitHub Pages; the Claude artifact view blocks embedded players.
 
 ## How it works
 

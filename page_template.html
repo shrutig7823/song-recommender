@@ -82,11 +82,14 @@ ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12p
 .ring b{display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:var(--surface);font-family:var(--font-head);font-size:15px;font-variant-numeric:tabular-nums}
 .actions{grid-column:2 / 4;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .play{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--accent);color:var(--accent-fg);border:0;font-weight:600;cursor:pointer;font-size:14px;text-decoration:none}
-.play.alt{background:var(--surface2);color:var(--fg);border:1px solid var(--line)}
 .play:hover{filter:brightness(1.07)}
 .why{font-size:13px;color:var(--muted);cursor:pointer;background:none;border:0;padding:6px 4px;text-decoration:underline;text-underline-offset:3px}
 .why-box{grid-column:2 / 4;font-size:13px;color:var(--muted);background:var(--surface2);border-radius:12px;padding:10px 12px}
 .player{grid-column:1 / 4;border-radius:14px;overflow:hidden;margin-top:4px}
+.pv{display:flex;gap:12px;align-items:center;padding:10px;background:var(--surface2);border-radius:12px}
+.pv img{width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;background:var(--line)}
+.pv .txt{min-width:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.pv audio{width:100%;height:36px}
 .player iframe{display:block;width:100%;height:152px;border:0;border-radius:12px;background:var(--surface2)}
 
 /* tuner and how it works */
@@ -161,7 +164,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:13px;background:var(-
 
   <footer class="foot">
     <span>Emotion, lyric theme and occasion labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
-    <span>Songs play through Spotify. Free listeners hear 30-second previews, and signed-in Spotify users hear full songs.</span>
+    <span>Songs play right here. Songs pulled from Spotify use Spotify's player (30-second previews, or full songs when you are signed in to Spotify). The other songs play a 30-second preview from iTunes.</span>
   </footer>
 </div>
 
@@ -256,24 +259,53 @@ function infoRow(i) {
   return d;
 }
 
-// ---- listening: Spotify embed when we have the song id, a Spotify search link otherwise ----
-const spotifySearch = i => "https://open.spotify.com/search/" + encodeURIComponent(DATA[i][0] + " " + DATA[i][1].split(", ")[0]);
+// ---- listening, always inside the page: Spotify player when we have the song id, otherwise a 30-second iTunes preview ----
+const norm2 = t => t.toLowerCase().replace(/\(.*?\)|\[.*?\]|- from .*|- remaster.*/g, "").replace(/[^\p{L}\p{N}]/gu, "");
+const previewCache = new Map();
+async function findPreview(i) {
+  if (previewCache.has(i)) return previewCache.get(i);
+  const title = DATA[i][0], artist = DATA[i][1].split(", ")[0];
+  let hit = null;
+  try {
+    const r = await fetch("https://itunes.apple.com/search?media=music&entity=song&limit=8&term=" + encodeURIComponent(title + " " + artist));
+    const list = (await r.json()).results.filter(x => x.previewUrl);
+    const t = norm2(title), a = norm2(artist);
+    hit = list.find(x => norm2(x.trackName) === t && norm2(x.artistName).includes(a))
+       || list.find(x => (norm2(x.trackName).includes(t) || t.includes(norm2(x.trackName))) && norm2(x.artistName).includes(a))
+       || null;
+  } catch (e) { hit = null; }
+  previewCache.set(i, hit);
+  return hit;
+}
+function closePlayers() {
+  document.querySelectorAll(".player").forEach(p => { p.querySelectorAll("audio").forEach(a => a.pause()); p.replaceChildren(); p.hidden = true; });
+  document.querySelectorAll(".play").forEach(x => { x.lastChild.textContent = x.dataset.label; });
+}
 const playIcon = () => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("width", "14"); s.setAttribute("height", "14"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("fill", "currentColor"); const p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("d", "M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"); s.append(p); return s; };
 function playControl(i, playerHost) {
   const id = DATA[i][10];
-  if (!id) {
-    const a = el("a", "play alt"); a.href = spotifySearch(i); a.target = "_blank"; a.rel = "noopener";
-    a.append(playIcon(), "Find on Spotify"); return a;
-  }
-  const b = el("button", "play"); b.type = "button"; b.append(playIcon(), "Play");
-  b.addEventListener("click", () => {
-    if (!playerHost.hidden && playerHost.firstChild) { playerHost.replaceChildren(); playerHost.hidden = true; b.lastChild.textContent = "Play"; return; }
-    document.querySelectorAll(".player").forEach(p => { p.replaceChildren(); p.hidden = true; });
-    document.querySelectorAll(".play:not(.alt)").forEach(x => x.lastChild.textContent = "Play");
-    const f = document.createElement("iframe");
-    f.src = "https://open.spotify.com/embed/track/" + id + "?utm_source=generator";
-    f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.loading = "lazy"; f.title = "Spotify player: " + DATA[i][0];
-    playerHost.replaceChildren(f); playerHost.hidden = false; b.lastChild.textContent = "Hide player";
+  const b = el("button", "play"); b.type = "button"; b.dataset.label = "Play"; b.append(playIcon(), "Play");
+  b.addEventListener("click", async () => {
+    if (!playerHost.hidden && playerHost.firstChild) { closePlayers(); return; }
+    closePlayers();
+    b.lastChild.textContent = "Hide player"; playerHost.hidden = false;
+    if (id) {
+      const f = document.createElement("iframe");
+      f.src = "https://open.spotify.com/embed/track/" + id + "?utm_source=generator";
+      f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.loading = "lazy"; f.title = "Spotify player: " + DATA[i][0];
+      playerHost.replaceChildren(f); return;
+    }
+    playerHost.replaceChildren(el("div", "meta", "Finding the song…"));
+    const hit = await findPreview(i);
+    if (playerHost.hidden) return;                       // closed while loading
+    if (!hit) { playerHost.replaceChildren(el("div", "pv meta", "No preview is available for this song.")); return; }
+    const box = el("div", "pv");
+    const img = document.createElement("img"); img.src = hit.artworkUrl100.replace("100x100", "300x300"); img.alt = ""; img.width = 64; img.height = 64;
+    const txt = el("div", "txt");
+    const au = document.createElement("audio"); au.controls = true; au.src = hit.previewUrl; au.preload = "auto";
+    txt.append(el("b", null, hit.trackName), el("span", "meta", hit.artistName + " · 30-second preview"), au);
+    box.append(img, txt); playerHost.replaceChildren(box);
+    au.play().catch(() => {});                           // if the browser blocks autoplay, the user presses play
   });
   return b;
 }
