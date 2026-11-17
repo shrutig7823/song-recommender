@@ -197,6 +197,8 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .foot{margin-top:26px;color:var(--faint);font-size:12px;display:flex;flex-direction:column;gap:6px}
 
 /* mini player, expanded player, drawer */
+.linkbtn{background:none;border:0;padding:0;color:var(--accent2);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font:inherit}
+.fullhint{margin-top:2px}
 .group{display:flex;flex-direction:column;gap:8px}
 .glabel{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .mini{cursor:pointer;position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
@@ -484,10 +486,12 @@ function fullLinks(i) {
 
 const mini = $("mini"), miniArt = $("miniArt"), miniTxt = $("miniTxt"), miniCtl = $("miniCtl");
 let audio = null, nowI = -1;
+// full songs through Spotify's Web Playback SDK (Spotify Premium, signed in, and allowed on this app); state shared with the Spotify section below
+const sp = { player: null, deviceId: null, ok: undefined, promise: null, nowI: -1, playing: false, dur: 0, ui: null };
 const mmss = s => isFinite(s) ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "0:00";
 function refreshIcons() {
   document.querySelectorAll("[data-play]").forEach(b => {
-    const on = Number(b.dataset.play) === nowI && audio && !audio.paused;
+    const on = Number(b.dataset.play) === nowI && ((audio && !audio.paused) || (sp.nowI === nowI && sp.playing));
     const lab = b.querySelector("span");
     if (lab) lab.textContent = on ? "Pause" : "Play";
     const svgEl = b.querySelector("svg"); const tmp = document.createElement("span"); tmp.innerHTML = on ? ICON.pause : ICON.play;
@@ -497,11 +501,15 @@ function refreshIcons() {
 }
 function stopAll() {
   if (audio) { audio.pause(); audio = null; }
+  if (sp.player && sp.nowI >= 0) { try { sp.player.pause(); } catch (e) { /* not playing */ } }
+  sp.nowI = -1; sp.playing = false; sp.ui = null;
+  document.querySelectorAll(".fullhint").forEach(e => e.remove());
   miniCtl.replaceChildren(); miniArt.replaceChildren(); miniTxt.replaceChildren(); mini.hidden = true; nowI = -1; refreshIcons();
 }
 // build the player for song i inside `host` (the mini player, or the enlarged one)
 async function startPlayer(i, host, tall) {
   const s = DATA[i];
+  if (SPOTIFY_CONNECT && spSaved() && sp.ok !== false) { if (await spFullStart(i, host)) return; }   // signed in to Spotify: try the whole song first
   if (s[10]) {                                         // Spotify embed
     const f = document.createElement("iframe");
     f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator";
@@ -516,7 +524,19 @@ async function startPlayer(i, host, tall) {
   document.querySelectorAll('.art[data-art="' + i + '"]').forEach(d => addImg(d, hit));
   audio = new Audio(hit.previewUrl);
   const pp = bindControls(audio, host);
+  addFullHint(host);
   audio.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
+}
+// under a 30-second preview: say why it is short and how to get the whole song here
+function addFullHint(host) {
+  const box = host.parentElement; if (!box) return;
+  box.querySelectorAll(".fullhint").forEach(e => e.remove());
+  if (!SPOTIFY_CONNECT) return;
+  const d = el("div", "hint fullhint");
+  if (!spSaved()) { d.append("This is a 30-second preview. "); const b = el("button", "linkbtn", "Connect Spotify Premium to play the whole song here."); b.type = "button"; b.addEventListener("click", () => spConnect()); d.append(b); }
+  else if (sp.ok === false) d.append("This is a 30-second preview. Whole songs here need Spotify Premium.");
+  else return;
+  host.insertAdjacentElement("afterend", d);
 }
 // play and pause, a seek bar and the time, wired to one audio element; can be shown in the mini player or the enlarged one
 function bindControls(a, host) {
@@ -533,6 +553,8 @@ function bindControls(a, host) {
   return pp;
 }
 async function playSong(i) {
+  if (sp.player) { try { sp.player.activateElement(); } catch (e) { /* older SDK */ } }   // lets the browser start sound after this tap
+  if (nowI === i && sp.nowI === i && sp.player) { sp.player.togglePlay(); return; }
   if (nowI === i && audio) { audio.paused ? audio.play() : audio.pause(); return; }
   stopAll(); nowI = i; mini.hidden = false;
   const s = DATA[i];
@@ -548,7 +570,7 @@ mini.addEventListener("click", e => { if (e.target.closest("button, input, a, if
 // the enlarged player: big cover, the player, and links to the whole song
 const full = $("full"), scrim = $("scrim"), drawer = $("drawer");
 function openFull(i) {
-  const keep = nowI === i && audio;                   // a preview that is already playing carries on without restarting
+  const keep = nowI === i && (audio || sp.nowI === i); // a song that is already playing carries on without restarting
   if (!keep) { stopAll(); nowI = i; }
   mini.hidden = true;
   const s = DATA[i];
@@ -565,11 +587,12 @@ function openFull(i) {
   const similar = el("button", "btn ghost", "See songs like this →"); similar.type = "button"; similar.addEventListener("click", () => { closeFull(); openSong(i); });
   full.append(head, art(i, ""), host, listen, save, similar);
   full.hidden = false; scrim.classList.add("on");
-  if (keep) bindControls(audio, host); else startPlayer(i, host, true);
+  if (keep) { if (sp.nowI === i) bindSdkControls(host); else { bindControls(audio, host); addFullHint(host); } } else startPlayer(i, host, true);
 }
 function closeFull() {
   full.hidden = true; full.replaceChildren(); scrim.classList.remove("on");
-  if (audio && nowI >= 0) { mini.hidden = false; bindControls(audio, miniCtl); refreshIcons(); } else stopAll();   // keep a playing preview going in the small player
+  if (sp.nowI >= 0 && sp.nowI === nowI) { mini.hidden = false; bindSdkControls(miniCtl); refreshIcons(); }
+  else if (audio && nowI >= 0) { mini.hidden = false; bindControls(audio, miniCtl); addFullHint(miniCtl); refreshIcons(); } else stopAll();   // keep a playing song going in the small player
 }
 const listDrawer = $("listDrawer");
 const toggleDrawer = on => { drawer.classList.toggle("on", on); if (on) listDrawer.classList.remove("on"); scrim.classList.toggle("on", on || !full.hidden || listDrawer.classList.contains("on")); };
@@ -649,7 +672,7 @@ async function spConnect(pendingKeys) {
   const challenge = b64url(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier)));
   try { sessionStorage.setItem("moodio.pkce", JSON.stringify({ verifier, state })); if (pendingKeys) sessionStorage.setItem("moodio.pending", JSON.stringify(pendingKeys)); }
   catch (e) { toast("Your browser is blocking storage, so Spotify sign-in cannot start. Try a normal window."); return; }
-  location.href = "https://accounts.spotify.com/authorize?" + new URLSearchParams({ response_type: "code", client_id: SPOTIFY_CLIENT_ID, scope: "playlist-modify-private playlist-modify-public", redirect_uri: REDIRECT, state, code_challenge_method: "S256", code_challenge: challenge });
+  location.href = "https://accounts.spotify.com/authorize?" + new URLSearchParams({ response_type: "code", client_id: SPOTIFY_CLIENT_ID, scope: "playlist-modify-private playlist-modify-public streaming user-read-email user-read-private user-modify-playback-state user-read-playback-state", redirect_uri: REDIRECT, state, code_challenge_method: "S256", code_challenge: challenge });
 }
 async function spTokenCall(params) {
   const r = await fetch("https://accounts.spotify.com/api/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams({ client_id: SPOTIFY_CLIENT_ID, ...params }) });
@@ -720,6 +743,66 @@ async function sendToSpotify(idxs) {
 }
 // Switched on once https://shrutig7823.github.io/song-recommender/ is added as a Redirect URI in the Spotify app settings
 const SPOTIFY_CONNECT = true;
+
+// ---- the whole song, right here: Spotify's Web Playback SDK turns this page into a Spotify player ----
+// It needs a Spotify Premium account that is signed in here and allowed on this app (testing mode). Anyone else keeps the 30-second preview.
+function spPlayerReady() {
+  if (sp.promise) return sp.promise;
+  sp.promise = new Promise((resolve, reject) => {
+    const fail = (code, msg) => { const e = new Error(msg || code); e.code = code; reject(e); };
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const player = new Spotify.Player({ name: "Moodio", getOAuthToken: cb => spToken().then(t => cb(t)), volume: 0.8 });
+      sp.player = player;
+      player.addListener("ready", ({ device_id }) => { sp.deviceId = device_id; resolve(); });
+      player.addListener("initialization_error", () => fail("unavailable"));
+      player.addListener("authentication_error", () => fail("auth"));
+      player.addListener("account_error", () => fail("premium"));
+      player.addListener("player_state_changed", st => {
+        if (!st) { sp.playing = false; refreshIcons(); return; }
+        sp.playing = !st.paused; sp.dur = st.duration; paintSdk(st.position, st.duration, st.paused); refreshIcons();
+      });
+      player.connect().then(ok => { if (!ok) fail("unavailable"); });
+      setInterval(async () => { if (sp.playing && sp.player) { const st = await sp.player.getCurrentState(); if (st) paintSdk(st.position, st.duration, st.paused); } }, 500);
+    };
+    const s = document.createElement("script"); s.src = "https://sdk.scdn.co/spotify-player.js"; s.onerror = () => fail("unavailable"); document.head.append(s);
+    setTimeout(() => fail("timeout"), 12000);
+  });
+  sp.promise.catch(() => { sp.promise = null; });                    // lets a later tap try again
+  return sp.promise;
+}
+function paintSdk(pos, dur, paused) {
+  const u = sp.ui; if (!u || !u.host.isConnected) return;
+  u.pp.innerHTML = paused ? ICON.play : ICON.pause; u.cur.textContent = mmss(pos / 1000); u.dur.textContent = mmss(dur / 1000); u.bar.value = dur ? Math.round(pos / dur * 1000) : 0;
+}
+function bindSdkControls(host) {
+  const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = sp.playing ? ICON.pause : ICON.play; pp.setAttribute("aria-label", "Play or pause");
+  const cur = el("time", null, "0:00"), dur = el("time", null, "0:00");
+  const bar = document.createElement("input"); bar.type = "range"; bar.min = 0; bar.max = 1000; bar.value = 0; bar.setAttribute("aria-label", "Seek");
+  pp.addEventListener("click", () => sp.player.togglePlay());
+  bar.addEventListener("input", () => { if (sp.dur) sp.player.seek(sp.dur * bar.value / 1000); });
+  sp.ui = { host, pp, cur, dur, bar };
+  host.replaceChildren(pp, cur, bar, dur);
+  host.parentElement.querySelectorAll(".fullhint").forEach(e => e.remove());
+  const tag = el("div", "hint fullhint", "Playing the whole song through your Spotify Premium."); host.insertAdjacentElement("afterend", tag);
+}
+async function spFullStart(i, host) {                               // true if the whole song is now playing here
+  host.replaceChildren(el("span", "meta", "Starting the whole song…"));
+  try {
+    await spPlayerReady();
+    if (nowI !== i) return true;                                     // they tapped something else meanwhile
+    const uri = DATA[i][10] ? "spotify:track:" + DATA[i][10] : await spFind(i);
+    if (!uri) return false;
+    if (sp.player.activateElement) await sp.player.activateElement();
+    await spApi("PUT", "/me/player/play?device_id=" + sp.deviceId, { uris: [uri] });
+    sp.nowI = i; sp.playing = true; bindSdkControls(host);
+    return true;
+  } catch (e) {
+    if (e.code === "premium" || (e.status === 403 && /premium/i.test(e.message || ""))) { sp.ok = false; toast("Whole songs here need Spotify Premium, so this one plays as a preview.", false); }
+    else if (e.code === "auth" || e.status === 401) { sp.ok = false; toast("Please reconnect Spotify to play whole songs here: press Add to Spotify playlist, or the Connect link under the player.", true); spStore(null); }
+    else if (e.code === "unavailable" || e.code === "timeout") sp.ok = false;
+    return false;
+  }
+}
 function spotifyAddBtn(idxs, label) {
   if (!SPOTIFY_CONNECT) { const h = el("span"); h.hidden = true; return h; }
   const b = el("button", "btn go", label || "Add to my Spotify playlist"); b.type = "button";
