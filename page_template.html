@@ -70,7 +70,18 @@ a{color:inherit}
 .homehero{padding:34px 0 8px;max-width:760px}
 .homehero h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-.025em}
 .homehero p{color:var(--muted);font-size:16px;margin:14px 0 0;max-width:56ch}
-.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:26px}
+.routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+.blend{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:20px;align-items:start}
+.blendcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:24px;padding:10px 10px 14px}
+#blend{width:100%;height:auto;display:block}
+#blend ellipse{transition:opacity .3s}
+#blend .orb circle{transition:r .2s,opacity .2s}
+#blend .orb:hover circle:nth-child(2){filter:brightness(1.25)}
+#blend .orb:focus-visible{outline:none}
+#blend .orb:focus-visible circle:nth-child(2){stroke:#ffc46b;stroke-width:3}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.8);opacity:1}100%{transform:scale(2);opacity:0}}
+.blendres{min-width:0}
 .route{display:flex;flex-direction:column;gap:8px;text-align:left;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:24px;padding:24px;min-height:170px}
 .route:hover{border-color:var(--accent2);transform:translateY(-2px)}
 .route h2{font-size:24px}
@@ -199,7 +210,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .tuner select{width:100%;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
 
 @media (max-width:900px){
-  .routes,.heat,.hero{grid-template-columns:1fr}
+  .routes,.heat,.hero,.blend{grid-template-columns:1fr}
   .hero{gap:20px}
   .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(170px,62%);overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
   .card{scroll-snap-align:start}
@@ -726,7 +737,7 @@ function row(i, onOpen) {
 const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any", moment: null };
 function renderHome() {
   const h = el("section", "homehero");
-  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Not sure what to play? Answer three quick questions. Know the moment? Pick it on the map. Or search for any song above."));
+  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Blend one to three moods on the map, answer three quick questions, or pick a moment. Or search for any song above."));
   const routes = el("div", "routes");
   const r1 = el("button", "route"); r1.type = "button";
   r1.append(el("span", "tag", "Not sure?"), el("h2", null, "Answer 3 quick questions"), el("p", null, "How you feel, what you are doing, and which language. That is all."), el("span", "go", "Start →"));
@@ -734,7 +745,10 @@ function renderHome() {
   const r2 = el("button", "route"); r2.type = "button";
   r2.append(el("span", "tag", "Know the moment?"), el("h2", null, "Pick a moment on the map"), el("p", null, "Shower, late-night drive, gym, qawwali night, old ghazals. The brighter the tile, the more songs we have."), el("span", "go", "Open the map →"));
   r2.addEventListener("click", () => go(renderMapRoute, "map"));
-  routes.append(r1, r2);
+  const r3 = el("button", "route"); r3.type = "button";
+  r3.append(el("span", "tag", "Mixed feelings?"), el("h2", null, "Blend your moods"), el("p", null, "Tap up to three moods on a glowing map. Songs where they overlap light up, and the list changes as you tap."), el("span", "go", "Open the blend map →"));
+  r3.addEventListener("click", () => go(renderBlendRoute, "blend"));
+  routes.append(r3, r1, r2);
   view.append(h, routes);
   // a taste of the library right on the home page
   const hits = DATA.map((s, i) => i).filter(i => DATA[i][11] === 5 && DATA[i][14] >= 4).sort(() => Math.random() - 0.5).slice(0, 6);
@@ -825,6 +839,77 @@ function renderMapRoute() {
   const legend = el("div", "meta", "Language: pick one to see what we have in it."); legend.style.marginBottom = "8px";
   wrap.append(head, legend, langs, holder); view.append(wrap);
   draw();
+}
+
+// ---- blend your moods: tap up to three moods on a glowing map; songs where they overlap light up, and the list updates live ----
+function renderBlendRoute() {
+  const W = 760, H = 470, PX = 44, PY = 34, R = 0.42;
+  const px = v => PX + v * (W - 2 * PX), py = v => PY + (1 - v) * (H - 2 * PY);
+  const sel = [];                                                    // chosen moods, at most three
+  const wrap = el("section");
+  const head = el("div", "sec"); head.append(el("h2", null, "Blend your moods"), el("span", "meta", "Tap up to three. Songs where your moods overlap light up."));
+  const langs = el("div", "pills"); langs.style.marginBottom = "14px";
+  LANGS.forEach(([n, o]) => { const b = el("button", "pill" + (o === profile.lang ? " on" : ""), n); b.type = "button"; b.addEventListener("click", () => { profile.lang = o; langs.querySelectorAll(".pill").forEach(x => x.classList.toggle("on", x === b)); update(); }); langs.append(b); });
+  const layout = el("div", "blend");
+  const card = el("div", "blendcard");
+  const s = svg("svg", { id: "blend", viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Mood map. Tap up to three moods to blend." });
+  const dotsG = svg("g", {}), zonesG = svg("g", {}), blendG = svg("g", {}), orbsG = svg("g", {});
+  s.append(dotsG, zonesG, blendG, orbsG);
+  [["SAD", PX, H - 8, "start"], ["HAPPY", W - PX, H - 8, "end"], ["INTENSE", W / 2, 16, "middle"], ["CALM", W / 2, H - 8, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 11, fill: "#6f6e8c", "letter-spacing": ".12em" }); t.textContent = w; s.append(t); });
+  // the moods you can pick, as glowing orbs
+  const orbs = {};
+  Object.entries(MAP).forEach(([name, [v, en]]) => {
+    const g = svg("g", { class: "orb", tabindex: 0, role: "button", "aria-label": name }); g.style.cursor = "pointer";
+    const halo = svg("circle", { cx: px(v), cy: py(en), r: 20, fill: EMO_COLOR[name], opacity: 0.18 });
+    const c = svg("circle", { cx: px(v), cy: py(en), r: 11, fill: EMO_COLOR[name], stroke: "#fff", "stroke-width": 1.5 });
+    const t = svg("text", { x: px(v), y: py(en) + 30, "text-anchor": "middle", "font-size": 13, "font-weight": 600, fill: "#fff", "paint-order": "stroke", stroke: "#090912", "stroke-width": 3.5 }); t.textContent = name;
+    g.append(halo, c, t); orbsG.append(g); orbs[name] = { g, halo, c };
+    const toggle = () => { const at = sel.indexOf(name); if (at >= 0) sel.splice(at, 1); else { if (sel.length === 3) sel.shift(); sel.push(name); } update(); };
+    g.addEventListener("click", toggle); g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+  });
+  card.append(s);
+  const chosen = el("div", "pills"); chosen.style.cssText = "margin-top:12px;min-height:38px";
+  card.append(chosen);
+  const res = el("div", "blendres");
+  layout.append(card, res); wrap.append(head, langs, layout); view.append(wrap);
+
+  const pool = () => DATA.map((_, j) => j).filter(j => DATA[j][11] >= minPop() && (profile.lang === "any" || DATA[j][4] === profile.lang));
+  // how well a song sits inside ALL the chosen moods: the geometric mean of its closeness to each one
+  const fit = (j, moods) => { let prod = 1; for (const m of moods) prod *= Math.max(0, 1 - Math.hypot(point[j][0] - MAP[m][0], point[j][1] - MAP[m][1]) / R); return Math.pow(prod, 1 / moods.length); };
+  function update() {
+    const p = pool(), fits = sel.length ? p.map(j => [j, fit(j, sel)]) : [];
+    // background dots: every song, brighter when it sits in the overlap
+    dotsG.replaceChildren();
+    p.forEach(j => { const f = sel.length ? fit(j, sel) : 0; dotsG.append(svg("circle", { cx: px(point[j][0]).toFixed(1), cy: py(point[j][1]).toFixed(1), r: f > 0.3 ? 3.4 : 1.7, fill: EMO_COLOR[DATA[j][5]], opacity: sel.length ? (f > 0.3 ? 0.95 : 0.16) : 0.4 })); });
+    zonesG.replaceChildren(); blendG.replaceChildren();
+    sel.forEach(m => zonesG.append(Object.assign(svg("ellipse", { cx: px(MAP[m][0]), cy: py(MAP[m][1]), rx: R * (W - 2 * PX), ry: R * (H - 2 * PY), fill: EMO_COLOR[m], opacity: 0.3 }), { style: "mix-blend-mode:screen" })));
+    if (sel.length) {
+      const cx = sel.reduce((a, m) => a + MAP[m][0], 0) / sel.length, cy = sel.reduce((a, m) => a + MAP[m][1], 0) / sel.length;
+      blendG.append(svg("circle", { cx: px(cx), cy: py(cy), r: 9, fill: "#fff" }), svg("circle", { cx: px(cx), cy: py(cy), r: 16, fill: "none", stroke: "#ffc46b", "stroke-width": 2.5, class: "pulse" }));
+      profile.point = [cx, cy];
+    }
+    Object.entries(orbs).forEach(([n, o]) => { const on = sel.includes(n); o.c.setAttribute("r", on ? 15 : 11); o.halo.setAttribute("opacity", on ? 0.5 : 0.18); o.c.setAttribute("stroke-width", on ? 3 : 1.5); });
+    // chips for the chosen moods
+    chosen.replaceChildren();
+    if (!sel.length) chosen.append(el("span", "meta", "Nothing picked yet. Tap a mood."));
+    sel.forEach(m => { const b = el("button", "pill on"); b.type = "button"; b.style.background = EMO_COLOR[m]; b.style.color = "#090912"; b.append(m + "  ✕"); b.addEventListener("click", () => { sel.splice(sel.indexOf(m), 1); update(); }); chosen.append(b); });
+    // live list
+    res.replaceChildren();
+    const top = el("div", "sec"); top.style.marginTop = "0";
+    const ranked = fits.filter(([, f]) => f > 0.12).map(([j, f]) => ({ j, score: f * 0.85 + 0.15 * popScore(j), f })).sort((a, b) => b.score - a.score);
+    const list = diversify(ranked, 10, 2);
+    top.append(el("h2", null, sel.length ? "Songs in your blend" : "Your blend"), el("span", "meta", sel.length ? sel.join(" + ") : ""));
+    res.append(top);
+    if (!sel.length) { res.append(el("p", "meta", "Pick one mood for songs that match it, or two or three to find songs that sit where they overlap. The list changes as you tap.")); return; }
+    if (!list.length) { res.append(soonCard("No songs sit in that blend yet" + (profile.lang !== "any" ? " in " + profile.lang : "") + ".")); return; }
+    const rows = el("div", "rows"); list.forEach(x => rows.append(row(x.j, openSong))); res.append(rows);
+    const more = el("button", "btn go", "More like this →"); more.type = "button"; more.style.marginTop = "12px";
+    more.addEventListener("click", () => { profile.label = sel.join(" and "); profile.occasion = ""; profile.moment = null; go(renderStacks, "stacks"); });
+    res.append(more);
+    refreshIcons();
+    prefetchArt(list.slice(0, 5).map(x => x.j));
+  }
+  update();
 }
 
 // ---- stacks: themed groups of songs picked for your answers ----
