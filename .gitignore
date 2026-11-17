@@ -1,0 +1,5 @@
+ALL_2000_Songs.csv
+.claude/
+node_modules/
+emotions/in/
+*.log

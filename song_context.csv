@@ -1,0 +1,2001 @@
+track_name,artist,year,year_confidence,lyric_theme,occasions,label_confidence
+"Kesariya (From ""Brahmastra"")","Pritam;Arijit Singh;Amitabh Bhattacharya",2022,known,love,"romantic date;chill",known
+"Fitoor","Mithoon;Arijit Singh;Neeti Mohan;Karan Malhotra",2022,known,love,"romantic date;chill",guess
+"Deva Deva (From ""Brahmastra"")","Pritam;Arijit Singh;Amitabh Bhattacharya;Jonita Gandhi",2022,known,devotion,"prayer;chill",known
+"Saibo","Sachin-Jigar;Shreya Ghoshal;Tochi Raina",2011,known,love,"romantic date;chill",known
+"Khairiyat","Pritam;Arijit Singh",2019,known,heartbreak,"chill;long drive",known
+"Tera Hone Laga Hoon","Atif Aslam;Alisha Chinai;Pritam",2009,known,love,"romantic date;chill",known
+"Tum Se Hi","Pritam;Mohit Chauhan",2007,known,love,"romantic date;chill",known
+"Khuda Jaane","Vishal-Shekhar;KK;Shilpa Rao",2008,known,love,"romantic date;chill",known
+"Rasiya (From ""Brahmastra"")","Pritam;Shreya Ghoshal;TUSHAR JOSHI",2022,known,love,"romantic date;chill",known
+"Tu Jaane Na","Atif Aslam;Pritam",2009,known,heartbreak,"chill;romantic date",known
+"Kabira","Pritam;Tochi Raina;Rekha Bhardwaj",2013,known,reflection,"long drive;chill",known
+"Tujhe Kitna Chahne Lage (From ""Kabir Singh"")","Arijit Singh;Mithoon",2019,known,heartbreak,"chill;long drive",known
+"Shayad","Pritam;Arijit Singh",2020,known,love,"romantic date;chill",known
+"Rait Zara Si (From ""Atrangi Re"")","A.R. Rahman;Arijit Singh;Shashaa Tirupati",2021,known,love,"romantic date;chill",known
+"Dance Ka Bhoot (From ""Brahmastra"")","Pritam;Arijit Singh;Amitabh Bhattacharya",2022,known,party,"party;festival",guess
+"Chand Sifarish","Jatin-Lalit;Shaan;Kailash Kher;Prasoon Joshi",2006,known,love,"romantic date;chill",known
+"Kalank (Title Track)","Pritam;Arijit Singh",2019,known,heartbreak,"chill;long drive",known
+"Param Sundari","A.R. Rahman;Shreya Ghoshal",2021,known,love,"party;romantic date",known
+"Raabta","Pritam;Arijit Singh",2012,known,love,"romantic date;chill",known
+"O Re Piya","Salim–Sulaiman;Rahat Fateh Ali Khan;Jaideep Sahni",2007,known,love,"romantic date;chill",known
+"Subhanallah","Pritam;Sreeram;Shilpa Rao",2013,known,love,"romantic date;chill",known
+"Ghungroo (From ""War"")","Vishal-Shekhar;Arijit Singh;Shilpa Rao;Kumaar",2019,known,party,"party;festival",known
+"Hum Nashe Mein Toh Nahin (From ""Bhool Bhulaiyaa 2"")","Pritam;Arijit Singh;Tulsi Kumar",2022,known,party,"party;festival",guess
+"Soch Na Sake","Amaal Mallik;Arijit Singh;Tulsi Kumar",2016,known,love,"romantic date;chill",known
+"Zara Sa","Pritam;KK",2008,known,love,"romantic date;chill",known
+"Enna Sona","A.R. Rahman;Arijit Singh",2016,known,love,"romantic date;chill",known
+"Channa Mereya","Pritam;Arijit Singh",2016,known,heartbreak,"chill;long drive",known
+"Ishq Wala Love","Vishal-Shekhar;Salim Merchant;Neeti Mohan;Shekhar Ravjiani",2012,known,love,"romantic date;party",known
+"Mehrama","Pritam;Darshan Raval;Antara Mitra",2020,known,heartbreak,"chill;long drive",known
+"Jashn-E-Bahaaraa","A.R. Rahman;Javed Ali",2008,known,love,"romantic date;chill",known
+"Phir Na Aisi Raat Aayegi (From ""Laal Singh Chaddha"")","Pritam;Arijit Singh;Amitabh Bhattacharya",2022,known,nostalgia,"chill;long drive",known
+"Jaan Ban Gaye","Mithoon;Vishal Mishra;Asees Kaur",2020,known,love,"romantic date;chill",known
+"Dil Ibaadat","Pritam;KK",2011,known,love,"romantic date;chill",known
+"Phir Bhi Tumko Chaahunga","Mithoon;Arijit Singh;Shashaa Tirupati",2017,known,heartbreak,"chill;long drive",known
+"Pee Loon","Pritam;Mohit Chauhan",2010,known,love,"romantic date;chill",known
+"Hamari Adhuri Kahani (Title Track)","Jeet Gannguli;Arijit Singh",2015,known,heartbreak,"chill;long drive",known
+"Ye Tune Kya Kiya","Pritam;Javed Bashir",2013,known,heartbreak,"chill;long drive",known
+"Kun Faya Kun","A.R. Rahman;Javed Ali;Mohit Chauhan",2011,known,devotion,"prayer;chill",known
+"Ae Dil Hai Mushkil Title Track","Pritam;Arijit Singh",2016,known,heartbreak,"chill;long drive",known
+"Raanjhanaa","A.R. Rahman;Jaswinder Singh;Shiraz Uppal",2013,known,love,"romantic date;chill",known
+"Ilahi","Pritam;Arijit Singh",2013,known,freedom,"long drive;chill",known
+"Pehli Nazar Mein","Atif Aslam;Pritam",2008,known,love,"romantic date;chill",known
+"Tune Jo Na Kaha","Pritam;Mohit Chauhan;Sandeep Shrivastava",2009,known,heartbreak,"chill;long drive",known
+"Falak Tak","Vishal-Shekhar;Udit Narayan;Mahalakshmi Iyer;Kausar Munir",2008,known,love,"romantic date;chill",known
+"Kahani (From ""Laal Singh Chaddha"")","Pritam;Mohan Kannan;Amitabh Bhattacharya",2022,known,reflection,"chill;long drive",known
+"Bol Na Halke Halke","Shankar-Ehsaan-Loy;Rahat Fateh Ali Khan;Mahalakshmi Iyer;Gulzar",2007,known,love,"romantic date;chill",known
+"Tere Hawaale (From ""Laal Singh Chaddha"")","Pritam;Arijit Singh;Shilpa Rao",2022,known,love,"romantic date;chill",known
+"Dil Diyan Gallan","Vishal-Shekhar;Julius Packiam;Atif Aslam;Irshad Kamil",2017,known,love,"romantic date;chill",known
+"Hawayein","Pritam;Arijit Singh",2017,known,heartbreak,"chill;long drive",known
+"Main Rang Sharbaton Ka","Atif Aslam;Chinmayi;Pritam",2013,known,love,"romantic date;chill",known
+"De Taali (From ""Bhool Bhulaiyaa 2"")","Pritam;Yo Yo Honey Singh;Armaan Malik;Shashwat Singh;Amitabh Bhattacharya",2022,known,party,"party;festival",known
+"Aashiqui Aa Gayi(From ""Radhe Shyam"")","Mithoon;Arijit Singh",2022,known,love,"romantic date;chill",known
+"Mere Bina","Pritam;Nikhil D'Souza",2010,known,heartbreak,"chill;long drive",known
+"Thodi Jagah (From ""Marjaavaan"")","Arijit Singh;Tanishk Bagchi",2019,known,heartbreak,"chill;long drive",known
+"Tum Mile","Pritam;Neeraj Shridhar",2009,known,love,"romantic date;chill",known
+"Hookah Bar","Himesh Reshammiya;Vineet Singh;Aaman Trikha",2012,known,party,"party;festival",known
+"Tum Jo Aaye","Pritam;Rahat Fateh Ali Khan;Tulsi Kumar",2010,known,love,"romantic date;chill",known
+"Firecracker","Vishal-Shekhar;Vishal Dadlani;Shekhar Ravjiani;Kumaar;Vayu",2022,known,party,"party;festival",known
+"Subha Hone Na De","Pritam;Mika Singh;Shefali Alvares",2011,known,party,"party;festival",known
+"Kal Ho Naa Ho","Shankar-Ehsaan-Loy;Sonu Nigam",2003,known,reflection,"chill;long drive",known
+"Naina","Pritam;Arijit Singh",2016,known,struggle,"chill;focus",known
+"O Saki Saki (From ""Batla House"")","Neha Kakkar;Tulsi Kumar;B Praak;Tanishk Bagchi;Vishal-Shekhar",2019,known,party,"party;festival",known
+"Main Yahaan Hoon","Madan Mohan;Udit Narayan;Javed Akhtar",2004,known,love,"romantic date;chill",known
+"Ishq Bulaava","Vishal-Shekhar;Sanam Puri;Shipra Goyal",2014,known,love,"romantic date;chill",known
+"Tu Hi Haqeeqat","Pritam;Javed Ali;Irshan Ashraf;Shadab",2011,known,love,"romantic date;chill",known
+"Heer Raanjhana (From ""Bachchhan Paandey"")","Amaal Mallik;Arijit Singh;Shreya Ghoshal",2022,known,love,"romantic date;chill",known
+"Badtameez Dil","Pritam;Benny Dayal;Shefali Alvares",2013,known,party,"party;festival",known
+"Tum Tak","A.R. Rahman;Javed Ali;KIRTI SAGATHIA;Pooja AV",2013,known,love,"romantic date;chill",known
+"Make Some Noise For The Desi Boyz","Pritam;KK;Bob",2011,known,party,"party;festival",known
+"Darkhaast (feat. Arijit Singh, Sunidhi Chauhan)","Mithoon;Arijit Singh;Sunidhi Chauhan",2016,known,love,"romantic date;chill",known
+"Teri Jhuki Nazar","Pritam;Shafqat Amanat Ali",2013,known,love,"romantic date;chill",known
+"Tere Bina","A.R. Rahman;Chinmayi;Murtuza Khan;Qadir Khan",2007,known,love,"romantic date;chill",known
+"Ik Vaari Aa","Pritam;Arijit Singh",2017,known,love,"romantic date;chill",known
+"Jitni Dafa","Yasser Desai;Jeet Gannguli;Rashmi Virag",2018,known,love,"romantic date;chill",known
+"Haan Tu Hain","Pritam;KK",2008,known,love,"romantic date;chill",known
+"Mitwa","Shankar-Ehsaan-Loy;Shankar Mahadevan;Caralisa Monteiro;Shafqat Amanat Ali",2006,known,love,"chill;long drive",known
+"Ye Ishq Hai","Pritam;Shreya Ghoshal",2007,known,love,"romantic date;chill",known
+"The Humma Song","A.R. Rahman;Badshah;Tanishk Bagchi;Shashaa Tirupati;Jubin Nautiyal",2016,known,party,"party;festival",known
+"Janam Janam","Pritam;Arijit Singh;Antara Mitra",2015,known,love,"romantic date;chill",known
+"Dilbar (From ""Satyameva Jayate"")","Neha Kakkar;Dhvani Bhanushali;Ikka;Tanishk Bagchi",2018,known,party,"party;festival",known
+"Balam Pichkari","Pritam;Vishal Dadlani;Shalmali Kholgade",2013,known,party,"party;festival",known
+"Dekha Hazaro Dafaa","Arijit Singh;Palak Muchhal;Jeet Gannguli",2016,known,love,"romantic date;chill",known
+"Shukran Allah","Salim–Sulaiman;Sonu Nigam;Shreya Ghoshal;Salim Merchant",2009,known,devotion,"prayer;chill",known
+"Abhi Mujh Mein Kahin","Ajay-Atul;Sonu Nigam",2012,known,reflection,"chill;long drive",known
+"Jiyein Kyun","Pritam;Papon",2011,known,heartbreak,"chill;long drive",known
+"Lat Lag Gayee","Benny Dayal;Shalmali Kholgade;Pritam",2013,known,party,"party;festival",known
+"Darasal","Pritam;Atif Aslam",2017,known,heartbreak,"chill;long drive",known
+"Bole Chudiyan","Jatin-Lalit;Amit Kumar;Sonu Nigam;Alka Yagnik;Udit Narayan;Kavita Krishnamurthy",2001,known,party,"wedding;party",known
+"Labon Ko","Pritam;KK",2007,known,love,"romantic date;chill",known
+"Kitni Haseen Hogi (From ""Hit - The First Case"")","Mithoon;Arijit Singh;Sayeed Quadri",2022,known,love,"romantic date;chill",known
+"Aabaad Barbaad (From ""Ludo"")","Pritam;Arijit Singh",2020,known,reflection,"chill;long drive",known
+"Maahi Ve","A.R. Rahman",2014,known,freedom,"long drive;chill",known
+"Afghan Jalebi (Film Version)","Pritam;Akhtar Chinnal",2015,known,party,"party;festival",known
+"Khamoshiyan","Jeet Gannguli;Arijit Singh",2015,known,love,"romantic date;chill",known
+"Tere Liye","Madan Mohan;Lata Mangeshkar;Roop Kumar Rathod;Javed Akhtar",2004,known,love,"romantic date;chill",known
+"Bahara","Vishal-Shekhar;Shreya Ghoshal;Sona Mohapatra",2010,known,love,"romantic date;chill",known
+"Dilliwaali Girlfriend","Pritam;Arijit Singh;Sunidhi Chauhan",2013,known,party,"party;festival",known
+"Soch Liya (From ""Radhe Shyam"")","Mithoon;Arijit Singh;Manoj Muntashir",2022,known,love,"romantic date;chill",known
+"Aao Milo Chalo","Pritam;Shaan;Sultan Khan",2007,known,party,"wedding;party",known
+"Mere Haath Mein","Jatin-Lalit;Sonu Nigam;Sunidhi Chauhan;Prasoon Joshi",2006,known,love,"romantic date;chill",known
+"Bulleya","Pritam;Amit Mishra;Shilpa Rao",2016,known,heartbreak,"chill;long drive",known
+"Tere Bin (From ""Simmba"")","Rahat Fateh Ali Khan;Asees Kaur;Tanishk Bagchi",2018,known,love,"romantic date;chill",known
+"Jhak Maar Ke","Pritam;Neeraj Shridhar;Harshdeep Kaur",2011,known,party,"party;festival",known
+"Kuch Kuch Hota Hai","Jatin-Lalit;Udit Narayan;Alka Yagnik",1998,known,love,"romantic date;chill",known
+"Teri Ore","Pritam;Rahat Fateh Ali Khan;Shreya Ghoshal",2008,known,love,"romantic date;chill",known
+"Chale Aana (From ""De De Pyaar De"")","Amaal Mallik;Armaan Malik",2019,known,heartbreak,"chill;long drive",known
+"First Class","Pritam;Arijit Singh;Neeti Mohan",2019,known,party,"party;festival",known
+"Yeh Haseen Vadiyan Yeh Khula Aasman","A.R. Rahman;S. P. Balasubrahmanyam;K. S. Chithra",1992,known,love,"romantic date;chill",known
+"Sajde","Pritam;KK;Sunidhi Chauhan",2010,known,devotion,"prayer;chill",known
+"Zehnaseeb","Vishal-Shekhar;Chinmayi Sripada;Shekhar Ravjiani",2014,known,love,"romantic date;chill",known
+"Tumse Bhi Zyada (From ""Tadap"")","Pritam;Arijit Singh",2021,known,heartbreak,"chill;long drive",known
+"Buddhu Sa Mann","Amaal Mallik;Armaan Malik",2016,known,love,"romantic date;chill",known
+"Khudaya Khair","Pritam;Soham Chakraborty;Akriti Kakkar;Monali Thakur",2009,known,heartbreak,"chill;long drive",known
+"Bol Do Na Zara","Armaan Malik;Amaal Mallik;Rashmi Virag",2016,known,love,"romantic date;chill",known
+"Abhi Kuch Dino Se","Pritam;Mohit Chauhan",2010,known,love,"romantic date;chill",known
+"Nazar Na Lag Jaaye (From ""Stree"")","Ash King;Sachin-Jigar",2018,known,love,"romantic date;chill",known
+"Bhool Bhulaiyaa","Pritam;Neeraj Shridhar",2007,known,party,"party;festival",known
+"Alcoholia (From ""Vikram Vedha"")","Vishal-Shekhar;Snigdhajit Bhowmik;Ananya Chakraborty",2022,known,party,"party;festival",known
+"I Love You","Pritam;Ash King;Clinton Cerejo",2011,known,love,"romantic date;party",known
+"Bin Tere","Vishal-Shekhar;Shafqat Amanat Ali;Sunidhi Chauhan",2010,known,heartbreak,"chill;long drive",known
+"Mauja Hi Mauja","Pritam;Mika Singh",2007,known,party,"party;festival",known
+"Moh Moh Ke Dhaage (Female)","Anu Malik;Monali Thakur;Varun Grover",2015,known,heartbreak,"chill;long drive",known
+"Do Pal","Madan Mohan;Lata Mangeshkar;Sonu Nigam;Javed Akhtar",2004,known,love,"romantic date;chill",known
+"Deva Shree Ganesha","Ajay-Atul;Ajay Gogavale",2012,known,devotion,"prayer;festival",known
+"Saware","Pritam;Arijit Singh",2015,known,love,"romantic date;chill",known
+"Sanam Re","Mithoon;Arijit Singh",2016,known,love,"romantic date;chill",known
+"Tujhe Sochta Hoon","Pritam;KK",2012,known,heartbreak,"chill;long drive",known
+"Be Intehaan","Atif Aslam;Sunidhi Chauhan;Pritam",2013,known,love,"romantic date;chill",known
+"Tu Hi Mera","Pritam;Shafqat Amanat Ali",2012,known,love,"romantic date;chill",known
+"Sajdaa","Shankar-Ehsaan-Loy;Rahat Fateh Ali Khan;Shankar Mahadevan;Richa Sharma",2010,known,devotion,"prayer;chill",known
+"Bheegi Si Bhaagi Si","Pritam;Mohit Chauhan;Antara Mitra",2010,known,love,"romantic date;chill",known
+"Kudi Nu Nachne De (From ""Angrezi Medium"")","Vishal Dadlani;Sachin-Jigar",2020,known,party,"party;wedding",known
+"Te Amo (Duet)","Pritam;Ash King;Sunidhi Chauhan",2011,known,love,"romantic date;party",known
+"Maahi Ve","Shankar-Ehsaan-Loy;Sadhana Sargam;Sujata Bhattacharya;Udit Narayan;Sonu Nigam",2003,known,love,"romantic date;chill",known
+"Allah Maaf Kare","Pritam;Sonu Nigam;Shilpa Rao",2011,known,devotion,"prayer;chill",guess
+"O Khuda","Amaal Mallik;Palak Muchhal",2015,known,love,"romantic date;chill",guess
+"Itni Si Baat Hain","Pritam;Arijit Singh;Antara Mitra",2016,known,love,"romantic date;chill",known
+"Mahi Mera Dil (From ""Dhokha Round D Corner"")","Arijit Singh;Tulsi Kumar;Tanishk Bagchi;Kumaar",2022,guess,love,"romantic date;chill",known
+"Woh Din","Pritam;Arijit Singh",2019,known,nostalgia,"chill;long drive",known
+"Bewajah","Himesh Reshammiya",2016,known,heartbreak,"chill;long drive",known
+"Ghagra","Pritam;Rekha Bhardwaj;Vishal Dadlani",2013,known,party,"party;wedding",known
+"Gulabi","Sachin-Jigar;Priya Saraiya;Jaideep Sahni",2013,known,love,"romantic date;chill",known
+"The Breakup Song","Pritam;Arijit Singh;Badshah;Jonita Gandhi;Nakash Aziz",2016,known,party,"party;festival",known
+"Aankhein Khuli","Jatin-Lalit;Lata Mangeshkar;Udit Narayan;Anand Bakshi",2000,known,love,"romantic date;chill",known
+"Ghar More Pardesiya","Pritam;Shreya Ghoshal",2019,known,heartbreak,"chill;long drive",known
+"Tere Naina","Shankar-Ehsaan-Loy;Shafqat Amanat Ali",2010,known,love,"romantic date;chill",known
+"Gerua","Pritam;Arijit Singh;Antara Mitra",2015,known,love,"romantic date;chill",known
+"My Dil Goes Mmmm","Vishal-Shekhar;Shaan;Gayatri Iyer;Jaideep Sahni",2005,known,love,"romantic date;party",known
+"Kyon","Pritam;Papon;Sunidhi Chauhan",2012,known,love,"romantic date;chill",known
+"Maana Ke Hum Yaar Nahin","Sachin-Jigar;Parineeti Chopra;Kausar Munir",2017,known,heartbreak,"chill;long drive",known
+"Kajra Re","Shankar;Ehsaan;Loy;Alisha Chinai;Shankar Mahadevan;Gulzar",2005,known,party,"party;wedding",known
+"Chikni Chameli","Ajay-Atul;Shreya Ghoshal",2012,known,party,"party;festival",known
+"Mat Aazma Re","Pritam;KK",2013,known,love,"romantic date;chill",known
+"Sapna Jahan (From ""Brothers"")","Ajay-Atul;Sonu Nigam;Neeti Mohan",2015,known,love,"romantic date;chill",known
+"Dilbara","Pritam;Abhijeet;Sowmya Raoh;Sameer",2004,known,love,"romantic date;chill",known
+"Zinda","Shankar-Ehsaan-Loy;Siddharth Mahadevan",2013,known,ambition,"workout;festival",known
+"Raabta (Title Track) [From ""Raabta""]","Pritam;Arijit Singh;Nikhita Gandhi",2017,known,love,"romantic date;chill",known
+"Bolo Har Har Har (feat. Mohit Chauhan, Sukhwinder Singh, Badshah, Megha Sriram Dalton, Anugrah, Sandeep Shrivastava)","Mithoon;Mohit Chauhan;Sukhwinder Singh;Badshah;Megha Sriram Dalton;Anugrah;Sandeep Shrivastava",2016,known,devotion,"prayer;festival",known
+"Haan Main Galat","Pritam;Arijit Singh;Shashwat Singh",2020,known,love,"romantic date;party",known
+"Bulleya","Vishal-Shekhar;Papon;Irshad Kamil",2016,known,devotion,"prayer;chill",guess
+"Lehra Do (From ""83"")","Pritam;Arijit Singh",2021,known,ambition,"festival;workout",known
+"Tumhi Dekho Naa","Shankar-Ehsaan-Loy;Sonu Nigam;Alka Yagnik",2006,known,love,"romantic date;chill",known
+"Cutiepie","Pritam;Pardeep Singh Sran;Nakash Aziz",2016,known,party,"party;festival",known
+"Party On My Mind","KK;Shefali Alvares;Yo Yo Honey Singh;Pritam",2013,known,party,"party;festival",known
+"Main Tera Boyfriend","Pritam;Arijit Singh;Neha Kakkar;Meet Bros.",2017,known,love,"party;romantic date",known
+"Vele","Vishal-Shekhar;Vishal Dadlani;Shekhar Ravjiani",2012,known,party,"party;festival",known
+"Shaayraana","Pritam;Arijit Singh",2014,known,love,"romantic date;chill",known
+"Ae Kash Ke Hum","Jatin-Lalit;Kumar Sanu",1994,known,love,"romantic date;chill",known
+"Chup Chup Ke","Pritam;Shaan;Muazzam;Rizwan Ali Khan",2012,guess,heartbreak,"chill;long drive",guess
+"Jaan Hai Meri (From ""Radhe Shyam"")","Amaal Mallik;Armaan Malik;Rashmi Virag",2022,known,love,"romantic date;chill",known
+"Tujhko Jo Paaya","Pritam;Mohit Chauhan",2010,known,love,"romantic date;chill",known
+"Nadaan Parinde","A.R. Rahman;Mohit Chauhan",2011,known,freedom,"long drive;chill",known
+"In Dino","Pritam;Soham",2007,known,love,"romantic date;chill",known
+"Muskurane - Romantic","Jeet Gannguli;Arijit Singh",2014,known,love,"romantic date;chill",known
+"Character Dheela","Pritam;Neeraj Shridhar;Amrita Kak",2011,known,party,"party;festival",known
+"Suna Hai","Jubin Nautiyal;Rashmi Virag;Jeet Gannguli",2021,known,love,"romantic date;chill",known
+"Ainvayi Ainvayi","Salim–Sulaiman;Sunidhi Chauhan;Amitabh Bhattacharya",2010,known,party,"party;wedding",known
+"Bakhuda Tumhi Ho","Atif Aslam;Alka Yagnik;Pritam",2009,known,love,"romantic date;chill",known
+"Dil Hi Toh Hai","Pritam;Arijit Singh;Antara Mitra;Nikhil D'Souza",2019,known,love,"romantic date;chill",known
+"Ek Toh Kum Zindagani (From ""Marjaavaan"")","Neha Kakkar;Yash Narvekar;Tanishk Bagchi",2019,known,party,"party;festival",known
+"Judai","Pritam;Kamran Ahmed",2008,known,heartbreak,"chill;long drive",known
+"Chal Ghar Chalen (From ""Malang - Unleash The Madness"") [Mithoon feat. Arijit Singh]","Mithoon;Arijit Singh",2020,known,reflection,"chill;long drive",known
+"Rabba Main Toh Mar Gaya Oye","Pritam;Rahat Fateh Ali Khan",2011,known,heartbreak,"chill;long drive",guess
+"Manchala","Vishal-Shekhar;Shafqat Amanat Ali;Nupur Pant",2014,known,love,"romantic date;chill",known
+"Sau Tarah Ke","Pritam;Jonita Gandhi;Amit Mishra",2016,known,party,"party;festival",known
+"The Jawaani Song","Vishal-Shekhar;Vishal Dadlani;Payal Dev;Kishore Kumar",2019,known,party,"party;festival",known
+"Aashiyan","Pritam;Shreya Ghoshal;Nikhil Paul George",2012,known,love,"romantic date;chill",known
+"Hua Hain Aaj Pehli Baar (From ""Sanam Re"")","Amaal Mallik;Armaan Malik;Palak Muchhal",2016,known,love,"romantic date;chill",known
+"Main Ki Karaan? (From ""Laal Singh Chaddha"")","Pritam;Sonu Nigam;Romy",2022,known,reflection,"chill;long drive",known
+"Lo Safar (From ""Baaghi 2"")","Jubin Nautiyal;Mithoon",2018,known,freedom,"long drive;chill",known
+"Dangal","Pritam;Daler Mehndi",2016,known,ambition,"workout;festival",known
+"Tera Hua (From ""Loveyatri"")","Atif Aslam;Tanishk Bagchi",2018,known,love,"romantic date;chill",known
+"Raabta (Kehte Hain Khuda Ne)","Pritam;Shreya Ghoshal;Arijit Singh",2012,known,love,"romantic date;chill",known
+"Odhani (From ""Made in China"")","Sachin-Jigar;Darshan Raval;Neha Kakkar",2019,known,love,"party;wedding",known
+"Crazy Kiya Re","Pritam;Sunidhi Chauhan;Sameer",2006,known,party,"party;festival",known
+"Yeh Ladka Hai Allah","Jatin-Lalit;Udit Narayan;Alka Yagnik",2001,known,love,"party;wedding",known
+"Khwab Dekhe Sexy Lady","Pritam;Neeraj Shridhar;Monali Thakur",2008,known,party,"party;festival",known
+"Jhalak Dikhla Ja","Himesh Reshammiya",2004,known,love,"party;romantic date",guess
+"Ishq Hua","Salim–Sulaiman;Sonu Nigam;Shreya Ghoshal;Jaideep Sahni",2007,known,love,"romantic date;chill",known
+"Saathiya","A.R. Rahman;Sonu Nigam;Gulzar",2002,known,love,"romantic date;chill",known
+"Unholy (feat. Kim Petras)","Sam Smith;Kim Petras",2022,known,rebellion,"party",guess
+"Without Me","Halsey",2018,known,heartbreak,"chill;long drive",known
+"As It Was","Harry Styles",2022,known,nostalgia,"chill;long drive",known
+"CUFF IT","Beyoncé",2022,known,party,"party;festival",known
+"Walls Could Talk","Halsey",2017,known,heartbreak,"chill;long drive",known
+"Left and Right (Feat. Jung Kook of BTS)","Charlie Puth;Jung Kook;BTS",2022,known,heartbreak,"chill;long drive",known
+"I'm Not The Only One","Sam Smith",2014,known,heartbreak,"chill;long drive",known
+"So Good","Halsey",2020,known,heartbreak,"chill;long drive",known
+"lovely (with Khalid)","Billie Eilish;Khalid",2018,known,struggle,"chill;sleep",known
+"Locked out of Heaven","Bruno Mars",2012,known,love,"party;long drive",known
+"Bad At Love","Halsey",2017,known,heartbreak,"chill;long drive",known
+"Watermelon Sugar","Harry Styles",2019,known,love,"long drive;chill",known
+"There's Nothing Holdin' Me Back","Shawn Mendes",2016,known,love,"long drive;romantic date",known
+"You should be sad","Halsey",2020,known,heartbreak,"chill;long drive",known
+"Night Changes","One Direction",2014,known,nostalgia,"chill;romantic date",known
+"Levitating (feat. DaBaby)","Dua Lipa;DaBaby",2020,known,party,"party;workout",known
+"Gasoline","Halsey",2015,known,struggle,"chill;long drive",known
+"Ghost","Justin Bieber",2021,known,heartbreak,"chill;long drive",known
+"positions","Ariana Grande",2020,known,love,"romantic date;chill",known
+"Control","Halsey",2015,known,struggle,"chill;long drive",known
+"Bad Habits","Ed Sheeran",2021,known,party,"party;long drive",known
+"7 rings","Ariana Grande",2019,known,ambition,"party;workout",known
+"Graveyard","Halsey",2019,known,heartbreak,"chill;long drive",known
+"drivers license","Olivia Rodrigo",2021,known,heartbreak,"chill;long drive",known
+"Levitating","Dua Lipa",2020,known,party,"party;workout",known
+"Colors","Halsey",2015,known,heartbreak,"chill;long drive",known
+"traitor","Olivia Rodrigo",2021,known,heartbreak,"chill;long drive",known
+"Treat You Better","Shawn Mendes",2016,known,love,"long drive;romantic date",known
+"Nightmare","Halsey",2019,known,rebellion,"workout;long drive",known
+"good 4 u","Olivia Rodrigo",2021,known,rebellion,"workout;long drive",known
+"Leave The Door Open","Bruno Mars;Anderson .Paak;Silk Sonic",2021,known,love,"romantic date;chill",known
+"Now Or Never","Halsey",2017,known,love,"party;long drive",known
+"Don’t Blame Me","Taylor Swift",2017,known,love,"romantic date;chill",known
+"Shallow","Lady Gaga;Bradley Cooper",2018,known,struggle,"chill;long drive",known
+"Castle","Halsey",2015,known,ambition,"workout;long drive",known
+"Happier Than Ever","Billie Eilish",2021,known,heartbreak,"chill;long drive",known
+"Attention","Charlie Puth",2017,known,heartbreak,"chill;long drive",known
+"Without Me (with Juice WRLD)","Halsey;Juice WRLD",2020,guess,heartbreak,"chill;long drive",guess
+"Perfect","Ed Sheeran",2017,known,love,"wedding;romantic date",known
+"Stuck with U (with Justin Bieber)","Ariana Grande;Justin Bieber",2020,known,love,"romantic date;chill",known
+"New Americana","Halsey",2015,known,rebellion,"long drive;chill",known
+"Heather","Conan Gray",2020,known,heartbreak,"chill;long drive",known
+"Too Good At Goodbyes","Sam Smith",2017,known,heartbreak,"chill;long drive",known
+"I am not a woman, I'm a god","Halsey",2021,known,ambition,"workout;long drive",known
+"deja vu","Olivia Rodrigo",2021,known,heartbreak,"chill;long drive",known
+"One Last Time","Ariana Grande",2014,known,heartbreak,"chill;long drive",known
+"SUGA's Interlude","Halsey;SUGA;BTS",2019,known,love,"chill;long drive",known
+"Shape of You","Ed Sheeran",2017,known,love,"party;romantic date",known
+"That's What I Like","Bruno Mars",2016,known,love,"party;romantic date",known
+"Peaches (feat. Daniel Caesar & Giveon)","Justin Bieber;Daniel Caesar;Giveon",2021,known,love,"romantic date;chill",known
+"Strawberries & Cigarettes","Troye Sivan",2018,known,love,"romantic date;chill",known
+"august","Taylor Swift",2020,known,heartbreak,"chill;long drive",known
+"We Don't Talk Anymore (feat. Selena Gomez)","Charlie Puth;Selena Gomez",2016,known,heartbreak,"long drive;party",known
+"happier","Olivia Rodrigo",2021,known,heartbreak,"chill;long drive",known
+"Angel Baby","Troye Sivan",2015,known,love,"chill;romantic date",known
+"Blank Space","Taylor Swift",2014,known,love,"party;long drive",known
+"Talking to the Moon","Bruno Mars",2010,known,heartbreak,"chill;sleep",known
+"Memories","Maroon 5",2019,known,nostalgia,"chill;long drive",known
+"Summer of Love (Shawn Mendes & Tainy)","Shawn Mendes;Tainy",2020,known,love,"party;long drive",known
+"Photograph","Ed Sheeran",2014,known,love,"romantic date;chill",known
+"thank u, next","Ariana Grande",2018,known,reflection,"party;chill",known
+"Lover","Taylor Swift",2019,known,love,"wedding;romantic date",known
+"When You're Gone","Shawn Mendes",2020,known,heartbreak,"chill;long drive",known
+"What Makes You Beautiful","One Direction",2011,known,love,"party;long drive",known
+"Unstoppable","Sia",2016,known,ambition,"workout;party",known
+"Love Yourself","Justin Bieber",2015,known,heartbreak,"chill;long drive",known
+"Just the Way You Are","Bruno Mars",2010,known,love,"romantic date;wedding",known
+"Payphone","Maroon 5;Wiz Khalifa",2012,known,heartbreak,"long drive;chill",known
+"Mercy","Shawn Mendes",2016,known,love,"romantic date;long drive",known
+"Story of My Life","One Direction",2013,known,reflection,"long drive;chill",known
+"Señorita","Shawn Mendes;Camila Cabello",2019,known,love,"party;romantic date",known
+"Baby","Justin Bieber;Ludacris",2010,known,love,"party;long drive",known
+"34+35","Ariana Grande",2020,known,love,"party;long drive",known
+"Sorry","Justin Bieber",2015,known,heartbreak,"party;workout",known
+"New Rules","Dua Lipa",2017,known,reflection,"party;long drive",known
+"Wolves","Selena Gomez;Marshmello",2017,known,struggle,"chill;long drive",known
+"Don't Start Now","Dua Lipa",2019,known,reflection,"party;workout",known
+"Steal My Girl","One Direction",2014,known,love,"long drive;party",known
+"Stitches","Shawn Mendes",2015,known,heartbreak,"long drive;chill",known
+"Wildest Dreams","Taylor Swift",2014,known,love,"romantic date;chill",known
+"IDGAF","Dua Lipa",2017,known,rebellion,"party;workout",known
+"Drag Me Down","One Direction",2015,known,ambition,"workout;long drive",known
+"boyfriend (with Social House)","Ariana Grande;Social House",2019,known,love,"party;long drive",known
+"Harleys In Hawaii","Katy Perry",2019,known,freedom,"long drive;chill",known
+"God is a woman","Ariana Grande",2018,known,love,"party;romantic date",known
+"Cheap Thrills","Sia",2016,known,party,"party;workout",known
+"Chandelier","Sia",2014,known,struggle,"party;workout",known
+"Love Story","Taylor Swift",2008,known,love,"wedding;romantic date",known
+"Gimme More","Britney Spears",2007,known,party,"party;workout",known
+"Animals","Maroon 5",2014,known,love,"long drive;party",known
+"Cheating on You","Charlie Puth",2018,known,heartbreak,"long drive;chill",known
+"You Belong With Me (Taylor’s Version)","Taylor Swift",2008,known,love,"long drive;party",known
+"Snowman","Sia",2017,guess,love,"chill;sleep",guess
+"TV","Billie Eilish",2022,known,heartbreak,"chill;sleep",known
+"Break My Heart","Dua Lipa",2020,known,love,"party;long drive",known
+"Merry Christmas","Ed Sheeran;Elton John",2021,known,love,"chill;wedding",known
+"motive (with Doja Cat)","Ariana Grande;Doja Cat",2020,known,love,"party;long drive",known
+"Skate","Bruno Mars;Anderson .Paak;Silk Sonic",2021,known,love,"chill;long drive",known
+"Fire On Fire","Sam Smith",2020,known,love,"romantic date;wedding",known
+"bury a friend","Billie Eilish",2019,known,struggle,"chill;focus",known
+"no tears left to cry","Ariana Grande",2018,known,reflection,"party;long drive",known
+"Love's Train","Bruno Mars;Anderson .Paak;Silk Sonic",2022,guess,love,"chill;romantic date",known
+"Love Me Harder","Ariana Grande;The Weeknd",2014,known,love,"party;romantic date",known
+"Mistletoe","Justin Bieber",2011,known,love,"chill;romantic date",known
+"Dark Horse","Katy Perry;Juicy J",2013,known,love,"party;long drive",known
+"New Rules - Acoustic","Dua Lipa",2017,guess,reflection,"chill;long drive",guess
+"break up with your girlfriend, i'm bored","Ariana Grande",2019,known,heartbreak,"party;long drive",known
+"Moonshine","Bruno Mars",2022,guess,love,"chill;long drive",known
+"Light Switch","Charlie Puth",2022,known,love,"party;long drive",known
+"One Time","Justin Bieber",2009,known,love,"long drive;party",known
+"Side To Side","Ariana Grande;Nicki Minaj",2016,known,love,"party;workout",known
+"The Christmas Song (Chestnuts Roasting On An Open Fire)","Justin Bieber;Usher",2011,guess,nostalgia,"chill;romantic date",guess
+"Genius (feat. Sia, Diplo, and Labrinth)","Sia;Diplo;Labrinth;LSD",2018,known,ambition,"long drive;party",known
+"Therefore I Am","Billie Eilish",2020,known,ambition,"long drive;workout",known
+"Into You","Ariana Grande",2016,known,love,"party;romantic date",known
+"all the good girls go to hell","Billie Eilish",2019,known,reflection,"chill;long drive",known
+"Frozen","Madonna;Sickick",1998,known,heartbreak,"chill;long drive",known
+"Love Me More","Sam Smith",2022,known,reflection,"chill;long drive",known
+"The One That Got Away","Katy Perry",2011,known,heartbreak,"long drive;chill",known
+"Diamonds","Sam Smith",2020,known,heartbreak,"chill;long drive",known
+"Loser","Charlie Puth",2022,known,heartbreak,"long drive;chill",known
+"Have Yourself A Merry Little Christmas","Sam Smith",1944,known,nostalgia,"chill;sleep",guess
+"Imagination","Shawn Mendes",2013,known,love,"chill;long drive",known
+"2step","Ed Sheeran;Lil Baby",2022,known,love,"party;long drive",known
+"Baila Conmigo (with Rauw Alejandro)","Selena Gomez;Rauw Alejandro",2021,known,love,"party;long drive",known
+"The Joker and the Queen","Ed Sheeran",2022,known,love,"romantic date;wedding",known
+"Back To You - From 13 Reasons Why – Season 2 Soundtrack","Selena Gomez",2018,known,heartbreak,"long drive;chill",known
+"Santa Claus Is Coming To Town","Justin Bieber",2011,guess,nostalgia,"chill;party",guess
+"Smells Like Me","Charlie Puth",2022,known,ambition,"party;workout",known
+"Christmas Eve","Justin Bieber",2011,known,love,"chill;romantic date",known
+"Monster (Shawn Mendes & Justin Bieber)","Shawn Mendes;Justin Bieber",2020,known,struggle,"chill;long drive",known
+"bad guy","Billie Eilish",2019,known,rebellion,"party;workout",known
+"How Long","Charlie Puth",2017,known,heartbreak,"long drive;party",known
+"Smokin out the Window","Bruno Mars;Anderson .Paak;Silk Sonic",2021,known,heartbreak,"chill;long drive",known
+"One Call Away","Charlie Puth",2015,known,love,"romantic date;long drive",known
+"Treasure - Cash Cash Radio Mix","Bruno Mars",2012,known,love,"party;workout",known
+"If I Can't Have You","Shawn Mendes",2019,known,heartbreak,"long drive;chill",known
+"Fa La La","Justin Bieber;Boyz II Men",2011,guess,party,"party;chill",guess
+"That's Hilarious","Charlie Puth",2022,known,heartbreak,"chill;long drive",known
+"Only Thing I Ever Get For Christmas","Justin Bieber",2011,guess,love,"chill;party",guess
+"Criminal","Britney Spears",2011,known,love,"party;workout",known
+"Homesick","Dua Lipa",2017,known,heartbreak,"chill;sleep",known
+"YOUTH","Troye Sivan",2015,known,freedom,"party;long drive",known
+"Time After Time - Live At Abbey Road Studios","Sam Smith",1983,known,love,"chill;romantic date",known
+"Fetish (feat. Gucci Mane)","Selena Gomez;Gucci Mane",2017,known,love,"party;long drive",known
+"The Lighthouse Keeper","Sam Smith",2020,guess,reflection,"chill;sleep",guess
+"Back To You","Selena Gomez",2018,known,heartbreak,"long drive;chill",known
+"willow","Taylor Swift",2020,known,love,"chill;romantic date",known
+"Same Old Love","Selena Gomez",2015,known,heartbreak,"long drive;party",known
+"cardigan","Taylor Swift",2020,known,nostalgia,"chill;long drive",known
+"Cheap Thrills (feat. Sean Paul)","Sia;Sean Paul",2016,known,party,"party;workout",known
+"Autumn Leaves","Ed Sheeran",2012,guess,nostalgia,"chill;romantic date",guess
+"No More Drama","Charlie Puth",2022,known,heartbreak,"long drive;chill",known
+"Shivers","Ed Sheeran",2021,known,love,"party;long drive",known
+"Charlie Be Quiet!","Charlie Puth",2022,known,reflection,"chill;focus",known
+"How Would You Feel (Paean)","Ed Sheeran",2017,known,love,"romantic date;wedding",known
+"Good For You","Selena Gomez;A$AP Rocky",2015,known,love,"romantic date;long drive",known
+"Visiting Hours","Ed Sheeran",2021,known,reflection,"chill;sleep",known
+"Tears On My Piano","Charlie Puth",2022,known,heartbreak,"chill;sleep",known
+"Overpass Graffiti","Ed Sheeran",2017,known,nostalgia,"long drive;chill",known
+"There’s A First Time For Everything","Charlie Puth",2022,known,reflection,"chill;long drive",known
+"Castle On the Hill - Throttle Remix","Ed Sheeran;Throttle",2017,known,nostalgia,"long drive;party",known
+"I Don’t Think That I Like Her","Charlie Puth",2022,known,heartbreak,"chill;long drive",known
+"Bad Habits - Joel Corry Remix","Ed Sheeran;Joel Corry",2021,known,party,"party;long drive",known
+"Marks On My Neck","Charlie Puth",2022,known,love,"party;romantic date",known
+"Intentions","Justin Bieber;Quavo",2020,known,love,"romantic date;long drive",known
+"Kiss and Make Up","Dua Lipa;BLACKPINK",2018,known,heartbreak,"party;long drive",known
+"We’re In This Together","Justin Bieber",2022,guess,love,"chill;romantic date",guess
+"Bloody Mary","Lady Gaga",2011,known,rebellion,"party;festival",known
+"Unstable","Justin Bieber;The Kid LAROI",2021,known,heartbreak,"chill;long drive",known
+"Judas","Lady Gaga",2011,known,rebellion,"party;festival",known
+"Loved By You","Justin Bieber;Burna Boy",2021,known,love,"romantic date;chill",known
+"E.T.","Katy Perry",2010,known,love,"party;long drive",known
+"Rockin' Around The Christmas Tree","Justin Bieber",2011,guess,party,"party;chill",guess
+"Paparazzi","Lady Gaga",2009,known,ambition,"party;workout",known
+"Friends","Justin Bieber;BloodPop®",2017,known,love,"long drive;party",known
+"Attention - HUGEL Remix","Charlie Puth;HUGEL",2017,guess,heartbreak,"party;festival",guess
+"Drummer Boy","Justin Bieber;Busta Rhymes",2011,guess,devotion,"chill;prayer",guess
+"Poker Face","Lady Gaga",2008,known,party,"party;workout",known
+"Hold On","Justin Bieber",2021,known,struggle,"chill;long drive",known
+"Monster","Lady Gaga",2009,known,struggle,"party;festival",known
+"Come Around Me","Justin Bieber",2020,known,heartbreak,"chill;long drive",known
+"The Edge Of Glory","Lady Gaga",2011,known,freedom,"party;workout",known
+"All Around Me","Justin Bieber",2020,known,love,"chill;romantic date",known
+"I Kissed A Girl","Katy Perry",2008,known,party,"party;workout",known
+"Yummy","Justin Bieber",2020,known,love,"party;long drive",known
+"Teeth","Lady Gaga",2011,known,love,"party;festival",known
+"All Around The World","Justin Bieber;Ludacris",2012,known,love,"party;long drive",known
+"Eh, Eh (Nothing Else I Can Say)","Lady Gaga",2009,known,heartbreak,"party;long drive",known
+"Firefly - Bravado Dubstep Remix","Ed Sheeran;Bravado",2011,guess,love,"chill;long drive",guess
+"Born This Way","Lady Gaga",2011,known,freedom,"party;festival",known
+"Physical","Dua Lipa",2020,known,love,"workout;party",known
+"Left and Right","Charlie Puth;Jung Kook",2022,known,love,"party;long drive",known
+"Physical - Erika de Casier Remix","Dua Lipa;Erika de Casier",2020,known,love,"workout;party",known
+"Ghost","Katy Perry",2013,known,heartbreak,"chill;long drive",known
+"New Love - Paraone Remix","Dua Lipa;Paraone",2017,guess,love,"chill;party",guess
+"Floating Through Space","Sia;David Guetta",2022,known,freedom,"chill;long drive",known
+"Lost Cause","Billie Eilish",2020,known,rebellion,"chill;long drive",known
+"Baila Conmigo","Selena Gomez;Rauw Alejandro",2021,known,love,"party;long drive",known
+"you should see me in a crown","Billie Eilish",2019,known,ambition,"party;workout",known
+"Mr. Brightside","The Killers",2003,known,heartbreak,"party;festival",known
+"In the End","Linkin Park",2000,known,struggle,"festival;long drive",known
+"Everlong","Foo Fighters",1997,known,love,"festival;long drive",known
+"I Wanna Be Yours","Arctic Monkeys",2013,known,love,"romantic date;chill",known
+"Here Comes The Sun - Remastered 2009","The Beatles",1969,known,freedom,"chill;long drive",known
+"Bones","Imagine Dragons",2022,known,struggle,"workout;long drive",known
+"Creep","Radiohead",1992,known,struggle,"chill;long drive",known
+"Feel Good Inc.","Gorillaz",2005,known,freedom,"long drive;party",known
+"Numb","Linkin Park",2003,known,struggle,"long drive;workout",known
+"Do I Wanna Know?","Arctic Monkeys",2013,known,heartbreak,"chill;long drive",known
+"Wish You Were Here","Pink Floyd",1975,known,nostalgia,"chill;long drive",known
+"Believer","Imagine Dragons",2017,known,struggle,"workout;festival",known
+"Losing My Religion","R.E.M.",1991,known,heartbreak,"chill;long drive",known
+"Smells Like Teen Spirit","Nirvana",1991,known,rebellion,"festival;workout",known
+"Come As You Are","Nirvana",1991,known,reflection,"chill;long drive",known
+"505","Arctic Monkeys",2007,known,heartbreak,"long drive;chill",known
+"Let It Be - Remastered 2009","The Beatles",1970,known,reflection,"chill;prayer",known
+"Why'd You Only Call Me When You're High?","Arctic Monkeys",2013,known,heartbreak,"long drive;party",known
+"No Surprises","Radiohead",1997,known,struggle,"chill;sleep",known
+"Californication","Red Hot Chili Peppers",1999,known,reflection,"long drive;chill",known
+"Heart-Shaped Box","Nirvana",1993,known,love,"chill;focus",known
+"R U Mine?","Arctic Monkeys",2012,known,love,"long drive;party",known
+"Come Together - Remastered 2009","The Beatles",1969,known,rebellion,"chill;long drive",known
+"Enemy (with JID) - from the series Arcane League of Legends","Imagine Dragons;JID;Arcane;League of Legends",2021,known,struggle,"workout;focus",known
+"Can't Stop","Red Hot Chili Peppers",2002,known,freedom,"workout;long drive",known
+"New Gold (feat. Tame Impala and Bootie Brown)","Gorillaz;Tame Impala;Bootie Brown",2022,known,party,"party;long drive",guess
+"The Pretender","Foo Fighters",2007,known,rebellion,"workout;festival",known
+"Snap Out Of It","Arctic Monkeys",2013,known,love,"long drive;party",known
+"Another Brick in the Wall, Pt. 2","Pink Floyd",1979,known,rebellion,"festival;chill",known
+"Thunder","Imagine Dragons",2017,known,ambition,"workout;festival",known
+"Under the Bridge","Red Hot Chili Peppers",1991,known,struggle,"chill;long drive",known
+"Snow (Hey Oh)","Red Hot Chili Peppers",2006,known,reflection,"long drive;chill",known
+"One Step Closer","Linkin Park",2000,known,rebellion,"workout;festival",known
+"Fluorescent Adolescent","Arctic Monkeys",2007,known,nostalgia,"party;long drive",known
+"Yesterday - Remastered 2009","The Beatles",1965,known,nostalgia,"chill;sleep",known
+"Somewhere Only We Know","Keane",2004,known,nostalgia,"chill;long drive",known
+"Otherside","Red Hot Chili Peppers",1999,known,struggle,"chill;long drive",known
+"Rhinestone Eyes","Gorillaz",2010,known,reflection,"chill;long drive",guess
+"Faint","Linkin Park",2003,known,struggle,"workout;festival",known
+"Arabella","Arctic Monkeys",2013,known,love,"long drive;chill",known
+"Twist And Shout - Remastered 2009","The Beatles",1963,known,party,"party;festival",known
+"Demons","Imagine Dragons",2012,known,struggle,"long drive;chill",known
+"The Adults Are Talking","The Strokes",2020,known,reflection,"long drive;chill",known
+"Scar Tissue","Red Hot Chili Peppers",1999,known,reflection,"long drive;chill",known
+"Learn to Fly","Foo Fighters",1999,known,freedom,"long drive;workout",known
+"Body Paint","Arctic Monkeys",2022,known,love,"chill;long drive",guess
+"Comfortably Numb","Pink Floyd",1979,known,struggle,"chill;long drive",known
+"Hotel California - 2013 Remaster","Eagles",1976,known,reflection,"long drive;chill",known
+"I'm In Love With You","The 1975",2022,known,love,"romantic date;chill",known
+"On Melancholy Hill","Gorillaz",2010,known,reflection,"chill;long drive",known
+"Something In The Way","Nirvana",1991,known,struggle,"chill;sleep",known
+"There’d Better Be A Mirrorball","Arctic Monkeys",2022,known,heartbreak,"chill;romantic date",known
+"In My Life - Remastered 2009","The Beatles",1965,known,nostalgia,"chill;romantic date",known
+"Natural","Imagine Dragons",2018,known,ambition,"workout;festival",known
+"Island In The Sun","Weezer",2001,known,freedom,"long drive;chill",known
+"Dani California","Red Hot Chili Peppers",2006,known,freedom,"long drive;festival",known
+"Crawling","Linkin Park",2000,known,struggle,"workout;long drive",known
+"Knee Socks","Arctic Monkeys",2013,known,love,"romantic date;long drive",known
+"Blackbird - Remastered 2009","The Beatles",1968,known,freedom,"chill;sleep",known
+"Bohemian Rhapsody - Remastered 2011","Queen",1975,known,reflection,"festival;long drive",known
+"Somebody Told Me","The Killers",2004,known,party,"party;long drive",known
+"Oh Caroline","The 1975",2022,known,love,"chill;long drive",known
+"The Man Who Sold The World","Nirvana",1970,known,reflection,"chill;long drive",known
+"I Ain’t Quite Where I Think I Am","Arctic Monkeys",2022,guess,reflection,"chill;long drive",guess
+"Hey Jude - Remastered 2015","The Beatles",1968,known,reflection,"chill;festival",known
+"Zombie","The Cranberries",1994,known,rebellion,"long drive;festival",known
+"When You Were Young","The Killers",2006,known,nostalgia,"long drive;festival",known
+"Karma Police","Radiohead",1997,known,reflection,"long drive;chill",known
+"Best of You","Foo Fighters",2005,known,ambition,"workout;festival",known
+"It's The End Of The World As We Know It (And I Feel Fine)","R.E.M.",1987,known,rebellion,"party;festival",known
+"Money","Pink Floyd",1973,known,ambition,"long drive;chill",known
+"Don't Stop Me Now - Remastered 2011","Queen",1979,known,party,"party;workout",known
+"Alive","Pearl Jam",1991,known,struggle,"long drive;festival",known
+"Clint Eastwood","Gorillaz",2001,known,ambition,"long drive;chill",known
+"Even Flow","Pearl Jam",1991,known,struggle,"long drive;festival",known
+"Jet Skis On The Moat","Arctic Monkeys",2022,known,reflection,"chill;long drive",guess
+"Something - Remastered 2009","The Beatles",1969,known,love,"wedding;romantic date",known
+"Whatever It Takes","Imagine Dragons",2017,known,ambition,"workout;festival",known
+"Dumb","Nirvana",1993,known,struggle,"chill;long drive",known
+"BURN IT DOWN","Linkin Park",2012,known,rebellion,"workout;festival",known
+"My Hero","Foo Fighters",1997,known,devotion,"workout;festival",known
+"The Car","Arctic Monkeys",2022,known,reflection,"chill;long drive",known
+"I Want To Hold Your Hand - Remastered 2015","The Beatles",1963,known,love,"party;long drive",known
+"Bad Liar","Imagine Dragons",2018,known,heartbreak,"long drive;chill",known
+"High and Dry","Radiohead",1995,known,heartbreak,"chill;long drive",known
+"Papercut","Linkin Park",2000,known,struggle,"workout;long drive",known
+"Bullet With Butterfly Wings - Remastered 2012","The Smashing Pumpkins",1995,known,rebellion,"long drive;workout",known
+"Perfect Sense","Arctic Monkeys",2022,known,reflection,"chill;long drive",guess
+"Time","Pink Floyd",1973,known,reflection,"chill;long drive",known
+"Sultans Of Swing","Dire Straits",1978,known,reflection,"long drive;chill",known
+"Everybody Hurts","R.E.M.",1992,known,struggle,"chill;sleep",known
+"She's My Collar (feat. Kali Uchis)","Gorillaz;Kali Uchis",2017,known,love,"party;long drive",known
+"About A Girl","Nirvana",1989,known,love,"chill;long drive",known
+"Hello You","Arctic Monkeys",2022,known,reflection,"long drive;chill",guess
+"Breathe (In the Air)","Pink Floyd",1973,known,reflection,"chill;sleep",known
+"Enemy - From the series Arcane League of Legends","Imagine Dragons;Arcane;League of Legends",2021,known,struggle,"workout;focus",known
+"Human","The Killers",2008,known,reflection,"long drive;festival",known
+"Dark Necessities","Red Hot Chili Peppers",2016,known,struggle,"long drive;chill",known
+"Black","Pearl Jam",1991,known,heartbreak,"chill;long drive",known
+"Mr Schwartz","Arctic Monkeys",2022,known,reflection,"chill;long drive",guess
+"Ob-La-Di, Ob-La-Da - Remastered 2009","The Beatles",1968,known,party,"party;wedding",known
+"Radioactive","Imagine Dragons",2012,known,rebellion,"workout;festival",known
+"Reptilia","The Strokes",2003,known,rebellion,"party;long drive",known
+"CASTLE OF GLASS","Linkin Park",2012,known,struggle,"workout;long drive",known
+"All My Life","Foo Fighters",2002,known,love,"workout;party",known
+"Sculptures Of Anything Goes","Arctic Monkeys",2022,guess,reflection,"chill;focus",guess
+"While My Guitar Gently Weeps - Remastered 2009","The Beatles",1968,known,reflection,"chill",known
+"Chasing Cars","Snow Patrol",2006,known,love,"romantic date;wedding",known
+"By the Way","Red Hot Chili Peppers",2002,known,reflection,"long drive;workout",known
+"Somebody Else","The 1975",2016,known,heartbreak,"chill;long drive",known
+"Somewhere I Belong","Linkin Park",2003,known,struggle,"workout;long drive",known
+"Big Ideas","Arctic Monkeys",2022,guess,reflection,"chill;focus",guess
+"Norwegian Wood (This Bird Has Flown) - Remastered 2009","The Beatles",1965,known,love,"chill;romantic date",known
+"We Will Rock You - Remastered 2011","Queen",1977,known,rebellion,"festival;workout",known
+"Last Nite","The Strokes",2001,known,heartbreak,"party;long drive",guess
+"About You","The 1975",2022,known,heartbreak,"chill;long drive",known
+"Lithium","Nirvana",1991,known,struggle,"chill;long drive",known
+"Help! - Remastered 2009","The Beatles",1965,known,struggle,"chill;long drive",known
+"Cigarette Daydreams","Cage The Elephant",2013,known,nostalgia,"chill;long drive",known
+"It's Not Living (If It's Not With You)","The 1975",2018,known,struggle,"long drive;chill",guess
+"Looking For Somebody (To Love)","The 1975",2022,known,love,"chill;long drive",guess
+"All Apologies","Nirvana",1993,known,reflection,"chill;sleep",known
+"Strawberry Fields Forever - Remastered 2009","The Beatles",1967,known,nostalgia,"chill;focus",known
+"Under Pressure - Remastered 2011","Queen;David Bowie",1981,known,struggle,"long drive;festival",known
+"Exit Music (For A Film)","Radiohead",1997,known,heartbreak,"chill;sleep",known
+"Call It Fate, Call It Karma","The Strokes",2013,known,reflection,"chill;long drive",guess
+"Breaking the Habit","Linkin Park",2003,known,struggle,"workout;long drive",known
+"Eleanor Rigby - Remastered 2009","The Beatles",1966,known,reflection,"chill;focus",known
+"Wonderwall - Remastered","Oasis",1995,known,love,"chill;festival",known
+"Fake Plastic Trees","Radiohead",1995,known,struggle,"chill;sleep",known
+"Robbers","The 1975",2013,known,heartbreak,"chill;long drive",known
+"Last Kiss","Pearl Jam",1999,known,heartbreak,"chill;long drive",guess
+"Hey You","Pink Floyd",1979,known,struggle,"chill;focus",known
+"On Top Of The World","Imagine Dragons",2012,known,ambition,"long drive;festival",known
+"The 1975","The 1975",2022,guess,reflection,"chill;long drive",guess
+"Happiness","The 1975",2020,known,love,"chill;party",known
+"Rape Me","Nirvana",1993,known,rebellion,"workout;festival",known
+"Don't Let Me Down - Remastered 2009","The Beatles",1969,known,love,"romantic date;chill",known
+"Warriors","Imagine Dragons",2014,known,ambition,"workout;festival",known
+"Selfless","The Strokes",2020,known,love,"chill;romantic date",known
+"New Divide","Linkin Park",2009,known,struggle,"workout;long drive",known
+"Jeremy","Pearl Jam",1991,known,struggle,"chill;long drive",known
+"And I Love Her - Remastered 2009","The Beatles",1964,known,love,"romantic date;wedding",known
+"Follow You","Imagine Dragons",2021,known,love,"chill;romantic date",guess
+"Weird Fishes/ Arpeggi","Radiohead",2007,known,reflection,"chill;focus",known
+"A Place for My Head","Linkin Park",2000,known,rebellion,"workout;long drive",known
+"Times Like These","Foo Fighters",2002,known,reflection,"long drive;chill",known
+"All My Loving - Remastered 2009","The Beatles",1963,known,love,"romantic date;wedding",known
+"Wrecked","Imagine Dragons",2022,known,heartbreak,"chill;sleep",guess
+"Wintering","The 1975",2022,guess,nostalgia,"chill;long drive",guess
+"Heavy (feat. Kiiara)","Linkin Park;Kiiara",2017,known,struggle,"chill;long drive",known
+"Yellow Ledbetter","Pearl Jam",1992,known,reflection,"chill;long drive",guess
+"Lucy In The Sky With Diamonds - Remastered 2009","The Beatles",1967,known,freedom,"chill;focus",known
+"Be My Mistake","The 1975",2018,known,heartbreak,"chill;sleep",known
+"Paranoid Android","Radiohead",1997,known,struggle,"focus;long drive",known
+"When We Are Together","The 1975",2022,known,love,"chill;romantic date",guess
+"Walk","Foo Fighters",2011,known,struggle,"workout;long drive",known
+"Love Me Do - Remastered 2009","The Beatles",1962,known,love,"romantic date;chill",known
+"Birds","Imagine Dragons",2018,known,reflection,"chill;long drive",guess
+"Part Of The Band","The 1975",2022,guess,reflection,"chill;focus",guess
+"Love It If We Made It","The 1975",2018,known,rebellion,"long drive;festival",known
+"Monkey Wrench","Foo Fighters",1997,known,heartbreak,"workout;party",guess
+"Shine On You Crazy Diamond (Pts. 1-5)","Pink Floyd",1975,known,reflection,"chill;focus",known
+"It's Time","Imagine Dragons",2012,known,freedom,"long drive;festival",known
+"Nude","Radiohead",2007,known,heartbreak,"chill;sleep",known
+"Points of Authority","Linkin Park",2000,known,rebellion,"workout;party",known
+"Zero - Remastered 2012","The Smashing Pumpkins",1995,known,struggle,"workout;long drive",known
+"Oh! Darling - Remastered 2009","The Beatles",1969,known,love,"romantic date;chill",known
+"I Want To Break Free","Queen",1984,known,freedom,"party;long drive",known
+"Where Did You Sleep Last Night","Nirvana",1994,known,heartbreak,"chill;sleep",known
+"LOST IN THE ECHO","Linkin Park",2012,known,struggle,"workout;long drive",known
+"You Know You're Right","Nirvana",2002,guess,struggle,"chill;long drive",known
+"A Hard Day's Night - Remastered 2009","The Beatles",1964,known,love,"long drive;party",known
+"Believer - Kaskade Remix","Imagine Dragons;Kaskade",2017,known,struggle,"workout;party",known
+"Jigsaw Falling Into Place","Radiohead",2007,known,reflection,"chill;long drive",known
+"From the Inside","Linkin Park",2003,known,rebellion,"workout;long drive",known
+"Just Breathe","Pearl Jam",2009,known,love,"romantic date;wedding",known
+"I Saw Her Standing There - Remastered 2009","The Beatles",1963,known,love,"party;romantic date",known
+"I Want It All - Remastered 2011","Queen",1989,known,ambition,"workout;festival",known
+"The Drummer","Red Hot Chili Peppers",2022,guess,reflection,"chill;long drive",guess
+"Never Let Me Go","Florence + The Machine",2011,known,reflection,"chill;sleep",guess
+"Daughter - Remastered","Pearl Jam",1993,known,struggle,"chill;long drive",known
+"Brain Damage","Pink Floyd",1973,known,struggle,"chill;focus",known
+"My Friends","Red Hot Chili Peppers",2006,known,love,"party;long drive",guess
+"Chocolate","The 1975",2013,known,rebellion,"party;long drive",guess
+"Lying from You","Linkin Park",2003,known,rebellion,"workout;long drive",known
+"Tonight, Tonight - Remastered 2012","The Smashing Pumpkins",1995,known,ambition,"long drive;festival",known
+"Have a Cigar","Pink Floyd",1975,known,ambition,"chill;long drive",known
+"Sympathy For The Devil","The Rolling Stones",1968,known,rebellion,"party;festival",known
+"Ode To The Mets","The Strokes",2020,known,nostalgia,"chill;long drive",known
+"ROADS UNTRAVELED","Linkin Park",2012,known,reflection,"chill;long drive",known
+"Lake Of Fire","Nirvana",1984,guess,struggle,"chill;focus",known
+"Us and Them","Pink Floyd",1973,known,reflection,"chill;sleep",known
+"Tippa My Tongue","Red Hot Chili Peppers",2006,known,love,"party;workout",guess
+"How to Disappear Completely","Radiohead",2000,known,struggle,"chill;sleep",known
+"Battle Symphony","Linkin Park",2017,known,struggle,"workout;long drive",known
+"In Bloom","Nirvana",1991,known,rebellion,"long drive;chill",known
+"Across The Universe - Remastered 2009","The Beatles",1969,known,devotion,"chill;sleep",known
+"Higher Ground - Remastered","Red Hot Chili Peppers",1973,guess,rebellion,"workout;party",known
+"Sincerity Is Scary","The 1975",2018,known,reflection,"chill;long drive",guess
+"Delusions of Saviour","Slayer",2015,known,rebellion,"workout;festival",known
+"Teenagers","My Chemical Romance",2006,known,rebellion,"party;workout",known
+"Highway to Hell","AC/DC",1979,known,freedom,"party;long drive",known
+"Sweet Child O' Mine","Guns N' Roses",1987,known,love,"romantic date;long drive",known
+"Can You Feel My Heart","Bring Me The Horizon",2013,known,struggle,"workout;long drive",known
+"All The Small Things","blink-182",1999,known,love,"party;long drive",known
+"You're Gonna Go Far, Kid","The Offspring",2008,known,rebellion,"workout;long drive",known
+"Raining Blood","Slayer",1986,known,rebellion,"workout;festival",known
+"The Middle","Jimmy Eat World",2001,known,reflection,"long drive;workout",known
+"Back In Black","AC/DC",1980,known,ambition,"party;workout",known
+"Chop Suey!","System Of A Down",2001,known,struggle,"workout;party",known
+"sTraNgeRs","Bring Me The Horizon",2023,guess,struggle,"workout;long drive",known
+"Basket Case","Green Day",1994,known,struggle,"long drive;party",known
+"The Kids Aren't Alright","The Offspring",1998,known,nostalgia,"long drive;chill",known
+"Stranded","Gojira",2016,known,struggle,"workout;focus",known
+"Centuries","Fall Out Boy",2015,known,ambition,"workout;festival",known
+"Thunderstruck","AC/DC",1990,known,party,"workout;festival",known
+"Master Of Puppets","Metallica",1986,known,struggle,"workout;focus",known
+"Throne","Bring Me The Horizon",2015,known,ambition,"workout;festival",known
+"What's My Age Again?","blink-182",1999,known,party,"party;long drive",known
+"EDGING","blink-182",2023,guess,rebellion,"workout;long drive",guess
+"South Of Heaven","Slayer",1988,known,rebellion,"workout;focus",known
+"Welcome to the Black Parade","My Chemical Romance",2006,known,reflection,"festival;workout",known
+"November Rain","Guns N' Roses",1991,known,heartbreak,"long drive;romantic date",known
+"Enter Sandman","Metallica",1991,known,struggle,"workout;festival",known
+"Drown","Bring Me The Horizon",2014,known,struggle,"chill;long drive",known
+"American Idiot","Green Day",2004,known,rebellion,"workout;festival",known
+"I Miss You","blink-182",2003,known,heartbreak,"chill;long drive",known
+"Silvera","Gojira",2016,known,reflection,"focus;workout",known
+"Thnks fr th Mmrs","Fall Out Boy",2007,known,nostalgia,"party;long drive",known
+"You Shook Me All Night Long","AC/DC",1980,known,love,"party;long drive",known
+"Toxicity","System Of A Down",2001,known,rebellion,"workout;festival",known
+"Kingslayer (feat. BABYMETAL)","Bring Me The Horizon;BABYMETAL",2020,known,rebellion,"workout;festival",known
+"Wake Me up When September Ends","Green Day",2004,known,heartbreak,"chill;long drive",known
+"Dear Maria, Count Me In","All Time Low",2007,known,love,"party;long drive",known
+"Flying Whales","Gojira",2005,known,freedom,"focus;chill",known
+"Sugar, We're Goin Down","Fall Out Boy",2005,known,heartbreak,"long drive;party",known
+"Nothing Else Matters","Metallica",1991,known,love,"romantic date;chill",known
+"Welcome To The Jungle","Guns N' Roses",1987,known,struggle,"workout;party",known
+"Sleepwalking","Bring Me The Horizon",2013,known,struggle,"long drive;workout",known
+"Boulevard of Broken Dreams","Green Day",2004,known,reflection,"long drive;chill",known
+"First Date","blink-182",2001,known,love,"romantic date;long drive",known
+"Our Time Is Now","Gojira",2012,guess,rebellion,"workout;focus",known
+"I'm Not Okay (I Promise)","My Chemical Romance",2004,known,struggle,"long drive;party",known
+"Knockin' On Heaven's Door","Guns N' Roses",1973,known,reflection,"chill;long drive",known
+"Last Resort","Papa Roach",2000,known,struggle,"workout;party",known
+"The Downfall Of Us All","A Day To Remember",2009,known,rebellion,"workout;party",known
+"Good Riddance (Time of Your Life)","Green Day",1997,known,reflection,"chill;long drive",known
+"Self Esteem","The Offspring",1994,known,struggle,"long drive;workout",known
+"Angel Of Death","Slayer",1986,known,rebellion,"workout;festival",known
+"Dance, Dance","Fall Out Boy",2005,known,love,"party;long drive",known
+"Paradise City","Guns N' Roses",1987,known,freedom,"party;festival",known
+"Duality","Slipknot",2004,known,struggle,"workout;festival",known
+"Follow You","Bring Me The Horizon",2015,known,love,"romantic date;long drive",known
+"When I Come Around","Green Day",1994,known,reflection,"long drive;chill",known
+"Pretty Fly (For A White Guy)","The Offspring",1998,known,party,"party;long drive",known
+"Amazonia","Gojira",2021,known,rebellion,"focus;workout",known
+"Helena","My Chemical Romance",2005,known,heartbreak,"chill;long drive",known
+"Stairway to Heaven - Remaster","Led Zeppelin",1971,known,reflection,"chill;focus",known
+"Don't Cry (Original)","Guns N' Roses",1991,known,heartbreak,"long drive;chill",known
+"DiE4u","Bring Me The Horizon",2023,guess,love,"chill;long drive",known
+"In Too Deep","Sum 41",2001,known,heartbreak,"long drive;party",known
+"Adam's Song","blink-182",1999,known,struggle,"chill;sleep",known
+"Seasons In The Abyss","Slayer",1990,known,struggle,"workout;focus",known
+"Immortals","Fall Out Boy",2014,known,ambition,"workout;festival",known
+"Immigrant Song - Remaster","Led Zeppelin",1970,known,rebellion,"workout;festival",known
+"Crazy Train","Ozzy Osbourne",1980,known,struggle,"workout;festival",known
+"If It Means A Lot To You","A Day To Remember",2009,known,love,"chill;romantic date",known
+"Fat Lip","Sum 41",2001,known,rebellion,"party;workout",known
+"Why Don't You Get A Job","The Offspring",1998,known,party,"party;long drive",known
+"The Heaviest Matter of the Universe","Gojira",2005,known,reflection,"focus;workout",known
+"My Songs Know What You Did In The Dark (Light Em Up)","Fall Out Boy",2013,known,ambition,"workout;party",known
+"T.N.T.","AC/DC",1975,known,party,"party;workout",known
+"Aerials","System Of A Down",2001,known,reflection,"chill;long drive",known
+"Miracle","A Day To Remember",2016,guess,struggle,"long drive;workout",known
+"I Don't Love You","My Chemical Romance",2006,known,heartbreak,"chill;long drive",known
+"The Rock Show","blink-182",2001,known,party,"party;long drive",known
+"L'enfant sauvage","Gojira",2012,known,reflection,"focus;workout",known
+"Famous Last Words","My Chemical Romance",2006,known,struggle,"long drive;chill",known
+"Whole Lotta Love - 1990 Remaster","Led Zeppelin",1969,known,love,"party;long drive",known
+"B.Y.O.B.","System Of A Down",2005,known,rebellion,"workout;party",known
+"Shadow Moses","Bring Me The Horizon",2013,known,struggle,"workout;party",known
+"Holiday / Boulevard of Broken Dreams","Green Day",2004,known,rebellion,"festival;workout",known
+"Want You Bad","The Offspring",2001,known,love,"party;long drive",known
+"Repentless","Slayer",2015,known,rebellion,"workout;festival",known
+"The Phoenix","Fall Out Boy",2013,known,ambition,"workout;festival",known
+"The Trooper - 2015 Remaster","Iron Maiden",1983,known,rebellion,"workout;long drive",known
+"Before I Forget","Slipknot",2004,known,rebellion,"workout;party",known
+"Your Betrayal","Bullet For My Valentine",2010,known,heartbreak,"workout;long drive",known
+"Holiday","Green Day",2004,known,rebellion,"festival;workout",known
+"Monsters (feat. blackbear)","All Time Low;blackbear",2019,known,struggle,"long drive;chill",known
+"The art of dying","Gojira",2008,known,reflection,"focus;workout",known
+"The Foundations of Decay","My Chemical Romance",2022,guess,struggle,"chill;long drive",guess
+"Whiskey In The Jar","Metallica",1967,guess,party,"party;festival",known
+"Change (In the House of Flies)","Deftones",2000,known,struggle,"chill;long drive",known
+"My Curse","Killswitch Engage",2006,known,heartbreak,"workout;long drive",known
+"Still Waiting","Sum 41",2002,known,struggle,"long drive;workout",known
+"Feeling This","blink-182",2003,known,love,"long drive;party",known
+"Dead Skin Mask","Slayer",1990,known,struggle,"focus;workout",known
+"The Ghost of You","My Chemical Romance",2004,known,heartbreak,"chill;long drive",known
+"The Unforgiven","Metallica",1991,known,struggle,"chill;focus",known
+"Hail to the King","Avenged Sevenfold",2013,known,ambition,"workout;festival",known
+"All I Want","A Day To Remember",2009,known,heartbreak,"long drive;workout",known
+"Dead!","My Chemical Romance",2006,known,struggle,"party;workout",known
+"Stay Together For The Kids","blink-182",2001,known,struggle,"chill;long drive",known
+"War Ensemble","Slayer",1990,known,rebellion,"workout;festival",known
+"This Ain't A Scene, It's An Arms Race","Fall Out Boy",2007,known,ambition,"party;workout",known
+"Black Dog - Remaster","Led Zeppelin",1971,known,love,"workout;long drive",known
+"Psychosocial","Slipknot",2008,known,rebellion,"workout;festival",known
+"1x1 (feat. Nova Twins)","Bring Me The Horizon;Nova Twins",2020,known,struggle,"workout;focus",known
+"Pieces","Sum 41",2004,known,love,"chill;long drive",known
+"Dammit","blink-182",1997,known,heartbreak,"long drive;party",known
+"Toxic garbage island","Gojira",2008,known,rebellion,"workout;focus",known
+"Cancer","My Chemical Romance",2006,known,heartbreak,"chill;sleep",known
+"Dirty Deeds Done Dirt Cheap","AC/DC",1976,known,rebellion,"party;long drive",known
+"My Own Summer (Shove It)","Deftones",1997,known,rebellion,"workout;long drive",known
+"Teardrops","Bring Me The Horizon",2020,known,struggle,"workout;long drive",known
+"Welcome to Paradise","Green Day",1992,known,struggle,"long drive;chill",known
+"Anthem Part Two","blink-182",2001,known,rebellion,"party;long drive",known
+"Bloodline","Slayer",2001,known,rebellion,"workout;festival",known
+"Mama","My Chemical Romance",2006,known,struggle,"workout;long drive",known
+"Walk","Pantera",1992,known,rebellion,"workout;festival",known
+"Be Quiet and Drive (Far Away)","Deftones",1997,known,freedom,"long drive;chill",known
+"Happy Song","Bring Me The Horizon",2015,known,struggle,"workout;party",known
+"Brain Stew","Green Day",1995,known,struggle,"long drive;chill",known
+"Sleepwalking","All Time Low",2020,known,struggle,"long drive;chill",known
+"Born For One Thing","Gojira",2021,known,reflection,"workout;focus",known
+"Uma Thurman","Fall Out Boy",2015,known,party,"party;workout",known
+"Symphony Of Destruction","Megadeth",1992,known,rebellion,"workout;long drive",known
+"Freak On a Leash","Korn",1998,known,rebellion,"workout;party",known
+"All Signs Point To Lauderdale","A Day To Remember",2010,known,love,"party;long drive",known
+"Jesus of Suburbia","Green Day",2004,known,rebellion,"long drive;workout",known
+"Always","blink-182",2003,known,love,"long drive;romantic date",known
+"World Painted Blood","Slayer",2009,known,rebellion,"workout;festival",known
+"You Know What They Do to Guys Like Us in Prison","My Chemical Romance",2004,known,struggle,"workout;party",known
+"Hells Bells","AC/DC",1980,known,rebellion,"workout;festival",known
+"Lonely Day","System Of A Down",2005,known,struggle,"chill;long drive",known
+"Laid to Rest","Lamb of God",2004,known,rebellion,"workout;festival",known
+"She","Green Day",1994,known,rebellion,"long drive;workout",known
+"Monsters (feat. Demi Lovato and blackbear)","All Time Low;Demi Lovato;blackbear",2020,known,struggle,"chill;long drive",known
+"Black Magic","Slayer",1983,known,rebellion,"workout;festival",known
+"Thank You for the Venom","My Chemical Romance",2004,known,rebellion,"workout;party",known
+"Smoke On The Water - Remastered 2012","Deep Purple",1972,known,reflection,"festival;long drive",known
+"Sextape","Deftones",2010,known,love,"chill;sleep",known
+"True Friends","Bring Me The Horizon",2015,known,love,"party;long drive",known
+"The Hell Song","Sum 41",2003,known,struggle,"workout;long drive",known
+"Weightless","All Time Low",2007,known,love,"long drive;party",known
+"Another World","Gojira",2021,known,reflection,"focus;workout",known
+"The Sharpest Lives","My Chemical Romance",2006,known,struggle,"party;workout",known
+"One","Metallica",1988,known,struggle,"workout;focus",known
+"Cherry Waves","Deftones",2006,guess,love,"chill;sleep",guess
+"Parasite Eve","Bring Me The Horizon",2020,known,struggle,"workout;festival",known
+"Disenchanted","My Chemical Romance",2006,known,reflection,"long drive;chill",known
+"Hear You Me","Jimmy Eat World",2001,known,heartbreak,"long drive;chill",known
+"Backbone","Gojira",2005,guess,rebellion,"workout;focus",guess
+"Cemetery Drive","My Chemical Romance",2004,known,struggle,"long drive;chill",known
+"For Whom The Bell Tolls - Remastered","Metallica",1984,known,rebellion,"workout;festival",known
+"Coming Undone","Korn",2005,guess,struggle,"workout;long drive",guess
+"Tears Don't Fall","Bullet For My Valentine",2005,known,heartbreak,"long drive;workout",known
+"With Me","Sum 41",2007,guess,love,"long drive;romantic date",guess
+"I Really Wish I Hated You","blink-182",2019,known,heartbreak,"long drive;chill",known
+"Vacuity","Gojira",2008,guess,rebellion,"workout;focus",guess
+"I Don't Care","Fall Out Boy",2008,known,party,"party;long drive",known
+"Shoot to Thrill","AC/DC",1980,known,party,"workout;festival",known
+"Unsainted","Slipknot",2019,known,struggle,"workout;festival",known
+"Avalanche","Bring Me The Horizon",2015,guess,struggle,"long drive;workout",guess
+"War","Sum 41",2016,guess,rebellion,"workout;festival",guess
+"Darkside","blink-182",2019,known,struggle,"long drive;chill",known
+"The Antichrist","Slayer",1983,known,rebellion,"workout;festival",known
+"This Is How I Disappear","My Chemical Romance",2006,known,struggle,"chill;long drive",known
+"Patience","Guns N' Roses",1988,known,love,"romantic date;long drive",known
+"The Diary of Jane - Single Version","Breaking Benjamin",2006,known,heartbreak,"long drive;workout",known
+"Obey (with YUNGBLUD)","Bring Me The Horizon;YUNGBLUD",2020,known,rebellion,"workout;festival",known
+"Still Breathing","Green Day",2016,known,struggle,"long drive;workout",known
+"Therapy","All Time Low",2009,known,heartbreak,"long drive;party",known
+"Oroborus","Gojira",2008,guess,reflection,"focus;workout",guess
+"House of Wolves","My Chemical Romance",2006,known,rebellion,"workout;festival",known
+"Fear of the Dark - 2015 Remaster","Iron Maiden",1992,known,struggle,"festival;long drive",known
+"Animal I Have Become","Three Days Grace",2006,known,struggle,"workout;long drive",known
+"Faded Out (feat. Within Temptation)","Asking Alexandria;Within Temptation",2019,guess,heartbreak,"long drive;chill",guess
+"You Irritate Me - Demo","Green Day",2000,guess,rebellion,"party;workout",guess
+"Kids In The Dark","All Time Low",2015,known,freedom,"long drive;party",known
+"The Gift of Guilt","Gojira",2012,guess,struggle,"focus;workout",guess
+"Irresistible","Fall Out Boy",2015,known,love,"party;long drive",known
+"Run to the Hills - 2015 Remaster","Iron Maiden",1982,known,rebellion,"festival;workout",known
+"I Hate Everything About You","Three Days Grace",2003,known,heartbreak,"long drive;workout",known
+"Have Faith In Me","A Day To Remember",2007,known,love,"romantic date;long drive",known
+"The Light Behind Your Eyes","My Chemical Romance",2006,guess,heartbreak,"chill;long drive",guess
+"After Midnight","blink-182",2011,known,love,"romantic date;chill",known
+"The Shooting Star","Gojira",2016,known,reflection,"focus;chill",known
+"Boy Division","My Chemical Romance",2003,guess,heartbreak,"long drive;chill",guess
+"Breaking the Law","Judas Priest",1980,known,rebellion,"workout;festival",known
+"Wait and Bleed","Slipknot",1999,known,struggle,"workout;festival",known
+"Redneck","Lamb of God",2006,known,rebellion,"workout;festival",known
+"Give Me Novacaine / She's a Rebel","Green Day",2004,known,struggle,"long drive;chill",known
+"Missing You","All Time Low",2015,known,heartbreak,"long drive;chill",known
+"New Found","Gojira",2021,known,reflection,"focus;chill",guess
+"The Last Of The Real Ones","Fall Out Boy",2018,known,love,"long drive;romantic date",known
+"You Could Be Mine","Guns N' Roses",1991,known,rebellion,"workout;long drive",known
+"Sugar","System Of A Down",1998,known,rebellion,"workout;festival",known
+"Super Freaky Girl","Nicki Minaj",2022,known,party,"party;workout",known
+"Jimmy Cooks (feat. 21 Savage)","Drake;21 Savage",2022,known,ambition,"party;workout",known
+"Vegas (From the Original Motion Picture Soundtrack ELVIS)","Doja Cat",2022,known,ambition,"party;workout",known
+"STAR WALKIN' (League of Legends Worlds Anthem)","Lil Nas X",2022,known,ambition,"workout;festival",known
+"WAIT FOR U (feat. Drake & Tems)","Future;Drake;Tems",2022,known,heartbreak,"chill;long drive",known
+"Woman","Doja Cat",2021,known,love,"romantic date;party",known
+"Without Me","Eminem",2002,known,ambition,"party;workout",known
+"No Role Modelz","J. Cole",2014,known,reflection,"long drive;chill",known
+"Revenge","XXXTENTACION",2017,known,rebellion,"chill;long drive",guess
+"THATS WHAT I WANT","Lil Nas X",2021,known,love,"romantic date;party",known
+"The Real Slim Shady","Eminem",2000,known,rebellion,"party;workout",known
+"Hope","XXXTENTACION",2018,known,struggle,"chill;sleep",known
+"INDUSTRY BABY (feat. Jack Harlow)","Lil Nas X;Jack Harlow",2021,known,ambition,"workout;party",known
+"Till I Collapse","Eminem;Nate Dogg",2002,known,ambition,"workout;focus",known
+"First Class","Jack Harlow",2022,known,ambition,"party;long drive",known
+"Superman","Eminem;Dina Rae",2002,known,love,"party;long drive",guess
+"Everybody Dies In Their Nightmares","XXXTENTACION",2017,known,struggle,"chill;sleep",known
+"One Dance","Drake;Wizkid;Kyla",2016,known,love,"party;long drive",known
+"Stan","Eminem;Dido",2000,known,struggle,"chill;long drive",known
+"Need to Know","Doja Cat",2021,known,love,"romantic date;chill",known
+"You Right","Doja Cat;The Weeknd",2021,known,love,"long drive;chill",known
+"Jocelyn Flores","XXXTENTACION",2017,known,struggle,"chill;sleep",known
+"Still D.R.E.","Dr. Dre;Snoop Dogg",1999,known,ambition,"long drive;party",known
+"God's Plan","Drake",2018,known,ambition,"party;long drive",known
+"HUMBLE.","Kendrick Lamar",2017,known,ambition,"workout;party",known
+"goosebumps","Travis Scott",2016,known,party,"party;workout",known
+"Streets","Doja Cat",2019,known,love,"romantic date;chill",known
+"Fuck Love (feat. Trippie Redd)","XXXTENTACION;Trippie Redd",2017,known,heartbreak,"chill;long drive",known
+"SAD!","XXXTENTACION",2018,known,heartbreak,"long drive;chill",known
+"Moonlight","XXXTENTACION",2017,known,love,"chill;romantic date",known
+"MONTERO (Call Me By Your Name)","Lil Nas X",2021,known,love,"party;long drive",known
+"Mask Off","Future",2017,known,ambition,"party;long drive",known
+"Godzilla (feat. Juice WRLD)","Eminem;Juice WRLD",2020,known,ambition,"workout;party",known
+"All The Stars (with SZA)","Kendrick Lamar;SZA",2018,known,ambition,"long drive;workout",guess
+"Love The Way You Lie","Eminem;Rihanna",2010,known,heartbreak,"long drive;chill",known
+"N95","Kendrick Lamar",2022,known,reflection,"long drive;focus",known
+"In Da Club","50 Cent",2003,known,party,"party;workout",known
+"Fair Trade (with Travis Scott)","Drake;Travis Scott",2021,known,reflection,"long drive;chill",known
+"SICKO MODE","Travis Scott",2018,known,ambition,"party;workout",known
+"See You Again (feat. Charlie Puth)","Wiz Khalifa;Charlie Puth",2015,known,heartbreak,"long drive;chill",known
+"Kiss Me More (feat. SZA)","Doja Cat;SZA",2021,known,love,"party;romantic date",known
+"Look At Me!","XXXTENTACION",2017,known,rebellion,"workout;party",known
+"HIGHEST IN THE ROOM","Travis Scott",2019,known,love,"long drive;party",guess
+"Die Hard","Kendrick Lamar;Blxst;Amanda Reifer",2022,known,love,"romantic date;chill",known
+"Praise The Lord (Da Shine) (feat. Skepta)","A$AP Rocky;Skepta",2018,known,ambition,"workout;party",known
+"She Knows (feat. Amber Coffman & Cults)","J. Cole;Cults;Amber Coffman",2013,known,love,"long drive;chill",guess
+"The Next Episode","Dr. Dre;Snoop Dogg",2000,known,party,"party;long drive",known
+"Hit 'Em Up - Single Version","2Pac;Outlawz",1996,known,rebellion,"workout",known
+"Goosebumps - Remix","Travis Scott;HVME",2017,guess,party,"party;workout",guess
+"Not Afraid","Eminem",2010,known,struggle,"workout;focus",known
+"Calling My Phone","Lil Tjay;6LACK",2021,known,heartbreak,"long drive;chill",known
+"Beat the Odds","Lil Tjay",2019,guess,struggle,"workout;long drive",guess
+"changes","XXXTENTACION",2018,known,heartbreak,"chill;long drive",known
+"Forgot About Dre","Dr. Dre;Eminem",1999,known,ambition,"long drive;workout",known
+"Hypnotize - 2014 Remaster","The Notorious B.I.G.",1997,known,ambition,"party;long drive",known
+"Boss Bitch","Doja Cat",2020,known,ambition,"party;workout",known
+"Say So","Doja Cat",2019,known,love,"party;long drive",known
+"I Like It","Cardi B;Bad Bunny;J Balvin",2018,known,party,"party;workout",known
+"the remedy for a broken heart (why am I so in love)","XXXTENTACION",2017,known,heartbreak,"chill;sleep",known
+"Ambitionz Az A Ridah","2Pac",1996,known,ambition,"workout;long drive",known
+"California Love - Original Version","2Pac;Roger;Dr. Dre",1995,known,party,"party;long drive",known
+"Big Poppa - 2005 Remaster","The Notorious B.I.G.",1994,known,ambition,"party;long drive",known
+"Old Town Road - Remix","Lil Nas X;Billy Ray Cyrus",2019,known,freedom,"party;long drive",known
+"Lose Yourself - From ""8 Mile"" Soundtrack","Eminem",2002,known,ambition,"workout;focus",known
+"5% TINT","Travis Scott",2018,known,love,"long drive;chill",guess
+"BUTTERFLY EFFECT","Travis Scott",2018,known,ambition,"long drive;workout",known
+"In My Head","Lil Tjay",2019,known,heartbreak,"long drive;chill",guess
+"Young, Wild & Free (feat. Bruno Mars)","Snoop Dogg;Wiz Khalifa;Bruno Mars",2011,guess,freedom,"party;long drive",guess
+"Rap God","Eminem",2013,known,ambition,"workout;focus",known
+"F.N","Lil Tjay",2018,known,struggle,"long drive;party",known
+"Run It Up (feat. Offset & Moneybagg Yo)","Lil Tjay;Offset;Moneybagg Yo",2021,known,ambition,"workout;party",known
+"I Don't Wanna Do This Anymore","XXXTENTACION",2017,known,heartbreak,"chill;sleep",known
+"All Eyez On Me (ft. Big Syke)","2Pac;Big Syke",1996,known,ambition,"party;long drive",known
+"Drop It Like It's Hot","Snoop Dogg;Pharrell Williams",2004,known,party,"party;long drive",known
+"Old Town Road","Lil Nas X",2018,known,freedom,"long drive;party",known
+"Churchill Downs (feat. Drake)","Jack Harlow;Drake",2022,known,ambition,"long drive;party",known
+"RIP Roach","XXXTENTACION;Ski Mask The Slump God",2017,known,rebellion,"workout;party",known
+"YuNg BrAtZ","XXXTENTACION",2017,known,struggle,"chill;workout",guess
+"Juicy - 2005 Remaster","The Notorious B.I.G.",1994,known,ambition,"long drive;chill",known
+"CAN'T SAY","Travis Scott",2018,known,struggle,"workout;long drive",known
+"WHATS POPPIN (feat. DaBaby, Tory Lanez & Lil Wayne) - Remix","Jack Harlow;Tory Lanez;DaBaby;Lil Wayne",2020,known,party,"party;workout",known
+"Sex Sounds","Lil Tjay",2019,guess,love,"party;romantic date",guess
+"bad vibes forever","XXXTENTACION;PnB Rock;Trippie Redd",2019,known,struggle,"long drive;chill",known
+"NUMB","XXXTENTACION",2018,known,struggle,"chill;sleep",known
+"Carry On","XXXTENTACION",2017,known,struggle,"workout;long drive",guess
+"Riot","XXXTENTACION",2016,guess,rebellion,"workout;party",guess
+"Do For Love","2Pac",1997,known,love,"romantic date;chill",known
+"What's The Difference","Dr. Dre;Eminem;Xzibit",1999,known,party,"party;long drive",known
+"Mo Money Mo Problems (feat. Puff Daddy & Mase) - 2014 Remaster","The Notorious B.I.G.;Mase;Diddy",1997,known,ambition,"party;long drive",known
+"STARGAZING","Travis Scott",2018,known,struggle,"long drive;chill",guess
+"YOSEMITE","Travis Scott",2018,known,reflection,"long drive;chill",known
+"Headshot (feat. Polo G & Fivio Foreign)","Lil Tjay;Polo G;Fivio Foreign",2021,known,struggle,"workout;long drive",known
+"infinity (888) - feat. Joey Bada$$","XXXTENTACION;Joey Bada$$",2018,guess,love,"chill;romantic date",guess
+"Venom - Music From The Motion Picture","Eminem",2018,known,ambition,"workout;festival",known
+"The Search","NF",2019,known,ambition,"workout;focus",known
+"Antidote","Travis Scott",2015,known,party,"party;long drive",known
+"ASTROTHUNDER","Travis Scott",2018,known,love,"chill;romantic date",known
+"679 (feat. Remy Boyz)","Fetty Wap;Remy Boyz",2014,known,ambition,"party;long drive",known
+"Trap Queen","Fetty Wap",2014,known,love,"party;long drive",known
+"Tyler Herro","Jack Harlow",2020,known,ambition,"party;workout",known
+"Nail Tech","Jack Harlow",2022,known,ambition,"party;long drive",known
+"Already Best Friends (feat. Chris Brown)","Jack Harlow;Chris Brown",2020,known,love,"romantic date;long drive",known
+"Ex Bitch","XXXTENTACION",2019,guess,heartbreak,"chill;long drive",guess
+"Changes","2Pac;Talent",1998,known,reflection,"long drive;chill",known
+"NO BYSTANDERS","Travis Scott",2018,known,party,"party;workout",known
+"BAD!","XXXTENTACION",2018,guess,rebellion,"workout;party",guess
+"vice city","XXXTENTACION",2018,guess,struggle,"chill;long drive",guess
+"I Need A Doctor","Dr. Dre;Eminem;Skylar Grey",2011,known,struggle,"chill;long drive",known
+"Nuthin But A G'Thang","Snoop Dogg",1992,known,party,"party;long drive",known
+"Dear Mama","2Pac",1995,known,love,"chill;long drive",known
+"N.Y. State of Mind","Nas",1994,known,struggle,"focus;long drive",known
+"MAFIA","Travis Scott",2022,known,ambition,"workout;party",known
+"SKELETONS","Travis Scott",2018,known,party,"chill;long drive",guess
+"Depression & Obsession","XXXTENTACION",2017,known,struggle,"chill;sleep",known
+"Floor 555","XXXTENTACION",2018,guess,struggle,"chill;long drive",guess
+"Keep Ya Head Up","2Pac",1993,known,reflection,"long drive;chill",known
+"Leaked","Lil Tjay",2019,guess,heartbreak,"long drive;chill",guess
+"Arms Around You (feat. Maluma & Swae Lee)","XXXTENTACION;Lil Pump;Swae Lee;Maluma",2018,known,love,"party;long drive",known
+"Save Me","XXXTENTACION",2017,known,struggle,"chill;sleep",known
+"Gospel (with Eminem)","Dr. Dre;Eminem",2021,known,ambition,"workout;long drive",known
+"Can't C Me","2Pac",1996,known,ambition,"party;long drive",known
+"If I Ruled the World (Imagine That) (feat. Lauryn Hill)","Nas;Ms. Lauryn Hill",1996,known,ambition,"long drive;chill",known
+"FRANCHISE (feat. Young Thug & M.I.A.)","Travis Scott;Young Thug;M.I.A.",2020,known,ambition,"workout;party",known
+"WAKE UP","Travis Scott",2018,known,reflection,"chill;long drive",known
+"ATTENTION!","XXXTENTACION",2019,guess,struggle,"workout;long drive",guess
+"Ghetto Gospel","2Pac",2004,known,reflection,"long drive;chill",known
+"Sweat - Remix","Snoop Dogg;David Guetta;Giorgio Tuinfort;Frederic Riesterer",2011,known,party,"party;festival",known
+"2 Of Amerikaz Most Wanted (ft. Snoop Doggy Dogg)","2Pac;Snoop Dogg",1996,known,ambition,"party;long drive",known
+"Suicidal Thoughts - 2005 Remaster","The Notorious B.I.G.",1994,known,struggle,"chill;sleep",known
+"Not In The Mood (feat. Fivio Foreign & Kay Flock)","Lil Tjay;Fivio Foreign;Kay Flock",2022,guess,struggle,"long drive;workout",guess
+"King","XXXTENTACION",2017,guess,ambition,"workout;party",guess
+"#ImSippinTeaInYoHood","XXXTENTACION",2017,guess,rebellion,"workout;party",guess
+"Only God Can Judge Me (ft. Rappin' 4-Tay)","2Pac;Rappin' 4-Tay",1996,known,struggle,"long drive;chill",known
+"Notorious Thugs - 2014 Remaster","The Notorious B.I.G.",1997,known,ambition,"long drive;party",known
+"The World Is Yours","Nas",1994,known,ambition,"long drive;chill",known
+"Party and Bullshit - 2008 Remaster","The Notorious B.I.G.",1993,known,party,"party;long drive",known
+"HIGHEST IN THE ROOM (feat. ROSALÍA & Lil Baby) - REMIX","Travis Scott;ROSALÍA;Lil Baby",2019,known,love,"party;long drive",known
+"Again","Fetty Wap",2015,guess,love,"party;long drive",guess
+"Hold On","Lil Tjay",2019,guess,struggle,"long drive;chill",guess
+"One Take","Lil Tjay",2019,guess,ambition,"workout;long drive",guess
+"High School","Nicki Minaj;Lil Wayne",2012,known,party,"party;long drive",known
+"King Of The Dead","XXXTENTACION",2017,guess,rebellion,"workout;party",guess
+"I Wanna Fuck You","Snoop Dogg;Akon",2006,known,love,"party;long drive",known
+"Hail Mary","2Pac",1997,known,devotion,"long drive;chill",known
+"Who Shot Ya? - 2005 Remaster","The Notorious B.I.G.",1995,known,rebellion,"long drive;workout",known
+"Nas Is Like","Nas",1999,known,reflection,"long drive;chill",known
+"Gimme the Loot - 2005 Remaster","The Notorious B.I.G.",1994,known,ambition,"long drive;workout",known
+"Goin Up","Lil Tjay",2018,guess,ambition,"long drive;party",guess
+"Zoo York (feat. Fivio Foreign & Pop Smoke)","Lil Tjay;Fivio Foreign;Pop Smoke",2022,guess,struggle,"workout;long drive",guess
+"ALONE, PART 3","XXXTENTACION",2017,guess,struggle,"chill;sleep",guess
+"what are you so afraid of","XXXTENTACION",2018,known,reflection,"chill;sleep",guess
+"My Way (feat. Monty)","Fetty Wap;Monty",2015,known,love,"party;long drive",known
+"Resume","Lil Tjay",2018,guess,ambition,"long drive;workout",guess
+"FUXK (feat. Ski Mask the Slump God)","XXXTENTACION;Ski Mask The Slump God",2017,guess,rebellion,"workout;party",guess
+"I don’t let go","XXXTENTACION",2018,known,love,"chill;romantic date",guess
+"Guardian angel","XXXTENTACION",2018,known,devotion,"chill;sleep",guess
+"Off the Wall!","XXXTENTACION;Ski Mask The Slump God",2018,guess,party,"party;workout",guess
+"Kush - Main","Dr. Dre;Snoop Dogg;Akon",2010,known,party,"party;long drive",known
+"Riders On The Storm - Fredwreck Remix","Snoop Dogg;The Doors",2003,guess,party,"long drive;party",guess
+"The Message","Nas",1996,known,struggle,"long drive;chill",known
+"It Ain't Hard to Tell","Nas",1994,known,ambition,"long drive;party",known
+"One More Chance / Stay with Me - Remix; 2007 Remaster","The Notorious B.I.G.",1995,known,love,"party;romantic date",known
+"FRANCHISE (feat. Future, Young Thug & M.I.A.) - REMIX","Travis Scott;Future;Young Thug;M.I.A.",2020,known,ambition,"workout;party",known
+"Ruthless (feat. Jay Critch)","Lil Tjay;Jay Critch",2019,guess,struggle,"workout;long drive",guess
+"Brothers (feat. Lil Durk) - Remix","Lil Tjay;Lil Durk",2019,guess,struggle,"long drive;chill",guess
+"Lil' Homies","2Pac",2001,known,struggle,"long drive;chill",known
+"Represent","Nas",1994,known,ambition,"long drive;party",known
+"Ten Crack Commandments - 2014 Remaster","The Notorious B.I.G.",1997,known,struggle,"long drive;workout",known
+"679 (feat. Monty)","Fetty Wap;Monty",2014,known,ambition,"party;long drive",known
+"Love Hurts (feat. Toosii)","Lil Tjay;Toosii",2021,known,heartbreak,"chill;long drive",known
+"20/20","Lil Tjay",2019,guess,struggle,"long drive;chill",guess
+"Life's a Bitch (feat. AZ & Olu Dara)","Nas;AZ;Olu Dara",1994,known,struggle,"long drive;chill",known
+"Get Down","Nas",2002,known,party,"party;long drive",known
+"None of Your Love - Bonus","Lil Tjay",2021,guess,heartbreak,"chill;long drive",guess
+"Sky's the Limit (feat. 112) - 2014 Remaster","The Notorious B.I.G.;112",1997,known,reflection,"chill;long drive",known
+"Machine Gun Funk - 2006 Remaster","The Notorious B.I.G.",1994,known,ambition,"long drive;workout",known
+"Wave Gods","Nas;A$AP Rocky;DJ Premier",2021,known,ambition,"long drive;workout",known
+"Hate Me Now (feat. Diddy)","Nas;Diddy",1999,known,rebellion,"workout;long drive",known
+"Halftime","Nas",1992,known,ambition,"long drive;focus",known
+"Warning - 2005 Remaster","The Notorious B.I.G.",1994,known,rebellion,"long drive;workout",known
+"Purple","Nas",2002,known,party,"long drive;party",known
+"Notorious Thugs (feat. Bone Thugs-n-Harmony) - 2007 Remaster","The Notorious B.I.G.;Bone Thugs-N-Harmony",1997,known,ambition,"long drive;party",known
+"Notorious B.I.G. (feat. Lil' Kim & Puff Daddy) - 2005 Remaster","The Notorious B.I.G.;Lil' Kim;Diddy",1999,known,ambition,"party;long drive",known
+"Street Dreams","Nas",1996,known,ambition,"long drive;chill",known
+"I Can","Nas",2002,known,reflection,"long drive;chill",known
+"Ready to Die - 2006 Remaster","The Notorious B.I.G.",1994,known,struggle,"workout;long drive",known
+"Kick in the Door - 2008 Remaster","The Notorious B.I.G.",1997,known,rebellion,"workout;long drive",known
+"Memory Lane (Sittin' in da Park)","Nas",1994,known,nostalgia,"long drive;chill",known
+"RGF Island","Fetty Wap",2015,known,ambition,"party;long drive",known
+"Mixed Emotions","Lil Tjay",2019,guess,heartbreak,"chill;long drive",guess
+"Affirmative Action (feat. AZ, Cormega & Foxy Brown)","Nas;AZ;Cormega;Foxy Brown",1996,known,ambition,"long drive;chill",known
+"G.O.A.T. (feat. Ty Dolla $ign & Bella Alubo)","The Notorious B.I.G.;Ty Dolla $ign;Bella Alubo",2022,guess,ambition,"long drive;party",guess
+"Dead Wrong (feat. Eminem) - 2005 Remaster","The Notorious B.I.G.;Eminem",1999,known,rebellion,"workout;long drive",known
+"EPMD 2 (feat. Eminem & EPMD)","Nas;Eminem;EPMD",2021,known,ambition,"long drive;workout",known
+"Spicy (feat. Fivio Foreign & A$AP Ferg)","Nas;Fivio Foreign;A$AP Ferg",2020,known,party,"party;long drive",known
+"Ether","Nas",2001,known,rebellion,"workout;long drive",known
+"Rare","Nas",2021,known,ambition,"long drive;chill",known
+"Replace Me (feat. Big Sean & Don Toliver)","Nas;Big Sean;Don Toliver",2020,guess,heartbreak,"long drive;chill",guess
+"Birthday (feat. Monty)","Fetty Wap;Monty",2016,guess,party,"party;long drive",guess
+"40-16 Building","Nas",2021,known,ambition,"long drive;chill",known
+"Under The Influence","Chris Brown",2022,known,love,"romantic date;chill",known
+"Blinding Lights","The Weeknd",2019,known,heartbreak,"long drive;party",known
+"Starboy","The Weeknd;Daft Punk",2016,known,ambition,"party;long drive",known
+"I Was Never There","The Weeknd;Gesaffelstein",2018,known,struggle,"chill;long drive",known
+"Call Out My Name","The Weeknd",2018,known,heartbreak,"chill;long drive",known
+"Save Your Tears","The Weeknd",2020,known,heartbreak,"long drive;party",known
+"The Hills","The Weeknd",2015,known,love,"party;chill",known
+"Die For You","The Weeknd",2016,known,love,"romantic date;chill",known
+"Pink + White","Frank Ocean",2016,known,reflection,"chill;long drive",known
+"Lost","Frank Ocean",2012,known,struggle,"long drive;chill",guess
+"Heartbreak Anniversary","Giveon",2020,known,heartbreak,"chill;long drive",known
+"September","Earth, Wind & Fire",1978,known,nostalgia,"party;wedding",known
+"Ain't No Mountain High Enough","Marvin Gaye;Tammi Terrell",1967,known,love,"wedding;romantic date",known
+"Back To Black","Amy Winehouse",2006,known,heartbreak,"chill;long drive",known
+"Ivy","Frank Ocean",2016,known,nostalgia,"chill;long drive",known
+"Novacane","Frank Ocean",2011,known,love,"chill;party",guess
+"No Guidance (feat. Drake)","Chris Brown;Drake",2019,known,love,"party;long drive",known
+"Stand by Me","Ben E. King",1961,known,devotion,"wedding;romantic date",known
+"Nights","Frank Ocean",2016,known,reflection,"chill;long drive",known
+"Chicago","Michael Jackson",2014,known,heartbreak,"chill;long drive",known
+"If I Ain't Got You","Alicia Keys",2004,known,love,"romantic date;wedding",known
+"Let's Groove","Earth, Wind & Fire",1981,known,party,"party;festival",known
+"Ain't No Sunshine","Bill Withers",1971,known,heartbreak,"chill;romantic date",known
+"My Girl","The Temptations",1964,known,love,"romantic date;wedding",known
+"Chanel","Frank Ocean",2017,known,ambition,"chill;long drive",known
+"White Ferrari","Frank Ocean",2016,known,nostalgia,"chill;long drive",known
+"Go Crazy","Chris Brown;Young Thug",2020,known,party,"party;workout",known
+"Thinkin Bout You","Frank Ocean",2012,known,love,"chill;romantic date",known
+"No One","Alicia Keys",2007,known,love,"romantic date;wedding",known
+"Under The Influence (Body Language)","Chris Brown",2022,guess,love,"party;romantic date",guess
+"Girl on Fire","Alicia Keys",2012,known,ambition,"workout;festival",known
+"I Want You Back","The Jackson 5",1969,known,love,"party;wedding",known
+"(Sittin' On) the Dock of the Bay","Otis Redding",1968,known,reflection,"chill;long drive",known
+"Boogie Wonderland","Earth, Wind & Fire;The Emotions",1979,known,party,"party;festival",known
+"Lovely Day","Bill Withers",1977,known,love,"chill;long drive",known
+"Self Control","Frank Ocean",2016,known,heartbreak,"chill;long drive",known
+"I Say a Little Prayer","Aretha Franklin",1968,known,love,"romantic date;chill",known
+"Valerie - Live At BBC Radio 1 Live Lounge, London / 2007","Amy Winehouse",2007,known,love,"chill;party",known
+"Super Freak","Rick James",1981,known,party,"party;festival",known
+"Easy","Commodores",1977,known,heartbreak,"chill;long drive",known
+"I Just Called To Say I Love You","Stevie Wonder",1984,known,love,"romantic date;wedding",known
+"Purple Rain","Prince",1984,known,heartbreak,"chill;festival",known
+"Rock with You - Single Version","Michael Jackson",1979,known,love,"party;romantic date",known
+"River","Leon Bridges",2015,known,reflection,"chill;long drive",guess
+"Kiss from a Rose","Seal",1994,known,love,"romantic date;chill",known
+"You Can't Hurry Love","The Supremes",1966,known,love,"party;long drive",known
+"Super Rich Kids","Frank Ocean;Earl Sweatshirt",2012,known,reflection,"chill;long drive",known
+"Feeling Good","Nina Simone",1965,known,freedom,"chill;long drive",known
+"Beyond","Leon Bridges",2018,known,love,"chill;romantic date",known
+"You Know I'm No Good","Amy Winehouse",2006,known,heartbreak,"chill;long drive",known
+"Rehab","Amy Winehouse",2006,known,rebellion,"party;long drive",known
+"Son Of A Preacher Man","Dusty Springfield",1968,known,love,"chill;romantic date",known
+"I Can't Help Myself (Sugar Pie, Honey Bunch)","Four Tops",1965,known,love,"party;wedding",known
+"Pyramids","Frank Ocean",2012,known,love,"chill;party",guess
+"Killing Me Softly With His Song","Roberta Flack",1973,known,reflection,"chill;romantic date",known
+"Celebration","Kool & The Gang",1980,known,party,"party;wedding",known
+"All Night Long (All Night) - Single Version","Lionel Richie",1983,known,party,"party;festival",known
+"Nikes","Frank Ocean",2016,known,reflection,"chill;long drive",known
+"Pink Matter","Frank Ocean;André 3000",2012,known,reflection,"chill;focus",known
+"Empire State of Mind (Part II) Broken Down","Alicia Keys",2009,known,ambition,"long drive;chill",known
+"If You Don't Know Me by Now - 2008 Remaster","Simply Red",1989,known,heartbreak,"chill;romantic date",known
+"Tears Dry On Their Own","Amy Winehouse",2006,known,heartbreak,"chill;long drive",known
+"Stuck On You","Lionel Richie",1984,known,love,"romantic date;long drive",known
+"Endless Love","Lionel Richie;Diana Ross",1981,known,love,"wedding;romantic date",known
+"We Are Family - 1995 Remaster","Sister Sledge",1979,known,party,"party;wedding",known
+"Midnight Train to Georgia","Gladys Knight & The Pips",1973,known,love,"long drive;romantic date",known
+"End Of The Road","Boyz II Men",1992,known,heartbreak,"chill;romantic date",known
+"Cold Little Heart - Radio Edit","Michael Kiwanuka",2016,known,heartbreak,"chill;long drive",known
+"By Your Side","Sade",2000,known,devotion,"romantic date;chill",known
+"Smooth Operator - Single Version","Sade",1984,known,love,"chill;romantic date",known
+"Mercy","Duffy",2008,known,love,"party;long drive",known
+"I'm Coming Out","Diana Ross",1980,known,freedom,"party;festival",known
+"You're The First, The Last, My Everything - Single Version","Barry White",1974,known,love,"romantic date;wedding",known
+"Thriller","Michael Jackson",1982,known,party,"party;festival",known
+"Man in the Mirror - 2012 Remaster","Michael Jackson",1987,known,reflection,"chill;long drive",known
+"Lean on Me","Bill Withers",1972,known,devotion,"chill;wedding",known
+"Coming Home","Leon Bridges",2015,known,love,"chill;romantic date",known
+"Stars","Simply Red",1991,known,reflection,"chill;long drive",known
+"Say You, Say Me","Lionel Richie",1985,known,love,"romantic date;wedding",known
+"Dancing On The Ceiling","Lionel Richie",1986,known,party,"party;festival",known
+"Upside Down","Diana Ross",1980,known,love,"party;romantic date",known
+"Black or White","Michael Jackson",1991,known,rebellion,"party;festival",known
+"Solo","Frank Ocean",2016,known,reflection,"chill;sleep",known
+"Biking","Frank Ocean;JAY-Z;Tyler, The Creator",2017,known,ambition,"chill;long drive",guess
+"Swim Good","Frank Ocean",2011,known,heartbreak,"chill;long drive",known
+"Forrest Gump","Frank Ocean",2012,known,love,"chill;romantic date",known
+"(You Make Me Feel Like) A Natural Woman","Aretha Franklin",1967,known,love,"romantic date;wedding",known
+"Love Is A Losing Game","Amy Winehouse",2006,known,heartbreak,"chill;sleep",known
+"Holding Back the Years - 2008 Remaster","Simply Red",1985,known,heartbreak,"chill;long drive",known
+"Hello","Lionel Richie",1984,known,love,"romantic date;wedding",known
+"Get Down On It - Single Version","Kool & The Gang",1981,known,party,"party;festival",known
+"Can't Get Enough Of Your Love, Babe","Barry White",1974,known,love,"romantic date;chill",known
+"Heal the World","Michael Jackson",1991,known,reflection,"chill;wedding",known
+"No Ordinary Love","Sade",1992,known,love,"romantic date;chill",known
+"Warwick Avenue","Duffy",2008,known,heartbreak,"chill;long drive",known
+"Hot Stuff","Donna Summer",1979,known,love,"party;workout",known
+"Ain't Nobody","Chaka Khan",1983,known,love,"party;workout",known
+"After the Love Has Gone","Earth, Wind & Fire",1979,known,heartbreak,"chill;long drive",known
+"I'll Make Love To You","Boyz II Men",1994,known,love,"romantic date;wedding",known
+"You Are Not Alone","Michael Jackson",1995,known,love,"chill;romantic date",known
+"I Just Can't Stop Loving You (feat. Siedah Garrett) - 2012 Remaster","Michael Jackson;Siedah Garrett",1987,known,love,"romantic date;wedding",known
+"I Put A Spell On You","Nina Simone",1965,known,love,"chill;romantic date",known
+"Kiss of Life","Sade",1993,known,love,"party;chill",known
+"Spooky","Dusty Springfield",1968,known,love,"chill;romantic date",known
+"Me & Mr Jones","Amy Winehouse",2006,known,heartbreak,"chill;long drive",known
+"That's What Friends Are For (with Elton John, Gladys Knight & Stevie Wonder)","Dionne Warwick;Elton John;Gladys Knight;Stevie Wonder",1985,known,devotion,"chill;wedding",known
+"I'm Every Woman","Chaka Khan",1978,known,ambition,"party;workout",known
+"Human Nature","Michael Jackson",1982,known,freedom,"chill;long drive",known
+"Love & Hate","Michael Kiwanuka",2016,known,struggle,"chill;long drive",known
+"Crazy","Seal",1990,known,reflection,"chill;long drive",known
+"Home Again","Michael Kiwanuka",2012,known,nostalgia,"chill;long drive",known
+"Your Love Is King","Sade",1984,known,love,"romantic date;chill",known
+"He Can Only Hold Her","Amy Winehouse",2007,known,heartbreak,"chill;long drive",known
+"The Rubberband Man","The Spinners",1976,known,party,"party;festival",known
+"Hot Stuff - 12"" Version","Donna Summer",1979,known,love,"party;workout",known
+"Give It To Me Baby","Rick James",1981,known,love,"party;romantic date",known
+"In the Midnight Hour","Wilson Pickett",1965,known,love,"party;romantic date",known
+"Earth Song","Michael Jackson",1995,known,struggle,"chill;long drive",known
+"Skyline To","Frank Ocean",2016,known,freedom,"chill;long drive",known
+"Close To You","Frank Ocean",2016,known,love,"chill;romantic date",known
+"Love Never Felt So Good","Michael Jackson",2014,known,love,"party;romantic date",known
+"The Sweetest Taboo","Sade",1985,known,love,"romantic date;chill",known
+"Our Day Will Come","Amy Winehouse",2011,known,love,"chill;romantic date",known
+"Cherish - Single Version","Kool & The Gang",1985,known,love,"romantic date;wedding",known
+"Good Guy","Frank Ocean",2016,known,heartbreak,"chill;long drive",known
+"Sexual Healing - Kygo Remix","Marvin Gaye;Kygo",2019,guess,love,"party;chill",guess
+"Sinnerman","Nina Simone",1965,known,devotion,"chill;prayer",known
+"Stronger Than Me","Amy Winehouse",2003,known,rebellion,"chill;long drive",known
+"Fresh","Kool & The Gang",1984,known,love,"party;romantic date",known
+"Can You Get To That","Funkadelic",1971,known,reflection,"chill;long drive",known
+"Hang on to Your Love","Sade",1984,known,love,"romantic date;chill",known
+"Wake Up Alone","Amy Winehouse",2006,known,heartbreak,"chill;sleep",known
+"Paradise","Sade",1988,known,love,"romantic date;chill",known
+"He's the Greatest Dancer - 1995 Remaster","Sister Sledge",1979,known,party,"party;festival",known
+"Dirty Diana - 2012 Remaster","Michael Jackson",1987,known,rebellion,"party;workout",known
+"One More Night","Michael Kiwanuka",2016,known,love,"chill;romantic date",known
+"Will You Still Love Me Tomorrow? - 2011","Amy Winehouse",2011,known,love,"chill;romantic date",known
+"Footsteps in the Dark, Pts. 1 & 2","The Isley Brothers",1977,known,nostalgia,"chill;long drive",known
+"Don't Let Me Be Misunderstood","Nina Simone",1964,known,reflection,"chill;long drive",known
+"Stand by Me","Seal",2008,guess,devotion,"romantic date;wedding",known
+"Cherish the Day","Sade",1993,known,love,"romantic date;chill",known
+"I Only Want To Be With You","Dusty Springfield",1963,known,love,"party;romantic date",known
+"Gangsta","Kehlani",2016,known,ambition,"workout;party",known
+"Truly","Lionel Richie",1982,known,love,"romantic date;wedding",known
+"Hold My Hand (with Akon)","Michael Jackson;Akon",2010,known,devotion,"chill;long drive",known
+"Motorbike","Leon Bridges",2021,known,freedom,"long drive;chill",known
+"Cupid - Deluxe Edition Version","Amy Winehouse",2007,known,love,"chill;romantic date",known
+"Turn Up The Sunshine - From 'Minions: The Rise of Gru' Soundtrack","Diana Ross;Tame Impala",2022,known,freedom,"chill;long drive",known
+"Inside Friend (feat. John Mayer)","Leon Bridges;John Mayer",2021,guess,love,"romantic date;chill",guess
+"Maggot Brain","Funkadelic",1971,known,reflection,"chill;sleep",known
+"Sunrise","Simply Red",2003,known,love,"chill;long drive",known
+"Money (with Tom Misch)","Michael Kiwanuka;Tom Misch",2020,guess,ambition,"chill;long drive",guess
+"The Only One","Lionel Richie",1983,guess,love,"romantic date;chill",guess
+"I Feel Love","Donna Summer",1977,known,love,"party;festival",known
+"Kiss from a Rose - Acoustic","Seal",2004,guess,love,"romantic date;chill",guess
+"Solid Ground","Michael Kiwanuka",2019,known,reflection,"chill;long drive",known
+"It's a Man's Man's Man's World","Seal",2008,guess,reflection,"chill;long drive",guess
+"Hold On","Kool & The Gang",1982,guess,love,"party;chill",guess
+"Never Forget My Love","Joss Stone",2009,guess,love,"chill;romantic date",guess
+"Distant Dreamer","Duffy",2008,known,reflection,"chill;sleep",known
+"Angel","Lionel Richie",2001,guess,love,"romantic date;wedding",guess
+"Stand by Me (Rerecorded)","Ben E. King",1961,guess,devotion,"romantic date;wedding",guess
+"To Love A Woman","Lionel Richie;Enrique Iglesias",2002,known,love,"romantic date;wedding",known
+"Groove With You","The Isley Brothers",1978,known,love,"romantic date;party",known
+"Smooth Sailin' Tonight - Single Version; Remastered","The Isley Brothers",1975,guess,love,"romantic date;chill",guess
+"They Just Can't Stop It (Games People Play)","The Spinners",1975,known,party,"party;chill",guess
+"Shake","The Gap Band",1979,guess,party,"party;festival",guess
+"Baby, Don't Change Your Mind","Gladys Knight & The Pips",1977,known,heartbreak,"chill;romantic date",known
+"Burn Rubber On Me (Why You Wanna Hurt Me)","The Gap Band",1980,known,heartbreak,"party;long drive",guess
+"Let's Stay Together","Al Green",1972,known,love,"romantic date;wedding",known
+"Super Duper Love","Joss Stone",2004,guess,love,"party;romantic date",guess
+"I've Got So Much To Give","Barry White",1973,known,love,"romantic date;chill",known
+"Sensuality, Pts. 1 & 2","The Isley Brothers",1975,known,love,"party;romantic date",known
+"Spoiled","Joss Stone",2004,guess,love,"party;chill",guess
+"Don't Cha Wanna Ride","Joss Stone",2004,guess,love,"party;long drive",guess
+"Only You","Teddy Pendergrass",1978,known,love,"romantic date;chill",known
+"Don't Make Me Wait Too Long","Barry White",1976,known,love,"romantic date;chill",known
+"My Baby Just Cares For Me - 2009 Remaster","Nina Simone",1958,known,love,"chill;romantic date",known
+"Tell Me 'Bout It","Joss Stone",2004,guess,love,"chill;romantic date",guess
+"How Can You Mend a Broken Heart","Al Green",1972,known,heartbreak,"chill;romantic date",known
+"Tired of Being Alone","Al Green",1971,known,heartbreak,"chill;romantic date",known
+"Out of Time","The Weeknd",2022,known,heartbreak,"chill;long drive",known
+"Superstition","Stevie Wonder",1972,known,party,"party;festival",known
+"So Sick","Ne-Yo",2006,known,heartbreak,"chill;long drive",known
+"Get Up Offa That Thing","James Brown",1976,known,party,"party;festival",known
+"I Feel It Coming","The Weeknd;Daft Punk",2016,known,love,"romantic date;long drive",known
+"Beautiful Monster","Ne-Yo",2010,known,love,"party;workout",known
+"Good Morning Gorgeous","Mary J. Blige;H.E.R.",2022,known,love,"chill;romantic date",known
+"I Saw Mommy Kissing Santa Claus","The Jackson 5",1970,guess,party,"party;chill",guess
+"LOST YOU","Snoh Aalegra",2021,guess,heartbreak,"chill;sleep",guess
+"SAVE YOURSELF","Snoh Aalegra",2021,guess,heartbreak,"chill;sleep",guess
+"Angel","Aretha Franklin",1973,known,love,"chill;romantic date",known
+"My Girl (Mono)","Otis Redding",1965,known,love,"romantic date;chill",known
+"Strange Fruit","Nina Simone",1965,known,rebellion,"chill;focus",known
+"Wishing on a Star","Seal",2011,guess,love,"chill;romantic date",guess
+"Lean On Me","Seal",2008,guess,devotion,"chill;wedding",guess
+"Life on Mars? (Uncut)","Seal",2011,guess,reflection,"chill;focus",guess
+"Come to My Aid - 2008 Remaster","Simply Red",1985,known,heartbreak,"chill;long drive",known
+"Merry Christmas Baby","Ne-Yo",2013,guess,party,"party;chill",guess
+"Ain't No Mountain High Enough - Short Promo Version","Diana Ross",1970,known,love,"wedding;romantic date",known
+"Breathe","The Prodigy",1996,known,party,"party;workout",known
+"Dancin (feat. Luvli) - Krono Remix","Aaron Smith;Krono;Luvli",2019,known,party,"party;workout",guess
+"Ferrari","James Hype;Miggy Dela Rosa",2022,known,party,"party;long drive",known
+"Good Life","Inner City",1988,known,party,"party;festival",known
+"Afterglow","Wilkinson;Becky Hill",2019,known,love,"party;festival",known
+"Dead To Me - Slow + Reverb","Whales;Fraxo;Lox Chatterbox",2021,guess,heartbreak,"chill;long drive",guess
+"I'm Good (Blue)","David Guetta;Bebe Rexha",2022,known,party,"party;workout",known
+"One Kiss (with Dua Lipa)","Calvin Harris;Dua Lipa",2018,known,love,"party;long drive",known
+"Let Me Love You","DJ Snake;Justin Bieber",2016,known,love,"long drive;party",known
+"Paradise","Toneshifterz;Firelite",2019,guess,freedom,"festival;workout",guess
+"Where Are You Now","Lost Frequencies;Calum Scott",2016,known,heartbreak,"party;long drive",known
+"Test & Recognise - Flume Re-work","Seekae;Flume",2012,guess,reflection,"chill;focus",guess
+"Sky and Sand","Paul Kalkbrenner;Fritz Kalkbrenner",2008,known,reflection,"long drive;festival",guess
+"Numb","Marshmello;Khalid",2019,known,heartbreak,"long drive;chill",known
+"Lost in the Fire (feat. The Weeknd)","Gesaffelstein;The Weeknd",2019,known,love,"chill;long drive",known
+"The Motto","Tiësto;Ava Max",2021,known,ambition,"party;workout",known
+"Hey Boy Hey Girl","The Chemical Brothers",1999,known,party,"party;festival",known
+"Dancin - Krono Remix","Aaron Smith;Luvli;Krono",2019,known,party,"party;workout",guess
+"Ferrari - Remix","James Hype;Miggy Dela Rosa;Lazza",2023,guess,party,"party;long drive",guess
+"Good Life (Remastered) - Club Mix","Inner City",1988,guess,party,"party;festival",guess
+"Off The Ground","Sub Focus",2019,guess,freedom,"workout;long drive",guess
+"Everything Goes On","Porter Robinson;League of Legends",2019,known,reflection,"chill;focus",known
+"Belly Dancer","Imanbek;BYOR",2022,guess,party,"party;workout",guess
+"Bad Decisions (with BTS & Snoop Dogg)","benny blanco;BTS;Snoop Dogg",2022,known,party,"party;long drive",known
+"Shootout","Izzamuzzic;Julien Marchal",2019,guess,ambition,"workout;focus",guess
+"Wanna Play?","The Prophet",2020,guess,party,"festival;workout",guess
+"Something Just Like This","The Chainsmokers;Coldplay",2017,known,love,"long drive;party",known
+"Every High","Kyson",2013,guess,love,"chill;focus",guess
+"Rave Harder Techno Bass","Mark Dekoda",2023,guess,party,"party;workout",guess
+"Leave Before You Love Me (with Jonas Brothers)","Marshmello;Jonas Brothers",2021,known,heartbreak,"party;long drive",known
+"The Middle","Zedd;Maren Morris;Grey",2018,known,love,"long drive;party",known
+"Don't Be Shy","Tiësto;KAROL G",2021,known,love,"party;workout",known
+"Galvanize","The Chemical Brothers",2004,known,party,"party;workout",known
+"Move Your Body","Marshall Jefferson;Solardo",2021,guess,party,"party;festival",guess
+"Sugar (feat. Francesco Yates)","Robin Schulz;Francesco Yates",2014,known,love,"long drive;party",known
+"Big Fun","Inner City",1988,known,party,"party;festival",known
+"Gold Dust - Radio Edit","DJ Fresh",2011,known,freedom,"party;festival",known
+"All That Really Matters","ILLENIUM;Teddy Swims",2022,guess,heartbreak,"chill;long drive",guess
+"The Nights","Avicii",2014,known,freedom,"long drive;festival",known
+"everything i wanted","Billie Eilish",2019,known,struggle,"chill;sleep",known
+"SG (with Ozuna, Megan Thee Stallion & LISA of BLACKPINK)","DJ Snake;Ozuna;Megan Thee Stallion;LISA",2021,known,party,"party;workout",known
+"Around the World (La la La)","Refuzion",2020,guess,party,"festival;workout",guess
+"Words (feat. Zara Larsson)","Alesso;Zara Larsson",2021,guess,love,"long drive;chill",guess
+"Every High - Young & Sick in-Flight Remix","Kyson;Young & Sick",2014,guess,love,"chill;focus",guess
+"Gravity","Boris Brejcha;Laura Korinth",2021,guess,love,"chill;long drive",guess
+"Happier","Marshmello;Bastille",2018,known,heartbreak,"long drive;chill",known
+"Give It To Me - Full Vocal Mix","Matt Sassari",2019,guess,party,"party;workout",guess
+"Hot In It","Tiësto;Charli XCX",2022,known,party,"party;festival",known
+"Firestarter","The Prodigy",1996,known,rebellion,"party;workout",known
+"Get Get Down","Paul Johnson",1999,known,party,"party;festival",known
+"California Dreamin' (feat. High Jinx)","Chris Lorenzo;High Jinx",2019,guess,freedom,"party;long drive",guess
+"Blackwater - 128 full strings vocal mix","Octave One",1990,known,reflection,"party;festival",guess
+"Ready To Fly","Sub Focus;Dimension",2020,guess,freedom,"party;festival",guess
+"Love Is Gone","SLANDER;Dylan Matthew",2018,known,heartbreak,"long drive;festival",known
+"Wake Me Up","Avicii",2013,known,reflection,"long drive;festival",known
+"Let Me Down Slowly","Alec Benjamin",2018,known,heartbreak,"chill;long drive",known
+"Middle","DJ Snake;Bipolar Sunshine",2015,known,heartbreak,"party;long drive",known
+"Harder State Of Mind","D-Block & S-te-Fan;DJ Isaac",2019,guess,party,"party;festival",guess
+"Bad Memories (feat. Elley Duhé & FAST BOY)","MEDUZA;James Carter;Elley Duhé;FAST BOY",2021,guess,heartbreak,"party;long drive",guess
+"Recovery","Rival Consoles",2018,guess,reflection,"focus;chill",guess
+"No Goodbye","Paul Kalkbrenner",2011,guess,reflection,"focus;chill",guess
+"Moth To A Flame (with The Weeknd)","Swedish House Mafia;The Weeknd",2021,known,love,"party;festival",known
+"Your Love (9PM)","ATB;Topic;A7S",2020,known,love,"party;long drive",known
+"The Business","Tiësto",2020,known,heartbreak,"party;workout",known
+"Smack My Bitch Up","The Prodigy",1997,known,rebellion,"party;workout",known
+"Promised Land","Joe Smooth",1987,known,freedom,"party;festival",known
+"My Love (feat. Jess Glynne)","Route 94;Jess Glynne",2016,known,love,"party;long drive",known
+"Lyk U Use 2 (feat. Andres)","Moodymann;Andres",2000,guess,love,"party;chill",guess
+"Solar System","Sub Focus",2009,guess,freedom,"party;festival",guess
+"From The Ashes (with Skylar Grey)","ILLENIUM;Skylar Grey",2019,guess,struggle,"chill;workout",guess
+"Crazy What Love Can Do","David Guetta;Becky Hill;Ella Henderson",2022,known,love,"party;long drive",known
+"Bored","Billie Eilish",2017,known,heartbreak,"chill;sleep",known
+"Taki Taki (with Selena Gomez, Ozuna & Cardi B)","DJ Snake;Selena Gomez;Ozuna;Cardi B",2018,known,party,"party;long drive",known
+"Feel It!","D-Block & S-te-Fan;D-Sturb",2019,guess,party,"party;festival",guess
+"Closer","The Chainsmokers;Halsey",2016,known,nostalgia,"long drive;party",known
+"We Always Rise","Dither;Deadly Guns;Warface",2021,guess,struggle,"workout;festival",guess
+"More","Jan Blomqvist;Elena Pitoulis",2016,guess,reflection,"chill;long drive",guess
+"Summer","Calvin Harris",2014,known,freedom,"long drive;party",known
+"Stay","Zedd;Alessia Cara",2017,known,love,"long drive;chill",known
+"Pump It Louder","Tiësto;Black Eyed Peas",2014,guess,party,"party;festival",guess
+"Out of Space","The Prodigy",1992,known,party,"party;festival",known
+"Your Love","Frankie Knuckles",1987,known,love,"party;chill",known
+"On Repeat","Robin Schulz;David Guetta",2021,guess,love,"long drive;party",guess
+"Something Here for the Club - Vocal","Terrence Parker",2000,guess,party,"party;chill",guess
+"Desire (with Dimension)","Sub Focus;Dimension",2019,guess,love,"party;workout",guess
+"Shelter","Porter Robinson;Madeon",2016,known,love,"chill;long drive",known
+"Bye Bye","Marshmello;Juice WRLD",2020,known,heartbreak,"chill;long drive",known
+"Deep Down (feat. Never Dull)","Alok;Ella Eyre;Kenny Dope;Never Dull",2018,known,love,"party;long drive",known
+"Loco Contigo (feat. J. Balvin & Tyga)","DJ Snake;J Balvin;Tyga",2019,known,party,"party;long drive",known
+"My Beautiful Fantasy","Phuture Noize;B-Front",2018,guess,freedom,"party;festival",guess
+"21 Reasons (feat. Ella Henderson)","Nathan Dawe;Ella Henderson",2021,known,love,"party;long drive",known
+"You","Kyson",2013,guess,reflection,"chill;sleep",guess
+"A New Error","Moderat",2009,known,reflection,"focus;long drive",known
+"This Is What You Came For","Calvin Harris;Rihanna",2016,known,love,"party;long drive",known
+"Make You Say","Zedd;Maren Morris;BEAUZ",2019,guess,love,"party;long drive",guess
+"Baila Conmigo","Tiësto",2020,guess,party,"party;festival",guess
+"Go","The Chemical Brothers",2015,known,freedom,"long drive;workout",known
+"Gabriel - Live Garage Mix","Roy Davis Jr.;Peven Everett",1996,known,love,"party;chill",known
+"Cola","CamelPhat;Elderbrook",2017,known,love,"party;long drive",known
+"I'm Doing Fine (feat. Amp Dog Knight)","Moodymann;Amp Dog Knight",2004,guess,reflection,"chill;long drive",guess
+"Changing","Sigma;Paloma Faith",2015,known,reflection,"long drive;party",known
+"Story Of My Life (feat. Trippie Redd)","ILLENIUM;Sueco;Trippie Redd",2020,guess,reflection,"long drive;chill",guess
+"Where Did You Go? (feat. MNEK)","Jax Jones;MNEK",2016,known,heartbreak,"party;long drive",known
+"I Like Me Better","Lauv",2017,known,love,"romantic date;chill",known
+"Glue","Bicep",2017,guess,love,"chill;long drive",guess
+"Lambada (Your Love)","Da Tweekaz;Tony Junior;Sound Rush",2022,guess,party,"party;festival",guess
+"2002","Anne-Marie",2018,known,nostalgia,"long drive;party",known
+"Thinking Of You Thinking Of Me","Bogdan Raczynski",1998,guess,reflection,"focus;chill",guess
+"Invisible - Paul Kalkbrenner Remix","NTO;Paul Kalkbrenner",2012,guess,reflection,"focus;long drive",guess
+"Silence","Marshmello;Khalid",2017,known,heartbreak,"long drive;chill",known
+"Clarity","Zedd;Foxes",2012,known,heartbreak,"party;long drive",known
+"Jackie Chan","Tiësto;Dzeko;Preme;Post Malone",2018,known,party,"party;long drive",known
+"Omen","The Prodigy",2009,known,rebellion,"party;workout",known
+"Brighter Days - Dajae- Underground Mix '93","Cajmere;Dajae",1993,guess,love,"party;chill",guess
+"Believe Me","Navos",2019,guess,love,"chill;long drive",guess
+"The Bells","Jeff Mills",1997,known,reflection,"focus;party",known
+"Touch","Hybrid Minds;Catching Cairo",2019,guess,love,"long drive;chill",guess
+"Feel Something (With I Prevail)","ILLENIUM;Excision;I Prevail",2020,known,struggle,"workout;chill",known
+"Move Your Body","Öwnboss;Sevek",2019,guess,party,"party;workout",guess
+"What A Time (feat. Niall Horan)","Julia Michaels;Niall Horan",2019,known,love,"chill;long drive",known
+"Taki Taki (feat. Selena Gomez, Ozuna & Cardi B)","DJ Snake;Selena Gomez;Ozuna;Cardi B",2018,known,party,"party;long drive",known
+"Rave Culture 2022","Sub Zero Project",2022,known,party,"party;festival",known
+"Better Days (NEIKED x Mae Muller x Polo G)","NEIKED;Mae Muller;Polo G",2021,known,freedom,"long drive;party",known
+"Dreamer's Wake","Rival Consoles",2018,guess,reflection,"focus;sleep",guess
+"Rave - Remix","Sam Paganini;Adam Beyer;Layton Giordani",2020,guess,party,"party;workout",guess
+"Don't You Worry Child - Radio Edit","Swedish House Mafia;John Martin",2012,known,reflection,"long drive;festival",known
+"Ocean Drive","Duke Dumont",2015,known,love,"party;long drive",known
+"Savage","Tiësto;Deorro",2019,guess,ambition,"party;workout",guess
+"Halcyon and On and On","Orbital",1993,known,reflection,"chill;focus",known
+"Dancin (feat. Luvli) - Krono Extended Remix","Aaron Smith;Krono;Luvli",2014,known,party,"party;long drive",known
+"Morenita","HUGEL;Cumbiafrica",2018,guess,love,"party;long drive",guess
+"Strings of Life","Derrick May",1987,known,reflection,"party;festival",known
+"All Goes Wrong","Chase & Status;Tom Grennan",2011,known,heartbreak,"long drive;party",known
+"Good Things Fall Apart (with Jon Bellion)","ILLENIUM;Jon Bellion",2019,known,heartbreak,"chill;long drive",known
+"Chamber Of Reflection","Mac DeMarco",2014,known,reflection,"chill;focus",known
+"Happier Than Ever - Edit","Billie Eilish",2021,known,heartbreak,"chill;sleep",known
+"Nightcall","Kavinsky",2010,known,love,"long drive;chill",known
+"Toss A Coin To Your Witcher","Coone;Da Tweekaz;Hard Driver;Bram Boender",2020,guess,party,"party;festival",guess
+"Get Lucky (feat. Pharrell Williams & Nile Rodgers) - Radio Edit","Daft Punk;Pharrell Williams;Nile Rodgers",2013,known,love,"party;long drive",known
+"Memory Arc","Rival Consoles",2018,guess,reflection,"focus;sleep",guess
+"Purple Noise","Boris Brejcha",2017,guess,freedom,"party;focus",guess
+"Feel So Close - Radio Edit","Calvin Harris",2011,known,love,"party;long drive",known
+"Coco Jamboo","Mr. President",1996,known,party,"party;long drive",known
+"Sandstorm","Darude",1999,known,party,"workout;party",known
+"No Good (Start the Dance)","The Prodigy",1994,known,rebellion,"party;workout",known
+"That's the Way Love Is - Underground Mix; Edit","Ten City",1989,known,love,"party;chill",known
+"Every Step","D.O.D",2019,guess,love,"party;long drive",guess
+"The Shit Baby","Omar S;D Taylor",2007,guess,party,"party;chill",guess
+"Blind Faith","Chase & Status;Liam Bailey",2011,known,love,"party;long drive",known
+"Goodbye To A World","Porter Robinson",2014,known,reflection,"chill;focus",known
+"Friday (feat. Mufasa & Hypeman) - Dopamine Re-Edit","Riton;Nightcrawlers;Mufasa & Hypeman;Dopamine",2021,known,party,"party;long drive",known
+"idfc","blackbear",2015,known,heartbreak,"chill;long drive",known
+"Wake Me Up In Paris","Anthony Keyrouz;Paradigm",2018,guess,love,"party;long drive",guess
+"WKND!","Brennan Heart;Wildstylez",2019,guess,party,"party;festival",guess
+"Roses - Imanbek Remix","SAINt JHN;Imanbek",2019,known,love,"party;long drive",known
+"Paradise","Satanicpornocultshop",2012,guess,reflection,"focus;chill",guess
+"Porto","Worakls",2016,guess,reflection,"chill;focus",guess
+"Stay With Me (with Justin Timberlake, Halsey, & Pharrell)","Calvin Harris;Justin Timberlake;Halsey;Pharrell Williams",2022,known,love,"party;long drive",known
+"Everytime We Touch","Cascada",2004,known,love,"party;long drive",known
+"Sicko Drop","KVSH;Schillist",2018,guess,party,"party;workout",guess
+"Voodoo People","The Prodigy",1994,known,rebellion,"party;workout",known
+"Dream Machine - DownTempo Mix","Mark Farina",2004,guess,reflection,"chill;long drive",guess
+"Rockstar","Ilkay Sencan;Dynoro",2019,guess,ambition,"party;long drive",guess
+"I Can't Kick This Feeling When It Hits","Moodymann",1997,guess,love,"chill;party",guess
+"Witchcraft","Pendulum",2010,known,rebellion,"workout;party",known
+"In Your Arms (with X Ambassadors)","ILLENIUM;X Ambassadors",2019,guess,love,"long drive;chill",guess
+"Waiting For Love","Avicii",2015,known,heartbreak,"long drive;party",known
+"die first","Nessa Barrett",2020,known,struggle,"chill;sleep",known
+"Turn Down for What","DJ Snake;Lil Jon",2013,known,party,"party;workout",known
+"Fight For Something","Brennan Heart;Coone;Max P",2018,guess,struggle,"workout;festival",guess
+"Love Tonight - David Guetta Remix Edit","Shouse;David Guetta",2020,known,love,"party;long drive",known
+"New Grass — piano reworks","tstewart;Ólafur Arnalds",2020,guess,reflection,"sleep;focus",guess
+"Mind Dimension - Tiësto Remix","Tiga;Tiësto",2013,guess,reflection,"party;focus",guess
+"Potion (with Dua Lipa & Young Thug)","Calvin Harris;Dua Lipa;Young Thug",2021,known,love,"party;long drive",known
+"4:00A.M.","Taeko Onuki",1978,guess,reflection,"chill;sleep",guess
+"One More Time","Armin van Buuren;Maia Wright",2021,guess,love,"party;festival",guess
+"Let Forever Be","The Chemical Brothers",1999,known,reflection,"party;chill",known
+"Beautiful People - Obskür Remix","Barbara Tucker;Obskür",1994,known,love,"party;chill",known
+"Miracle Maker","Dom Dolla;Clementine Douglas",2022,known,love,"party;long drive",known
+"Don’t You Want My Love","Moodymann",2014,guess,love,"chill;party",guess
+"End Credits","Chase & Status;Plan B",2011,known,reflection,"long drive;chill",known
+"Can You Feel My Heart","Varien;Andrew Zink",2018,guess,love,"workout;festival",guess
+"Ride It","Regard",2019,known,love,"party;long drive",known
+"idontwannabeyouanymore","Billie Eilish",2017,known,struggle,"chill;sleep",known
+"Cooler Than Me","Lucky Luke",2019,guess,love,"party;long drive",guess
+"Zombie","Ran-D",2013,guess,party,"party;festival",guess
+"OUT OUT (feat. Charli XCX & Saweetie)","Joel Corry;Jax Jones;Charli XCX;Saweetie",2021,known,party,"party;long drive",known
+"Do Matter","Plaid",2014,guess,reflection,"focus;chill",guess
+"Future Dust - Original Mix","Enrico Sangiuliano",2018,guess,reflection,"focus;workout",guess
+"FRIENDS","Marshmello;Anne-Marie",2018,known,love,"party;long drive",known
+"Beautiful Now","Zedd;Jon Bellion",2015,known,reflection,"long drive;chill",known
+"Children","Robert Miles",1995,known,reflection,"chill;sleep",known
+"Voodoo People - Pendulum Mix","The Prodigy;Pendulum",2005,known,rebellion,"workout;party",known
+"Mystery of Love","Mr. Fingers",1985,known,love,"chill;party",known
+"Check Out","J. Worra;Leo Stannard",2020,guess,love,"party;long drive",guess
+"Big Fun (Remastered)","Inner City",1988,known,party,"party;chill",known
+"Full Send","1991",2018,guess,ambition,"workout;party",guess
+"Alive","Zeds Dead;MKLA",2019,guess,freedom,"workout;long drive",guess
+"My Kind of Woman","Mac DeMarco",2012,known,love,"chill;romantic date",known
+"hot girl bummer","blackbear",2019,known,reflection,"party;long drive",known
+"La Bachata","Manuel Turizo",2022,known,heartbreak,"party;long drive",known
+"Tití Me Preguntó","Bad Bunny",2022,known,party,"party;long drive",known
+"Me Porto Bonito","Bad Bunny;Chencho Corleone",2022,known,ambition,"party;long drive",known
+"Vivir Mi Vida","Marc Anthony",2013,known,freedom,"party;wedding",known
+"cómo dormiste?","Rels B",2021,guess,heartbreak,"chill;long drive",guess
+"Efecto","Bad Bunny",2022,known,love,"chill;long drive",known
+"Ojitos Lindos","Bad Bunny;Bomba Estéreo",2022,known,love,"romantic date;chill",known
+"Moscow Mule","Bad Bunny",2022,known,party,"party;long drive",known
+"Flor Pálida","Marc Anthony",1992,known,heartbreak,"chill;romantic date",known
+"A Mí","Rels B",2022,guess,love,"chill;long drive",guess
+"Neverita","Bad Bunny",2022,known,heartbreak,"party;long drive",known
+"LOKERA","Rauw Alejandro;Lyanno;Brray",2021,known,party,"party;long drive",known
+"PROVENZA","KAROL G",2022,known,freedom,"party;long drive",known
+"La Vida Es Un Carnaval","Celia Cruz",1998,known,freedom,"party;wedding",known
+"SHORTY QUE TE VAYA BN <3","Rels B",2022,guess,heartbreak,"chill;long drive",guess
+"Tarot","Bad Bunny;Jhayco",2022,known,party,"party;long drive",known
+"Party","Bad Bunny;Rauw Alejandro",2022,known,party,"party;long drive",known
+"GATÚBELA","KAROL G;Maldy",2022,known,party,"party;long drive",known
+"Está Rico","Marc Anthony;Will Smith;Bad Bunny",2022,known,party,"party;long drive",known
+"Como Antes","Rels B",2021,guess,nostalgia,"chill;long drive",guess
+"Te Felicito","Shakira;Rauw Alejandro",2022,known,heartbreak,"chill;long drive",known
+"La Corriente","Bad Bunny;Tony Dize",2022,known,rebellion,"party;long drive",known
+"LA CANCIÓN","J Balvin;Bad Bunny",2019,known,heartbreak,"chill;long drive",known
+"Brujeria","El Gran Combo De Puerto Rico",1972,guess,heartbreak,"party;chill",guess
+"La Última Canción","Rels B",2020,guess,heartbreak,"chill;long drive",guess
+"Pepas","Farruko",2021,known,party,"party;long drive",known
+"Yonaguni","Bad Bunny",2021,known,love,"chill;long drive",known
+"Lo Siento BB:/ (with Bad Bunny & Julieta Venegas)","Tainy;Bad Bunny;Julieta Venegas",2020,known,heartbreak,"chill;long drive",known
+"You Sang To Me","Marc Anthony",1999,known,love,"romantic date;wedding",known
+"Buenos Genes","Rels B;DELLAFUENTE",2021,guess,ambition,"chill;long drive",guess
+"Hips Don't Lie (feat. Wyclef Jean)","Shakira;Wyclef Jean",2006,known,love,"party;long drive",known
+"Un Ratito","Bad Bunny",2022,known,love,"party;long drive",known
+"Feliz Cumpleaños Ferxxo","Feid",2022,known,party,"party;long drive",known
+"When I Dream at Night","Marc Anthony",1999,known,love,"romantic date;chill",known
+"I Know","Rels B;Indigo Jams",2018,guess,reflection,"chill;long drive",guess
+"Yo Voy (feat. Daddy Yankee)","Zion & Lennox",2004,known,love,"party;long drive",known
+"Dos Mil 16","Bad Bunny",2022,known,nostalgia,"chill;long drive",known
+"Un Coco","Bad Bunny",2022,known,party,"party;long drive",known
+"Vivir Sin Ella","Gilberto Santa Rosa",1994,guess,heartbreak,"chill;romantic date",guess
+"Forgive Me","Rels B;Indigo Jams",2018,guess,heartbreak,"chill;long drive",guess
+"DÁKITI","Bad Bunny;Jhayco",2020,known,love,"party;long drive",known
+"Prohibidox","Feid",2022,guess,love,"party;long drive",guess
+"Andrea","Bad Bunny;Buscabulla",2022,known,struggle,"chill;long drive",known
+"Güaracha","Willie Colón;Héctor Lavoe;Yomo Toro",1975,known,party,"party;focus",known
+"Gasolina","Daddy Yankee",2004,known,party,"party;workout",known
+"PUNTO 40","Rauw Alejandro;Baby Rasta",2021,known,ambition,"party;long drive",known
+"MAMIII","Becky G;KAROL G",2022,known,party,"party;long drive",known
+"Barco a la Deriva","Marc Anthony",2013,known,heartbreak,"chill;long drive",known
+"Despacito","Luis Fonsi;Daddy Yankee",2017,known,love,"party;long drive",known
+"X ÚLTIMA VEZ","Daddy Yankee;Bad Bunny",2022,known,party,"party;long drive",known
+"Normal","Feid",2022,guess,love,"chill;long drive",guess
+"Lamento Borincano - Salsa Version","Marc Anthony",2004,guess,struggle,"chill;romantic date",guess
+"Waka Waka (This Time for Africa) [The Official 2010 FIFA World Cup (TM) Song] (feat. Freshlyground)","Shakira;Freshlyground",2010,known,freedom,"party;festival",known
+"Otro Atardecer","Bad Bunny;The Marías",2022,known,love,"romantic date;chill",known
+"Yo No Soy Celoso","Bad Bunny",2022,known,love,"party;long drive",known
+"Conteo Regresivo","Gilberto Santa Rosa",1996,guess,love,"party;chill",guess
+"Con Calma","Daddy Yankee;Snow",2019,known,party,"party;long drive",known
+"Me Fui de Vacaciones","Bad Bunny",2022,known,freedom,"long drive;chill",known
+"La Santa","Bad Bunny;Daddy Yankee",2020,known,party,"party;long drive",known
+"Tu Amor Me Hace Bien","Marc Anthony",2004,known,love,"romantic date;chill",known
+"MIA (feat. Drake)","Bad Bunny;Drake",2018,known,love,"party;long drive",known
+"Enséñame a Bailar","Bad Bunny",2022,known,party,"party;long drive",known
+"Aguacero","Bad Bunny",2022,known,party,"party;long drive",known
+"Plazos Traicioneros","Celia Cruz;Willie Colón",1977,guess,heartbreak,"party;chill",guess
+"Shower","Becky G",2014,known,love,"party;long drive",known
+"Besos Moja2","Wisin & Yandel;ROSALÍA",2022,known,love,"party;long drive",known
+"Diles","Bad Bunny;Ozuna;Farruko;Arcangel;Ñengo Flow;DJ Luian;Mambo Kingz",2016,known,party,"party;long drive",known
+"Amandote","Gilberto Santa Rosa",2001,guess,love,"romantic date;chill",guess
+"Chantaje (feat. Maluma)","Shakira;Maluma",2016,known,heartbreak,"party;long drive",known
+"Desesperados","Rauw Alejandro;Chencho Corleone",2021,known,heartbreak,"party;long drive",known
+"LA NOCHE DE ANOCHE","Bad Bunny;ROSALÍA",2023,known,love,"party;long drive",known
+"I Need You","Marc Anthony",2002,known,love,"romantic date;wedding",known
+"Hey Mor","Ozuna;Feid",2022,known,love,"party;long drive",known
+"Si Te La Encuentras Por Ahí","Feid",2023,guess,heartbreak,"chill;long drive",guess
+"No Me Conoce - Remix","Jhayco;J Balvin;Bad Bunny",2019,guess,ambition,"party;long drive",guess
+"En Defensa Propia","Gilberto Santa Rosa",1997,guess,rebellion,"chill;party",guess
+"In Da Getto","J Balvin;Skrillex",2019,known,party,"party;festival",known
+"Volví","Aventura;Bad Bunny",2022,known,ambition,"party;long drive",known
+"UN PESO","J Balvin;Bad Bunny;Marciano Cantero",2019,known,ambition,"party;long drive",known
+"Volando Entre Tus Brazos","Marc Anthony",2004,known,love,"romantic date;chill",known
+"Whenever, Wherever","Shakira",2001,known,love,"party;long drive",known
+"Party en el Barrio (feat. Duki)","Paulo Londra;Duki",2019,guess,ambition,"party;long drive",guess
+"CÓMO SE SIENTE - Remix","Jhayco;Bad Bunny",2021,guess,love,"party;long drive",guess
+"Pablo Pueblo","Rubén Blades;Willie Colón",1977,guess,struggle,"chill;focus",guess
+"Del Mar","Ozuna;Doja Cat;Sia",2021,known,love,"party;long drive",known
+"Si Estuviésemos Juntos","Bad Bunny",2018,known,heartbreak,"chill;long drive",known
+"Si Veo a Tu Mamá","Bad Bunny",2020,known,heartbreak,"chill;long drive",known
+"Quien No Ha Llorado Solo","Gilberto Santa Rosa",1990,guess,heartbreak,"chill;romantic date",guess
+"Can't Remember to Forget You (feat. Rihanna)","Shakira;Rihanna",2014,known,love,"party;long drive",known
+"A Tu Merced","Bad Bunny",2020,known,love,"romantic date;chill",known
+"Junio","Maluma",2018,known,love,"party;long drive",known
+"FOR SALE","Gilberto Santa Rosa",1990,guess,heartbreak,"chill;party",guess
+"Limbo","Daddy Yankee",2012,known,love,"party;long drive",known
+"Agosto","Bad Bunny",2022,known,nostalgia,"chill;long drive",known
+"QUE PRETENDES","J Balvin;Bad Bunny",2018,known,heartbreak,"party;long drive",known
+"Nada Personal","Marc Anthony",2004,known,heartbreak,"chill;long drive",known
+"Danza Kuduro","Don Omar;Lucenzo",2010,known,party,"party;festival",known
+"El Apagón","Bad Bunny",2022,known,rebellion,"party;long drive",known
+"Sobrio","Maluma",2017,known,love,"party;long drive",known
+"Hojas Blancas","El Gran Combo De Puerto Rico;Andy Montañez",1990,guess,heartbreak,"chill;long drive",guess
+"X","Nicky Jam;J Balvin",2018,known,party,"party;workout",guess
+"Todo De Ti","Rauw Alejandro",2021,known,love,"party;romantic date",guess
+"Mayor Que Usted","Natti Natasha;Daddy Yankee;Wisin & Yandel",2018,known,party,"party;festival",guess
+"Pueden Decir - Balada","Gilberto Santa Rosa",1996,guess,love,"romantic date;chill",guess
+"El Perdón (with Enrique Iglesias)","Nicky Jam;Enrique Iglesias",2015,known,heartbreak,"party;long drive",known
+"She Don't Give a Fo","Duki;KHEA",2018,known,party,"party;workout",guess
+"Tacones Rojos","Sebastian Yatra",2019,known,love,"party;romantic date",guess
+"Agua que Cae del Cielo (Lluvia) (feat. Willie Rosario) - En Vivo desde Puerto Rico","Gilberto Santa Rosa;Willie Rosario",2002,guess,heartbreak,"party;chill",guess
+"Livin' la Vida Loca","Ricky Martin",1999,known,party,"party;festival",known
+"Mercedes Tintia","Anuel AA",2020,guess,ambition,"party;workout",guess
+"TE MUDASTE","Bad Bunny",2020,known,heartbreak,"chill;long drive",guess
+"Esta Navidad","Héctor Lavoe;Willie Colón;Yomo Toro",1970,guess,party,"party;festival",known
+"Échame La Culpa","Luis Fonsi;Demi Lovato",2017,known,love,"party;long drive",known
+"Callaita","Bad Bunny;Tainy",2019,known,heartbreak,"party;long drive",guess
+"Luces De Neón","Myke Towers",2020,guess,party,"party;long drive",guess
+"Hasta Ayer","Marc Anthony",1995,guess,heartbreak,"romantic date;chill",guess
+"Mañana","Ozuna",2022,guess,love,"party;romantic date",guess
+"Berlin","Zion & Lennox;Maria Becerra",2021,guess,party,"party;long drive",guess
+"Nos Comemos Vivos","Maluma;Chencho Corleone",2022,guess,love,"party;romantic date",guess
+"Celo","Willie Colón",1981,guess,heartbreak,"party;chill",guess
+"Despacito - Remix","Luis Fonsi;Daddy Yankee;Justin Bieber",2017,known,love,"party;romantic date",known
+"Safaera","Bad Bunny;Jowell & Randy;Ñengo Flow",2020,known,party,"party;workout",known
+"RUMBATÓN","Daddy Yankee",2022,known,party,"party;workout",guess
+"Popurrí Navideño / Estrella De Oriente (De Tierras Lejanas) / Noche De Paz / La Virgen María / La Tierra Mía","Willie Colón;Héctor Lavoe",1970,guess,devotion,"festival;prayer",guess
+"Mi Gente","J Balvin;Willy William",2017,known,party,"party;festival",known
+"La Difícil","Bad Bunny",2020,known,love,"party;chill",guess
+"EL MAKINON","KAROL G;Mariah Angeliq",2023,known,party,"party;workout",guess
+"No Encuentro Palabras","Celia Cruz;La Sonora Matancera",1955,guess,love,"romantic date;chill",guess
+"Hawái - Remix","Maluma;The Weeknd",2020,known,heartbreak,"chill;long drive",guess
+"Yo Perreo Sola","Bad Bunny",2020,known,freedom,"party;workout",known
+"La Zona","Bad Bunny",2020,known,party,"party;workout",guess
+"Tu Amor Me Hace Bien - Live Version","Marc Anthony",1999,guess,love,"romantic date;party",guess
+"Dura","Daddy Yankee",2018,known,party,"party;workout",known
+"Cúrame","Rauw Alejandro",2021,known,love,"romantic date;party",guess
+"SEJODIOTO","KAROL G",2024,guess,party,"party;workout",guess
+"El Arbolito","El Gran Combo De Puerto Rico",1970,guess,reflection,"party;chill",guess
+"Hero","Enrique Iglesias",2001,known,love,"romantic date;wedding",known
+"XQ Te Pones Así","Feid;Yandel",2023,guess,love,"party;romantic date",guess
+"Tusa","KAROL G;Nicki Minaj",2019,known,heartbreak,"party;chill",known
+"Desvelo De Amor","Celia Cruz;La Sonora Matancera",1955,guess,heartbreak,"chill;romantic date",guess
+"Viaje","Farruko",2020,guess,love,"party;long drive",guess
+"Vuelve","Daddy Yankee;Bad Bunny",2017,known,heartbreak,"party;long drive",guess
+"BOMBÓN","Daddy Yankee;El Alfa;Lil Jon",2022,known,party,"party;workout",known
+"Él Son","Héctor Lavoe",1998,guess,party,"party;festival",guess
+"Try Everything","Shakira",2016,known,ambition,"workout;long drive",known
+"Sola (Remix)","Anuel AA;Daddy Yankee;Zion & Lennox;Farruko;Wisin",2018,known,love,"party;workout",guess
+"Aeropuerto","Camilo",2021,guess,heartbreak,"chill;long drive",guess
+"Un Amor para la Historia - Bolero/Balada","Gilberto Santa Rosa",2003,guess,love,"romantic date;wedding",guess
+"SUBEME LA RADIO (feat. Descemer Bueno & Zion & Lennox)","Enrique Iglesias;Descemer Bueno;Zion & Lennox",2017,known,party,"party;long drive",known
+"Ande Con Quien Ande","Myke Towers;Jhay Cortez",2021,guess,party,"party;long drive",guess
+"Hawái","Maluma",2020,known,heartbreak,"chill;long drive",guess
+"Canto A Borínquen","Héctor Lavoe;Willie Colón;Yomo Toro",1970,guess,nostalgia,"chill;festival",guess
+"Ram Pam Pam","Natti Natasha;Becky G",2021,known,party,"party;workout",guess
+"Qué Más Pues?","J Balvin;Maria Becerra",2021,known,party,"party;long drive",guess
+"Ley Seca","Jhayco;Anuel AA",2022,guess,party,"party;workout",guess
+"Se Esfuma Tu Amor","Marc Anthony",2013,known,heartbreak,"chill;romantic date",guess
+"Te Pienso","Ozuna",2023,guess,heartbreak,"chill;long drive",guess
+"Brother","Anuel AA",2021,guess,reflection,"chill;long drive",guess
+"Pareja Del Año","Sebastian Yatra;Myke Towers",2021,guess,love,"party;romantic date",guess
+"Gracia Divina - Live","Celia Cruz;Orquesta Harlow;Larry Harlow",1974,guess,devotion,"party;festival",guess
+"Tonight (I'm Fuckin' You)","Enrique Iglesias;Ludacris;DJ Frank E",2007,known,party,"party;workout",known
+"China","Anuel AA;Daddy Yankee;KAROL G;J Balvin;Ozuna",2019,known,love,"party;long drive",guess
+"KESI - Remix","Camilo;Shawn Mendes",2020,known,love,"romantic date;chill",guess
+"Pueden Decir","Gilberto Santa Rosa",1996,guess,love,"romantic date;chill",guess
+"I Like It","Enrique Iglesias;Pitbull",2010,known,party,"party;festival",known
+"Algo Me Gusta De Ti","Wisin & Yandel;Chris Brown;T-Pain",2008,known,love,"party;romantic date",guess
+"Relación - Remix","Sech;Daddy Yankee;J Balvin;ROSALÍA;Farruko",2019,known,love,"party;long drive",guess
+"Necesito Amarte","Marc Anthony",1993,guess,love,"romantic date;chill",guess
+"Con Calma - Remix","Daddy Yankee;Katy Perry;Snow",2019,known,party,"party;festival",known
+"Baila Baila Baila - Remix","Ozuna;Daddy Yankee;J Balvin;Farruko;Anuel AA",2018,known,party,"party;workout",guess
+"BICHOTA","KAROL G",2020,known,ambition,"party;workout",guess
+"Sin Voluntad - En Vivo desde Puerto Rico","Gilberto Santa Rosa",1991,guess,heartbreak,"chill;romantic date",guess
+"Favorita","Ozuna",2023,guess,love,"party;romantic date",guess
+"Ella Quiere Beber - Remix","Anuel AA;Romeo Santos",2018,known,party,"party;workout",guess
+"¿Qué Nos Pasó?","Anuel AA",2022,guess,heartbreak,"chill;long drive",guess
+"De Que?","Rubén Blades;Willie Colón",1981,guess,reflection,"party;chill",guess
+"Mi Gente (feat. Beyoncé)","J Balvin;Willy William;Beyoncé",2017,known,party,"party;festival",known
+"Una Locura","Ozuna;J Balvin;Chencho Corleone",2020,guess,love,"party;long drive",guess
+"UN DIA (ONE DAY) (Feat. Tainy)","J Balvin;Dua Lipa;Bad Bunny;Tainy",2020,known,love,"party;long drive",guess
+"Creo en Ti","Rubén Blades",1980,guess,love,"romantic date;chill",guess
+"4:22","Ozuna;Danny Ocean",2023,guess,love,"party;long drive",guess
+"Criminal","Natti Natasha;Ozuna",2020,known,love,"party;long drive",guess
+"11 PM","Maluma",2017,guess,love,"party;romantic date",guess
+"Si Los Hombres Han Llegado a La Luna","Gilberto Santa Rosa",1992,guess,heartbreak,"chill;party",guess
+"El Cel","Ozuna;Chencho Corleone;Arcangel;J Balvin;Randy",2023,guess,love,"party;long drive",guess
+"Noche de Novela (feat. Ed Sheeran)","Paulo Londra;Ed Sheeran",2022,guess,love,"chill;long drive",guess
+"Se Preparó","Ozuna",2017,known,party,"party;workout",guess
+"Me Volvieron A Hablar De Ella - En Vivo desde Puerto Rico","Gilberto Santa Rosa",1996,guess,heartbreak,"chill;romantic date",guess
+"Kotodama","Ozuna",2023,guess,party,"party;workout",guess
+"Secreto","Anuel AA;KAROL G",2019,known,love,"party;romantic date",guess
+"Soltera - Remix","Lunay;Daddy Yankee;Bad Bunny",2019,known,party,"party;workout",guess
+"Si He De Morir","Marc Anthony",1993,guess,love,"romantic date;chill",guess
+"La La La (Brazil 2014) (feat. Carlinhos Brown)","Shakira;Carlinhos Brown",2014,known,party,"party;festival",known
+"Sin Novia","Nicky Jam",2022,guess,party,"party;long drive",guess
+"Sigue","J Balvin;Ed Sheeran",2021,known,love,"romantic date;chill",guess
+"A Dónde Vamos a Parar (with Natalia Lafourcade) - En Vivo","Gilberto Santa Rosa;Natalia Lafourcade",2017,guess,heartbreak,"chill;romantic date",guess
+"Un Reel","Ozuna;TINI",2022,guess,love,"party;romantic date",guess
+"Nazareno","Farruko",2022,guess,devotion,"chill;prayer",guess
+"HOT","Daddy Yankee;Pitbull",2022,known,party,"party;workout",guess
+"Que Alguien Me Diga - Live Version","Gilberto Santa Rosa",1990,guess,heartbreak,"chill;romantic date",guess
+"I'm Yours","Jason Mraz",2008,known,love,"chill;romantic date",known
+"Something in the Orange","Zach Bryan",2022,known,heartbreak,"chill;long drive",known
+"The Night We Met","Lord Huron",2015,known,heartbreak,"chill;sleep",known
+"Take Me To Church","Hozier",2013,known,rebellion,"chill;long drive",known
+"Fourth of July","Sufjan Stevens",2015,known,reflection,"chill;sleep",known
+"Lucky","Jason Mraz;Colbie Caillat",2008,known,love,"romantic date;wedding",known
+"You Proof","Morgan Wallen",2022,known,party,"party;long drive",known
+"Riptide","Vance Joy",2013,known,love,"chill;long drive",known
+"Fast Car","Tracy Chapman",1988,known,struggle,"long drive;chill",known
+"Wild World","Yusuf / Cat Stevens",1970,known,heartbreak,"chill;long drive",known
+"I Won't Give Up","Jason Mraz",2012,known,love,"wedding;romantic date",known
+"Wasted On You","Morgan Wallen",2021,known,heartbreak,"chill;long drive",known
+"Little Talks","Of Monsters and Men",2011,known,heartbreak,"festival;long drive",known
+"American Pie","Don McLean",1971,known,nostalgia,"long drive;chill",known
+"Slow Dancing in a Burning Room","John Mayer",2006,known,heartbreak,"chill;romantic date",known
+"93 Million Miles","Jason Mraz",2012,known,reflection,"chill;long drive",known
+"The Kind of Love We Make","Luke Combs",2022,known,love,"romantic date;wedding",known
+"Ophelia","The Lumineers",2016,known,struggle,"chill;long drive",known
+"You're Gonna Live Forever in Me","John Mayer",2017,known,reflection,"chill;sleep",known
+"Your Body Is a Wonderland","John Mayer",2001,known,love,"romantic date;chill",known
+"Have It All","Jason Mraz",2018,known,reflection,"chill;focus",known
+"Tennessee Whiskey","Chris Stapleton",2015,known,love,"romantic date;wedding",known
+"Ho Hey","The Lumineers",2012,known,love,"festival;long drive",known
+"Heart Of Gold","Neil Young",1972,known,reflection,"long drive;chill",known
+"Take Me Home, Country Roads","John Denver",1971,known,nostalgia,"long drive;festival",known
+"The Remedy (I Won't Worry)","Jason Mraz",2002,known,reflection,"chill;long drive",known
+"Whiskey Glasses","Morgan Wallen",2018,known,heartbreak,"party;chill",known
+"Let Her Go","Passenger",2012,known,heartbreak,"chill;long drive",known
+"Baby Can I Hold You","Tracy Chapman",1988,known,love,"romantic date;chill",known
+"Knockin' On Heaven's Door","Bob Dylan",1973,known,reflection,"chill;sleep",known
+"Love Someone","Jason Mraz",2014,known,love,"romantic date;wedding",known
+"Beautiful Crazy","Luke Combs",2018,known,love,"romantic date;wedding",known
+"Mrs. Robinson - From ""The Graduate"" Soundtrack","Simon & Garfunkel",1968,known,reflection,"long drive;chill",known
+"Waiting On the World to Change","John Mayer",2006,known,rebellion,"long drive;chill",known
+"Father And Son","Yusuf / Cat Stevens",1970,known,reflection,"chill;sleep",known
+"You and I Both","Jason Mraz",2005,known,love,"chill;long drive",known
+"Forever After All","Luke Combs",2020,known,love,"wedding;romantic date",known
+"Skinny Love","Bon Iver",2007,known,heartbreak,"chill;sleep",known
+"Gravity","John Mayer",2006,known,reflection,"chill;sleep",known
+"Free Fallin' - Live at the Nokia Theatre, Los Angeles, CA - December 2007","John Mayer",1989,known,heartbreak,"chill;long drive",known
+"More Than Friends (feat. Meghan Trainor)","Jason Mraz;Meghan Trainor",2018,known,love,"romantic date;chill",known
+"10,000 Hours (with Justin Bieber)","Dan + Shay;Justin Bieber",2019,known,love,"romantic date;wedding",known
+"The Sound of Silence - Acoustic Version","Simon & Garfunkel",1964,known,reflection,"chill;sleep",known
+"Mystery of Love","Sufjan Stevens",2017,known,love,"romantic date;chill",known
+"Annie's Song","John Denver",1974,known,love,"romantic date;wedding",known
+"Let's See What The Night Can Do","Jason Mraz",2018,known,love,"romantic date;chill",known
+"You're Still The One","Shania Twain",1998,known,love,"wedding;romantic date",known
+"Big Black Car","Gregory Alan Isakov",2009,guess,reflection,"chill;long drive",known
+"Swan Upon Leda","Hozier",2023,known,rebellion,"chill;focus",known
+"I Guess I Just Feel Like","John Mayer",2021,known,reflection,"chill;long drive",known
+"Unlonely","Jason Mraz",2018,known,love,"chill;focus",known
+"Before He Cheats","Carrie Underwood",2006,known,rebellion,"party;long drive",known
+"Beach Baby","Bon Iver",2009,known,nostalgia,"chill;long drive",known
+"XO","John Mayer",2013,known,love,"chill;romantic date",known
+"Like a Rolling Stone","Bob Dylan",1965,known,rebellion,"long drive;chill",known
+"The Woman I Love","Jason Mraz",2012,known,love,"romantic date;wedding",known
+"Man! I Feel Like A Woman!","Shania Twain",1997,known,party,"party;festival",known
+"Saturday Sun","Vance Joy",2018,known,love,"chill;long drive",known
+"Last Train Home","John Mayer",2021,known,freedom,"long drive;chill",known
+"Vincent","Don McLean",1971,known,reflection,"chill;sleep",known
+"Living in the Moment","Jason Mraz",2012,known,reflection,"chill;focus",known
+"Wagon Wheel","Darius Rucker",2013,known,freedom,"long drive;party",known
+"The Boxer","Simon & Garfunkel",1969,known,struggle,"chill;long drive",known
+"Pink Moon","Nick Drake",1972,known,reflection,"sleep;chill",known
+"Like Real People Do","Hozier",2014,known,love,"romantic date;chill",known
+"No Plans","Jason Mraz",2018,known,freedom,"chill;long drive",known
+"9 to 5","Dolly Parton",1980,known,ambition,"party;long drive",known
+"I Will Wait","Mumford & Sons",2012,known,devotion,"festival;long drive",known
+"Blowin' in the Wind","Bob Dylan",1963,known,rebellion,"chill;long drive",known
+"Harvest Moon","Neil Young",1992,known,love,"romantic date;chill",known
+"Long Drive","Jason Mraz",2014,known,freedom,"long drive;chill",known
+"The Bones","Maren Morris",2019,known,love,"romantic date;long drive",known
+"Only Love","Ben Howard",2011,known,reflection,"chill;long drive",known
+"Old Pine","Ben Howard",2011,known,nostalgia,"chill;sleep",known
+"Cherry Wine - Live","Hozier",2014,known,struggle,"chill;sleep",known
+"I'll Do Anything","Jason Mraz",2002,known,love,"romantic date;chill",known
+"Life is a Highway","Rascal Flatts",2006,known,freedom,"long drive;party",known
+"Sleep On The Floor","The Lumineers",2016,known,freedom,"long drive;chill",known
+"Someone New","Hozier",2014,known,love,"chill;romantic date",known
+"Stay Alive","José González",2013,known,freedom,"chill;long drive",known
+"Curbside Prophet","Jason Mraz",2002,known,reflection,"chill;focus",known
+"The Gambler","Kenny Rogers",1978,known,reflection,"long drive;chill",known
+"Missing Piece","Vance Joy",2018,guess,love,"romantic date;chill",guess
+"The Wind - Remastered 2021","Yusuf / Cat Stevens",1971,known,freedom,"chill;sleep",known
+"Daughters","John Mayer",2004,known,reflection,"chill;wedding",known
+"Sleep All Day","Jason Mraz",2002,known,freedom,"chill;focus",known
+"Play It Again","Luke Bryan",2013,known,love,"long drive;party",known
+"Dirty Paws","Of Monsters and Men",2011,known,freedom,"festival;long drive",known
+"Carry Me Away","John Mayer",2021,known,love,"chill;long drive",known
+"Love on the Weekend","John Mayer",2016,known,love,"romantic date;chill",known
+"Who Needs Shelter","Jason Mraz",2002,known,love,"chill;romantic date",known
+"Hurt","Johnny Cash",1994,known,struggle,"chill;sleep",known
+"Flightless Bird, American Mouth","Iron & Wine",2007,known,love,"chill;romantic date",known
+"Heartbeats","José González",2002,guess,love,"chill;sleep",known
+"Should Have Known Better","Sufjan Stevens",2015,known,reflection,"chill;sleep",known
+"Look For The Good (Single Version)","Jason Mraz",2008,known,reflection,"chill;wedding",known
+"I Quit Drinking","Kelsea Ballerini;LANY",2022,guess,heartbreak,"chill;long drive",guess
+"Clarity","Vance Joy",2020,guess,love,"chill;romantic date",guess
+"Death with Dignity","Sufjan Stevens",2015,known,reflection,"sleep;chill",known
+"Shrike","Hozier",2018,known,heartbreak,"chill;sleep",known
+"Absolutely Zero","Jason Mraz",2002,known,heartbreak,"chill;focus",known
+"Jolene","Dolly Parton",1973,known,heartbreak,"chill;long drive",known
+"Ends of the Earth","Lord Huron",2012,known,freedom,"long drive;chill",known
+"Stop This Train","John Mayer",2006,known,reflection,"long drive;chill",known
+"Half of My Heart","John Mayer",2009,known,love,"chill;romantic date",known
+"Too Much Food","Jason Mraz",2002,known,freedom,"chill;focus",known
+"Simple","Florida Georgia Line",2019,guess,love,"romantic date;wedding",guess
+"Morning Has Broken - Remastered 2021","Yusuf / Cat Stevens",1971,known,devotion,"prayer;chill",known
+"Heartbreak Warfare","John Mayer",2009,known,heartbreak,"chill;long drive",known
+"The Blower's Daughter","Damien Rice",2001,guess,heartbreak,"chill;sleep",known
+"No Stopping Us","Jason Mraz",2002,guess,freedom,"chill;focus",guess
+"Any Man Of Mine","Shania Twain",1995,known,love,"party;long drive",known
+"The Night We Met (feat. Phoebe Bridgers)","Lord Huron;Phoebe Bridgers",2018,known,heartbreak,"chill;sleep",known
+"The Only Thing","Sufjan Stevens",2015,known,reflection,"sleep;chill",known
+"Who Says","John Mayer",2009,known,freedom,"long drive;chill",known
+"On Love, in Sadness","Jason Mraz",2002,known,heartbreak,"chill;sleep",known
+"Speechless","Dan + Shay",2018,known,love,"wedding;romantic date",known
+"Cleopatra","The Lumineers",2016,known,reflection,"chill;long drive",known
+"Shouldn't Matter but It Does","John Mayer",2021,known,heartbreak,"chill;long drive",known
+"Hallelujah","Leonard Cohen",1984,known,devotion,"prayer;chill",known
+"Tonight, Not Again - Live","Jason Mraz",2002,guess,freedom,"chill;focus",guess
+"Tequila","Dan + Shay",2018,known,heartbreak,"chill;long drive",known
+"Stubborn Love","The Lumineers",2012,known,love,"festival;long drive",known
+"Who You Love (feat. Katy Perry)","John Mayer;Katy Perry",2013,known,love,"romantic date;chill",known
+"Promise","Ben Howard",2014,known,love,"chill;sleep",known
+"The Boy's Gone","Jason Mraz",2002,known,reflection,"chill;focus",known
+"You","Dan + Shay",2018,guess,love,"romantic date;wedding",guess
+"San Luis","Gregory Alan Isakov",2018,known,nostalgia,"chill;long drive",known
+"Why Georgia","John Mayer",2001,known,reflection,"chill;long drive",known
+"Mr. Tambourine Man","Bob Dylan",1965,known,freedom,"chill;long drive",known
+"Tonight, Not Again","Jason Mraz",2002,guess,freedom,"chill;focus",guess
+"Chattahoochee","Alan Jackson",1993,known,freedom,"party;long drive",known
+"Little Lion Man","Mumford & Sons",2009,known,struggle,"festival;long drive",known
+"From Eden","Hozier",2014,known,love,"chill;romantic date",known
+"Work Song","Hozier",2014,known,love,"chill;romantic date",known
+"Bella Luna","Jason Mraz",2005,guess,love,"chill;romantic date",guess
+"The Bones - with Hozier","Maren Morris;Hozier",2019,known,love,"romantic date;long drive",known
+"I'm with You","Vance Joy",2018,known,love,"romantic date;chill",known
+"Futile Devices (Doveman Remix)","Sufjan Stevens",2010,known,love,"chill;sleep",known
+"Almost (Sweet Music)","Hozier",2019,known,love,"chill;romantic date",known
+"Winter Wonderland","Jason Mraz",1934,known,freedom,"chill;festival",known
+"What Hurts The Most","Rascal Flatts",2003,guess,heartbreak,"chill;long drive",known
+"Amsterdam","Gregory Alan Isakov",2009,guess,reflection,"chill;long drive",guess
+"The Heart of Life","John Mayer",2006,known,reflection,"chill;sleep",known
+"Shot in the Dark","John Mayer",2021,known,love,"chill;long drive",known
+"If It Kills Me","Jason Mraz",2008,known,love,"chill;romantic date",known
+"H.O.L.Y.","Florida Georgia Line",2016,known,love,"romantic date;wedding",known
+"The Times They Are A-Changin'","Bob Dylan",1964,known,rebellion,"chill;long drive",known
+"Movement","Hozier",2018,known,love,"romantic date;chill",known
+"Angel Of Small Death & The Codeine Scene","Hozier",2014,known,love,"chill;sleep",known
+"Cowboy Take Me Away","The Chicks",1999,known,freedom,"long drive;chill",known
+"Rocky Mountain High","John Denver",1972,known,freedom,"long drive;chill",known
+"Leaving, On a Jet Plane - ""Greatest Hits"" Version","John Denver",1969,known,heartbreak,"chill;long drive",known
+"In the Blood","John Mayer",2017,known,reflection,"chill;long drive",known
+"Good Time","Alan Jackson",2008,known,party,"party;long drive",known
+"Holocene","Bon Iver",2011,known,reflection,"chill;sleep",known
+"Dreaming with a Broken Heart","John Mayer",2006,known,heartbreak,"chill;sleep",known
+"You Want It Darker","Leonard Cohen",2016,known,devotion,"chill;focus",known
+"Boot Scootin' Boogie","Brooks & Dunn",1992,known,party,"party;festival",known
+"April Come She Will","Simon & Garfunkel",1966,known,heartbreak,"chill;sleep",known
+"Edge of Desire","John Mayer",2009,known,heartbreak,"chill;long drive",known
+"Til the Right One Comes","John Mayer",2021,known,love,"chill;romantic date",known
+"Glad You Exist","Dan + Shay",2019,known,love,"romantic date;wedding",known
+"Fire and the Flood","Vance Joy",2014,known,love,"chill;long drive",known
+"Say","John Mayer",2007,known,reflection,"chill;long drive",known
+"To Be Alone With You","Sufjan Stevens",2004,known,devotion,"chill;focus",guess
+"Rainbow","Kacey Musgraves",2018,known,reflection,"chill;sleep",known
+"Bloom (Online Bonus Track)","The Paper Kites",2013,known,love,"chill;sleep",known
+"Would That I","Hozier",2019,known,love,"romantic date;chill",known
+"Arsonist's Lullabye","Hozier",2014,known,struggle,"chill;focus",known
+"Marry Me","Thomas Rhett",2017,known,love,"wedding;romantic date",known
+"If I Go, I'm Goin","Gregory Alan Isakov",2009,known,heartbreak,"chill;long drive",known
+"Jackie And Wilson","Hozier",2014,known,love,"long drive;chill",known
+"Why You No Love Me","John Mayer",2021,known,heartbreak,"chill;long drive",known
+"Amarillo By Morning","George Strait",1983,known,struggle,"chill;long drive",known
+"Mess Is Mine","Vance Joy",2014,known,heartbreak,"chill;long drive",known
+"Rosie","John Mayer",2017,known,love,"chill;long drive",known
+"Neon","John Mayer",2001,known,reflection,"chill;long drive",known
+"My Church","Maren Morris",2016,known,freedom,"long drive;chill",known
+"Flowers In Your Hair","The Lumineers",2012,known,love,"chill;romantic date",known
+"All I Want Is to Be With You","John Mayer",2021,known,love,"romantic date;chill",known
+"Wasteland, Baby!","Hozier",2019,known,love,"chill;long drive",known
+"Butterflies","Kacey Musgraves",2018,known,love,"romantic date;chill",known
+"Simple Song","Passenger",2007,guess,heartbreak,"chill;long drive",guess
+"Delicate","Damien Rice",2003,known,heartbreak,"chill;sleep",known
+"Never on the Day You Leave","John Mayer",2017,known,heartbreak,"chill;sleep",known
+"From This Moment On - Pop On-Tour Version","Shania Twain",1998,known,love,"wedding;romantic date",known
+"WHERE WE ARE","The Lumineers",2022,known,reflection,"chill;long drive",known
+"Sedated","Hozier",2014,known,heartbreak,"chill;long drive",known
+"Sunlight","Hozier",2019,known,love,"chill;romantic date",known
+"I Should Probably Go To Bed","Dan + Shay",2020,known,heartbreak,"chill;long drive",known
+"I Lied (with Allison Ponthier)","Lord Huron;Allison Ponthier",2023,guess,heartbreak,"chill;long drive",guess
+"Talk","Hozier",2019,known,love,"romantic date;chill",known
+"NFWMB","Hozier",2018,known,love,"chill;long drive",known
+"Islands in the Stream","Dolly Parton;Kenny Rogers",1983,known,love,"romantic date;wedding",known
+"Sword from the Stone","Passenger",2016,known,heartbreak,"chill;sleep",known
+"Time in a Bottle","Jim Croce",1972,known,love,"romantic date;chill",known
+"Suite from Run Rabbit Run: I. Year of the Ox - Arr. Michael Atkinson. Live from City Recital Hall, Sydney, 2019","Sufjan Stevens;Australian Chamber Orchestra;Richard Tognetti",2019,guess,reflection,"focus;chill",guess
+"Steal My Love","Dan + Shay",2018,known,love,"romantic date;chill",known
+"Georgia","Vance Joy",2014,known,heartbreak,"chill;long drive",known
+"Apocalypse","Cigarettes After Sex",2015,known,love,"romantic date;sleep",known
+"Seven Nation Army","The White Stripes",2003,known,rebellion,"festival;workout",known
+"Experience","Ludovico Einaudi;Daniel Hope;I Virtuosi Italiani",2013,known,reflection,"focus;chill",known
+"Nothing's Gonna Change My Love for You","George Benson",1985,known,love,"romantic date;wedding",known
+"Just the Two of Us (feat. Bill Withers)","Grover Washington, Jr.;Bill Withers",1980,known,love,"romantic date;chill",known
+"River Flows In You","Yiruma",2001,known,reflection,"chill;focus",known
+"I Ain't Worried","OneRepublic",2022,known,freedom,"long drive;chill",known
+"K.","Cigarettes After Sex",2017,known,love,"romantic date;sleep",known
+"Sweet Home Alabama","Lynyrd Skynyrd",1974,known,nostalgia,"long drive;festival",known
+"Nuvole Bianche","Ludovico Einaudi",2004,known,reflection,"focus;sleep",known
+"Wu Wei","De Moi",2020,guess,reflection,"focus;sleep",guess
+"Don't Know Why","Norah Jones",2002,known,heartbreak,"chill;focus",known
+"Moonlight Shadow","Mike Oldfield",1983,known,heartbreak,"chill;long drive",known
+"Running Up That Hill (A Deal With God)","Kate Bush",1985,known,love,"long drive;chill",known
+"Sunsetz","Cigarettes After Sex",2017,known,love,"romantic date;sleep",known
+"For What It's Worth","Buffalo Springfield",1966,known,rebellion,"chill;long drive",known
+"Nowesind","Jacob David",2020,guess,reflection,"focus;sleep",guess
+"Lava","Kuana Torres Kahele;Napua Greig;James Ford Murphy",2014,known,love,"chill;romantic date",known
+"At Last","Etta James",1960,known,love,"wedding;romantic date",known
+"Return To Innocence","Enigma",1994,known,freedom,"chill;focus",known
+"Hold Me Closer","Elton John;Britney Spears",2022,known,love,"long drive;party",known
+"Cry","Cigarettes After Sex",2019,known,heartbreak,"romantic date;sleep",known
+"I See Red","Everybody Loves an Outlaw",2019,guess,rebellion,"long drive;workout",guess
+"Una Mattina","Ludovico Einaudi",2004,known,reflection,"focus;sleep",known
+"Breezin'","George Benson",1976,known,freedom,"chill;long drive",known
+"Sway","Michael Bublé",2003,known,love,"romantic date;party",known
+"Sadeness","Enigma",1990,known,reflection,"chill;focus",known
+"I'm Still Standing","Elton John",1983,known,ambition,"workout;party",known
+"Sweet","Cigarettes After Sex",2017,known,love,"romantic date;sleep",known
+"Free Bird","Lynyrd Skynyrd",1973,known,freedom,"festival;long drive",known
+"Gymnopédie No. 1","Erik Satie;Philippe Entremont",1888,known,reflection,"sleep;focus",known
+"An Idea","Leo Brouwer;Zsófia Boros",2015,guess,reflection,"focus;chill",guess
+"Come Away With Me","Norah Jones",2002,known,love,"romantic date;sleep",known
+"Ameno","ERA",1996,known,devotion,"prayer;focus",known
+"Counting Stars","OneRepublic",2013,known,ambition,"long drive;workout",known
+"Anchor","Novo Amor",2017,guess,reflection,"chill;sleep",guess
+"All Along the Watchtower","Jimi Hendrix",1967,known,reflection,"long drive;festival",known
+"The Carnival of the Animals, R. 125: XIII. The Swan (Arr. for Cello and Piano)","Camille Saint-Saëns;Yo-Yo Ma;Kathryn Stott",1886,known,reflection,"sleep;focus",known
+"Entre Dos Aguas - Remastered 2014","Paco de Lucía",1973,known,freedom,"chill;focus",known
+"Feeling Good","Michael Bublé",1964,known,freedom,"chill;long drive",known
+"Principles Of Lust: Sadeness / Find Love / Sadeness (Reprise)","Enigma",1990,known,love,"chill;focus",known
+"Sunshine","OneRepublic",2020,guess,freedom,"long drive;chill",guess
+"State Lines","Novo Amor",2018,guess,heartbreak,"chill;sleep",guess
+"La Grange - 2005 Remaster","ZZ Top",1973,known,party,"long drive;festival",known
+"Sonata No. 14 ""Moonlight"" in C-Sharp Minor"", Op. 27 No. 2: I. Adagio sostenuto","Ludwig van Beethoven;Paul Lewis",1801,known,reflection,"sleep;focus",known
+"Chega de Saudade","João Gilberto",1958,known,heartbreak,"chill;romantic date",known
+"What A Wonderful World","Louis Armstrong",1967,known,reflection,"chill;sleep",known
+"Kiss The Rain","Yiruma",2003,known,love,"chill;sleep",known
+"Rocket Man (I Think It's Going To Be A Long, Long Time)","Elton John",1972,known,reflection,"long drive;chill",known
+"You Are Enough","Sleeping At Last",2014,guess,love,"chill;sleep",guess
+"Play with Fire (feat. Yacht Money)","Sam Tinnesz;Yacht Money",2017,known,ambition,"workout;long drive",known
+"Cello Suite No. 1 in G Major, BWV 1007: I. Prélude","Johann Sebastian Bach;Yo-Yo Ma",1720,guess,reflection,"focus;sleep",known
+"In Your Eyes","George Benson",1983,known,love,"romantic date;chill",known
+"Sunrise","Norah Jones",2004,known,freedom,"chill;sleep",known
+"Sunset Bird","Yiruma",2007,guess,reflection,"chill;focus",guess
+"How to Save a Life","The Fray",2005,known,struggle,"chill;long drive",known
+"Comptine d'un autre été, l'après-midi","Yann Tiersen",2001,known,nostalgia,"focus;chill",known
+"Wonderful Tonight","Eric Clapton",1977,known,love,"romantic date;wedding",known
+"Fracture","Stephan Moccio",2016,guess,reflection,"focus;sleep",guess
+"ily (i love you baby)","Andrew Foy;Renee Foy",2021,guess,love,"romantic date;chill",guess
+"Haven't Met You Yet","Michael Bublé",2009,known,love,"romantic date;long drive",known
+"Sadeness - Pt. 1 / Radio Edit","Enigma",1990,known,love,"chill;focus",known
+"Vienna","Billy Joel",1977,known,reflection,"chill;long drive",known
+"Turning Page","Sleeping At Last",2012,known,love,"romantic date;wedding",known
+"Johnny B. Goode","Chuck Berry",1958,known,ambition,"party;festival",known
+"Vaseegara","Bombay Jayashri",2001,known,love,"romantic date;chill",known
+"Brookline","Finlep",2019,guess,nostalgia,"chill;focus",guess
+"Just the Two of Us","Grover Washington, Jr.",1980,known,love,"romantic date;chill",known
+"Song From A Secret Garden","Secret Garden",1995,known,reflection,"chill;focus",known
+"Uptown Girl","Billy Joel",1983,known,love,"party;long drive",known
+"Nothing's Gonna Hurt You Baby","Cigarettes After Sex",2012,known,love,"romantic date;sleep",known
+"Baba O'Riley","The Who",1971,known,freedom,"festival;long drive",known
+"Merry-Go-Round of Life - from 'Howl's Moving Castle'","Joe Hisaishi",2004,known,nostalgia,"chill;focus",known
+"Where We Are","Project AER",2018,guess,reflection,"focus;chill",guess
+"L-O-V-E","Nat King Cole",1965,known,love,"romantic date;wedding",known
+"The Child In Us","Enigma",1996,known,reflection,"chill;focus",known
+"Your Song","Elton John",1970,known,love,"romantic date;wedding",known
+"Heavenly","Cigarettes After Sex",2019,known,love,"romantic date;sleep",known
+"(Don't Fear) The Reaper","Blue Öyster Cult",1976,known,reflection,"long drive;chill",known
+"Clair de Lune, L. 32","Claude Debussy;Martin Jones",1905,known,reflection,"sleep;focus",known
+"Rodrigo: Concierto de Aranjuez: II. Adagio","Joaquín Rodrigo;Thibaut García;Ben Glassberg;Orchestre National Du Capitole De Toulouse",1939,known,reflection,"focus;chill",known
+"Home","Michael Bublé",2005,known,nostalgia,"long drive;chill",known
+"River Flows in You - Orchestra Version","Yiruma",2019,guess,reflection,"chill;focus",guess
+"Tiny Dancer","Elton John",1971,known,love,"long drive;chill",known
+"Touch","Sleeping At Last",2014,guess,love,"chill;sleep",guess
+"The Boys Are Back In Town","Thin Lizzy",1976,known,party,"party;long drive",known
+"Through The Fire And Flames","DragonForce",2006,known,ambition,"workout;festival",known
+"i miss you","Ichika Nito",2019,guess,heartbreak,"chill;sleep",guess
+"Time Moves Slow","BADBADNOTGOOD;Samuel T. Herring",2016,known,reflection,"chill;long drive",known
+"We Contain Multitudes — piano reworks","Yiruma;Ólafur Arnalds",2020,guess,reflection,"focus;chill",guess
+"Don't Go Breaking My Heart","Elton John;Kiki Dee",1976,known,love,"party;long drive",known
+"Ontario","Novo Amor;Ed Tullett;Lowswimmer",2020,guess,heartbreak,"chill;sleep",guess
+"No Rain","Blind Melon",1992,known,struggle,"chill;long drive",known
+"Nocturne No. 2 in E-Flat Major, Op. 9 No. 2","Frédéric Chopin;Daniel Barenboim",1832,known,reflection,"sleep;focus",known
+"Guarisci il mio Cuore","Valerio Castilla",2019,guess,reflection,"focus;sleep",guess
+"Everything","Michael Bublé",2007,known,love,"romantic date;wedding",known
+"Valentine","Jim Brickman;Martina McBride",1997,known,love,"romantic date;wedding",known
+"West Coast","OneRepublic",2016,guess,freedom,"long drive;chill",guess
+"Repeat Until Death","Novo Amor",2018,guess,heartbreak,"chill;sleep",guess
+"Listen to the Music","The Doobie Brothers",1972,known,freedom,"long drive;festival",known
+"Hourglass","Jiří Horák",2020,guess,reflection,"focus;sleep",guess
+"Surfing with the Alien","Joe Satriani",1987,known,freedom,"workout;long drive",known
+"I'd Rather Go Blind","Etta James",1967,known,heartbreak,"chill;sleep",known
+"Nocturne","Secret Garden",1995,known,reflection,"chill;sleep",known
+"A Thousand Miles","Vanessa Carlton",2002,known,love,"long drive;chill",known
+"Keep Me","Novo Amor",2020,guess,love,"chill;sleep",guess
+"House of the Rising Sun","The Animals",1964,known,struggle,"chill;long drive",known
+"Chopin: Nocturne No. 20 in C-Sharp Minor, Op. Posth.","Frédéric Chopin;Mikhail Pletnev",1830,known,reflection,"sleep;focus",known
+"A Day In The Life","Wes Montgomery",1967,known,reflection,"chill;focus",known
+"93 'Til Infinity","Souls Of Mischief",1993,known,ambition,"chill;long drive",known
+"One Man's Dream","Yanni",1992,known,reflection,"chill;focus",known
+"Piano Man","Billy Joel",1973,known,reflection,"chill;long drive",known
+"Already Gone","Sleeping At Last",2017,guess,heartbreak,"chill;sleep",guess
+"Drunk (And I Don't Wanna Go Home)","Elle King;Miranda Lambert",2021,guess,party,"party;long drive",guess
+"Gnossienne No. 1","Erik Satie;Alena Cherny",1890,known,reflection,"sleep;focus",known
+"Midnight Blue - Remastered","Kenny Burrell",1963,known,reflection,"chill;focus",known
+"I Just Couldn't Save You Tonight (feat. Aurélie) - Story of Kale - Original Motion Picture Soundtrack","Ardhito Pramono;Aurélie",2023,guess,heartbreak,"chill;sleep",guess
+"So This Is Love","Emile Pandolfi",2008,guess,love,"chill;romantic date",guess
+"Run","OneRepublic",2023,guess,freedom,"long drive;workout",guess
+"Poison Tree","Grouper",2008,guess,reflection,"sleep;focus",guess
+"Come a Little Closer","Cage The Elephant",2013,known,love,"long drive;chill",known
+"One Summer Day","Joe Hisaishi",2001,known,nostalgia,"chill;focus",known
+"At My Worst","Andrew Foy;Renee Foy",2020,guess,love,"romantic date;chill",guess
+"Alexander Hamilton","Leslie Odom Jr.;Daveed Diggs;Okieriete Onaodowan;Lin-Manuel Miranda;Phillipa Soo;Christopher Jackson;Original Broadway Cast of Hamilton;Anthony Ramos",2015,known,ambition,"chill;focus",known
+"Mariage d'Amour","Jacob's Piano",1978,known,love,"romantic date;wedding",known
+"Secrets","OneRepublic",2009,known,struggle,"long drive;chill",known
+"Falling In Love","Cigarettes After Sex",2019,known,love,"romantic date;sleep",known
+"Ain't No Rest for the Wicked","Cage The Elephant",2008,known,struggle,"long drive;workout",known
+"Rue des trois frères","Fabrizio Paterlini",2011,guess,nostalgia,"focus;chill",guess
+"Slightly Hung Over","Blues Delight",2010,guess,party,"chill;party",guess
+"Hit the Road Jack","Ray Charles",1961,known,heartbreak,"party;long drive",known
+"Mea Culpa","Enigma",1990,known,devotion,"chill;focus",known
+"Someday","OneRepublic",2016,known,freedom,"long drive;chill",known
+"You're All I Want","Cigarettes After Sex",2017,known,love,"romantic date;sleep",known
+"Layla","Derek & The Dominos",1970,known,heartbreak,"chill;long drive",known
+"Tchaikovsky: Swan Lake, Op. 20, Act II: No. 10, Scene. Moderato","Pyotr Ilyich Tchaikovsky;André Previn;London Symphony Orchestra",1877,known,reflection,"sleep;focus",known
+"A Better Place","Project AER;cxlt.",2019,guess,reflection,"focus;chill",guess
+"A Sunday Kind Of Love","Etta James",1946,guess,love,"romantic date;chill",guess
+"The Mass","ERA",1996,known,devotion,"prayer;focus",known
+"We Didn't Start the Fire","Billy Joel",1989,known,reflection,"long drive;party",known
+"Carry You","Novo Amor",2017,guess,love,"chill;sleep",guess
+"Simple Man","Lynyrd Skynyrd",1973,known,reflection,"long drive;chill",known
+"Vivaldi Variation (Arr. for Piano from Concerto for Strings in G Minor, RV 156)","Antonio Vivaldi;Florian Christl",2018,guess,reflection,"focus;chill",guess
+"For the Love of God","Steve Vai",1990,known,devotion,"focus;workout",known
+"Turn Me On","Norah Jones",2002,known,love,"romantic date;chill",known
+"Damascus","Conjure One;Rhys Fulber",2002,guess,reflection,"chill;focus",guess
+"Give A Little Bit","Supertramp",1977,known,love,"chill;long drive",known
+"Weightless","Marconi Union",2011,known,reflection,"sleep;focus",known
+"The Joker","Steve Miller Band",1973,known,freedom,"long drive;chill",known
+"Box of Memories","Josh Kramer",2020,guess,nostalgia,"chill;focus",guess
+"Elegia","Antonio Garcia Isaac",2018,guess,reflection,"focus;sleep",guess
+"Everybody Loves Somebody","Dean Martin",1964,known,love,"romantic date;wedding",known
+"Once Upon a December (from Anastasia)","Emile Pandolfi",1997,known,nostalgia,"chill;focus",known
+"Apologize","OneRepublic",2007,known,heartbreak,"long drive;chill",known
+"Saturn","Sleeping At Last",2018,known,reflection,"chill;sleep",known
+"Centerfold","The J. Geils Band",1981,known,love,"party;long drive",known
+"Wind Song","Ludovico Einaudi",2022,guess,reflection,"focus;sleep",guess
+"Fields Of Gold","Tobias Berntsson",2020,guess,love,"chill;romantic date",guess
+"It Runs Through Me","Tom Misch;De La Soul",2018,known,love,"chill;long drive",known
+"The Promise","Secret Garden",1997,guess,love,"chill;romantic date",guess
+"Good Life","OneRepublic",2010,known,freedom,"long drive;party",known
+"Affection","Cigarettes After Sex",2018,guess,love,"romantic date;sleep",guess
+"Ex's & Oh's","Elle King",2014,known,heartbreak,"party;long drive",known
+"The Theory of Everything","Jóhann Jóhannsson",2014,known,love,"chill;focus",known
+"Chitlins Con Carne","Kenny Burrell",1963,known,reflection,"chill;focus",known
+"The Girl From Ipanema","Stan Getz;João Gilberto;Astrud Gilberto",1964,known,love,"chill;romantic date",known
+"Divano","ERA",1998,known,reflection,"chill;focus",known
+"You Found Me","The Fray",2009,known,struggle,"chill;long drive",known
+"Haven (from Life Is Strange)","Novo Amor",2020,guess,reflection,"chill;sleep",guess
+"Born To Be Wild","Steppenwolf",1968,known,freedom,"long drive;festival",known
+"Bagatelle No. 25 in A Minor, WoO 59 ""Für Elise""","Ludwig van Beethoven;Igor Levit",1810,known,reflection,"sleep;focus",known
+"As It Was","Anna Kitkowska",2022,guess,nostalgia,"chill;focus",guess
+"Let It Snow! Let It Snow! Let It Snow!","Dean Martin",1945,known,love,"chill;romantic date",known
+"Never Alone","Jim Brickman;Lady A",2013,guess,love,"romantic date;wedding",guess
+"Say Something","A Great Big World;Christina Aguilera",2013,known,heartbreak,"chill;sleep",known
+"Weightless Part 1","Marconi Union",2011,known,reflection,"sleep;focus",known
+"Lonely Boy","The Black Keys",2011,known,love,"long drive;party",known
+"Piano Concerto No. 21 in C Major, K. 467: II. Andante","Wolfgang Amadeus Mozart;London Mozart Players;Howard Shelley",1785,known,love,"sleep;focus",known
+"Minor Swing","Django Reinhardt;Stéphane Grappelli;Quintette du Hot Club de France",1937,known,freedom,"chill;focus",known
+"Solitude","Billie Holiday",1941,known,heartbreak,"chill;sleep",known
+"A Thousand Years (Piano Version)","Laura Sullivan",2020,guess,love,"wedding;romantic date",guess
+"Sacrifice","Elton John",1989,known,heartbreak,"chill;long drive",known
+"Goodness of God - Live","Bethel Music;Jenn Johnson",2019,known,devotion,"prayer;chill",known
+"All Right Now","Free",1970,known,love,"party;long drive",known
+"Für Elise, WoO 59","Ludwig van Beethoven;Nelly Kokinos",1810,known,reflection,"focus;sleep",known
+"Always with Me, Always with You","Joe Satriani",2001,guess,reflection,"chill;focus",guess
+"Cheek To Cheek","Ella Fitzgerald;Louis Armstrong",1956,known,love,"romantic date;chill",known
+"Nuclear","Mike Oldfield",2013,known,rebellion,"long drive;workout",guess
+"Everybody's Changing","Keane",2003,known,reflection,"chill;long drive",known
+"Euphor","Novo Amor;Ed Tullett;Lowswimmer",2020,guess,reflection,"chill;sleep",guess
+"Sharp Dressed Man - 2008 Remaster","ZZ Top",1983,known,ambition,"long drive;party",known
+"The Four Seasons - Winter in F Minor, RV. 297: I. Allegro non molto","Antonio Vivaldi;Adrian Chandler;La Serenissima",1725,known,struggle,"focus;chill",known
+"Tender Surrender","Steve Vai",1995,known,love,"romantic date;chill",known
+"Unforgettable","Nat King Cole",1951,known,love,"romantic date;wedding",known
+"You Are the Reason - Instrumental","Laura Sullivan",2018,guess,love,"romantic date;wedding",guess
+"Goodbye Yellow Brick Road - Remastered 2014","Elton John",1973,known,freedom,"long drive;chill",known
+"Water","Bicep;Clara La San",2021,known,love,"party;festival",known
+"End Of The Line","Traveling Wilburys",1988,known,reflection,"long drive;chill",known
+"Zara Zara","Bombay Jayashri",2001,known,love,"romantic date;chill",known
+"Largo Rv. 443 For Guitar","Marcel Depuis",2020,guess,reflection,"focus;sleep",guess
