@@ -697,7 +697,7 @@ async function sendToSpotify(idxs) {
   }
 }
 // Switched on once https://shrutig7823.github.io/song-recommender/ is added as a Redirect URI in the Spotify app settings
-const SPOTIFY_CONNECT = false;
+const SPOTIFY_CONNECT = true;
 function spotifyAddBtn(idxs, label) {
   if (!SPOTIFY_CONNECT) { const h = el("span"); h.hidden = true; return h; }
   const b = el("button", "btn go", label || "Add to my Spotify playlist"); b.type = "button";
