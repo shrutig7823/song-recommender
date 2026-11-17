@@ -26,7 +26,7 @@ const md = t => cells.push({ cell_type: "markdown", metadata: {}, source: t.trim
 const code = t => cells.push({ cell_type: "code", metadata: {}, execution_count: null, outputs: [], source: t.trim().split("\n").map((l, i, a) => l + (i < a.length - 1 ? "\n" : "")) });
 
 md(String.raw`
-# Song Recommender: your first machine learning model
+# Moodio: your first machine learning model
 
 **Goal:** you give the model a song you like, and it recommends 5 similar songs.
 

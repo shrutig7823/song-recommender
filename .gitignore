@@ -7,3 +7,6 @@ new/removed_rows.json
 node_modules/
 emotions/in/
 *.log
+tmp_lyrics/
+lyrics_test_out.json
+lyrics_test_existing.json

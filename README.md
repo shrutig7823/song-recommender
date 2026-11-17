@@ -1,4 +1,4 @@
-# Song Recommender
+# Moodio
 
 Pick a song you like and get 5 similar songs. A beginner-friendly machine learning project: it turns each song into numbers and recommends the songs whose numbers are closest. It does not listen to audio.
 
