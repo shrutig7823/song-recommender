@@ -33,15 +33,29 @@ const eraSim = (a, b) => Math.max(0, 1 - Math.abs(ctx[a].y - ctx[b].y) / 25);
 
 // weights are "how much it counts", relative to each other (they do not need to add up to 1)
 const DEFAULT = { tags: 40, emotion: 30, context: 20, era: 10 };
-function recommend(title, wt = DEFAULT, count = 5) {
+const artistsOf = j => songs[j].artist.split(";").map(a => a.trim().toLowerCase());
+
+// variety: "mix" = at most 1 song per artist, "strict" = also never the picked song's artists, "off" = no rule
+function recommend(title, wt = DEFAULT, variety = "mix", count = 5) {
   const i = songs.findIndex(s => s.track_name.toLowerCase() === title.toLowerCase());
   if (i === -1) return null;
   const total = wt.tags + wt.emotion + wt.context + wt.era;
-  return songs.map((s, j) => {
+  const ranked = songs.map((s, j) => {
     const parts = { tags: cosine(vectors[i], vectors[j]), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j) };
     const score = (wt.tags * parts.tags + wt.emotion * parts.emotion + wt.context * parts.context + wt.era * parts.era) / total;
     return { j, song: s, parts, score };
-  }).filter(x => x.j !== i).sort((a, b) => b.score - a.score).slice(0, count);
+  }).filter(x => x.j !== i).sort((a, b) => b.score - a.score);
+  if (variety === "off") return ranked.slice(0, count);
+  const used = new Set(variety === "strict" ? artistsOf(i) : []);
+  const out = [];
+  for (const x of ranked) {
+    const a = artistsOf(x.j);
+    if (a.some(n => used.has(n))) continue;      // an artist is already in the list: skip
+    a.forEach(n => used.add(n));
+    out.push(x);
+    if (out.length === count) break;
+  }
+  return out;
 }
 
 module.exports = { songs, ctx, recommend, themeSim, occasionSim, eraSim };

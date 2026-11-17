@@ -330,13 +330,26 @@ md(String.raw`
 Each factor has a **weight**, which is how much it counts. The weights do not need to add up to 100.
 
 Final score = (tags x weight + emotion x weight + context x weight + era x weight) / total of the weights
-`);
+
+**Artist variety.** Songs by the same artist share many tags, so without a rule one artist can fill the whole list. ${"`one_per_artist=True`"} walks down the ranking and skips any song whose artist is already in your 5. Set it to ${"`False`"} to see the difference.
+`.replace(/\$\{"(`[^`]*`)"\}/g, "$1"));
 code(String.raw`
-def recommend_all(title, tags=40, emotion=30, context=20, era=10, n=5):
+def recommend_all(title, tags=40, emotion=30, context=20, era=10, n=5, one_per_artist=True):
     i = find(title)
     total = tags + emotion + context + era
     score = (tags * text_sim[i] + emotion * emotion_sim[i] + context * context_sim[i] + era * era_sim[i]) / total
-    order = [j for j in np.argsort(-score) if j != i][:n]
+    order, used = [], set()
+    for j in np.argsort(-score):
+        if j == i:
+            continue
+        artists = {a.strip().lower() for a in songs.loc[j, "artist"].split(";")}
+        if one_per_artist:
+            if artists & used:      # an artist is already in the list: skip this song
+                continue
+            used |= artists
+        order.append(j)
+        if len(order) == n:
+            break
     out = songs.loc[order, ["track_name", "artist", "year", "emotion_main", "lyric_theme", "occasions"]].copy()
     out["score"] = score[order].round(2)
     return out
