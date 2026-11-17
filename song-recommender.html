@@ -111,7 +111,15 @@ a{color:inherit}
 .mosaic .art{width:100%;aspect-ratio:1.6;font-size:26px}
 .stackcard h3{font-size:18px}
 .rows{display:flex;flex-direction:column}
-.trow{display:grid;grid-template-columns:48px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:8px 10px;border-radius:12px;cursor:pointer}
+.addbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--fg);font-size:20px;line-height:1;display:grid;place-items:center;flex:none}
+.addbtn:hover{border-color:var(--accent2)}
+.addbtn.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);border-color:transparent;font-weight:700}
+.addbtn.wide{width:auto;height:auto;border-radius:14px;padding:10px 16px;font-size:14px;font-weight:600;display:inline-flex;gap:8px}
+.card .addbtn{position:absolute;right:8px;top:8px;z-index:1;width:34px;height:34px;background:rgba(9,9,18,.72)}
+.card .addbtn.on{background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.trow{display:grid;grid-template-columns:48px minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;cursor:pointer}
+#listBody .trow{grid-template-columns:48px minmax(0,1fr) auto auto}
+#listBody:empty::before{content:"Nothing saved yet.";color:var(--muted)}
 .trow:hover{background:rgba(255,255,255,.06)}
 .trow .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rplay{width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--panel2);color:var(--fg)}
@@ -196,7 +204,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
   .top{flex-wrap:wrap}
   .search{order:3;flex-basis:100%;max-width:none}
   .art.big{width:140px;height:140px;font-size:58px}
-  .trow{grid-template-columns:48px minmax(0,1fr) auto}
+  .trow,#listBody .trow{grid-template-columns:48px minmax(0,1fr) auto auto}
   .trow .tier{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -213,6 +221,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
     <datalist id="songs"></datalist>
     <button class="btn go" type="submit">Search</button>
   </form>
+  <button class="btn" type="button" id="listBtn">My list <span id="listCount" class="tier">0</span></button>
   <button class="btn" type="button" id="tuneBtn">Tune</button>
 </header>
 
@@ -232,6 +241,15 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 
 <div class="scrim" id="scrim"></div>
 <section class="fullcard" id="full" hidden aria-label="Player"></section>
+<aside class="drawer" id="listDrawer" aria-label="My list">
+  <h2>My list <button class="xbtn" id="listClose" type="button" aria-label="Close">✕</button></h2>
+  <div class="tuner">
+    <div class="hint">Tap + on any song to save it here. Your list stays in this browser. To get it into a Spotify or YouTube playlist, copy it or download the file below.</div>
+    <div id="listBody" class="rows"></div>
+    <div class="btnrow" id="listActions"></div>
+    <div class="hint" id="listHelp"></div>
+  </div>
+</aside>
 <aside class="drawer" id="drawer" aria-label="Tune the mix">
   <h2>Tune the mix <button class="xbtn" id="drawerClose" type="button" aria-label="Close">✕</button></h2>
   <div class="tuner">
@@ -495,16 +513,66 @@ function openFull(i) {
   const x = el("button", "xbtn", "✕"); x.type = "button"; x.setAttribute("aria-label", "Close"); x.addEventListener("click", closeFull);
   head.append(t, x);
   const host = el("div", "ctl"); host.style.flexDirection = s[10] ? "column" : "row"; host.style.alignItems = "stretch";
-  full.append(head, art(i, ""), moodChips(i), host, fullLinks(i));
+  const fl = fullLinks(i); fl.prepend(addWide(i));
+  full.append(head, art(i, ""), moodChips(i), host, fl);
   full.hidden = false; scrim.classList.add("on");
   startPlayer(i, host, true);
 }
 function closeFull() { full.hidden = true; full.replaceChildren(); scrim.classList.remove("on"); stopAll(); }
-const toggleDrawer = on => { drawer.classList.toggle("on", on); scrim.classList.toggle("on", on || !full.hidden); };
+const listDrawer = $("listDrawer");
+const toggleDrawer = on => { drawer.classList.toggle("on", on); if (on) listDrawer.classList.remove("on"); scrim.classList.toggle("on", on || !full.hidden || listDrawer.classList.contains("on")); };
+const toggleListPanel = on => { listDrawer.classList.toggle("on", on); if (on) { drawer.classList.remove("on"); renderList(); } scrim.classList.toggle("on", on || drawer.classList.contains("on") || !full.hidden); };
 $("tuneBtn").addEventListener("click", () => toggleDrawer(true));
 $("drawerClose").addEventListener("click", () => toggleDrawer(false));
-scrim.addEventListener("click", () => { if (!full.hidden) closeFull(); toggleDrawer(false); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!full.hidden) closeFull(); toggleDrawer(false); } });
+$("listBtn").addEventListener("click", () => toggleListPanel(true));
+$("listClose").addEventListener("click", () => toggleListPanel(false));
+scrim.addEventListener("click", () => { if (!full.hidden) closeFull(); toggleDrawer(false); toggleListPanel(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!full.hidden) closeFull(); toggleDrawer(false); toggleListPanel(false); } });
+
+// ---- my list: songs you save while browsing. It lives in this browser; export it to move it into Spotify or YouTube ----
+const keyOf = i => (DATA[i][0] + "|" + DATA[i][1].split(", ")[0]).toLowerCase();
+const idxByKey = new Map(DATA.map((_, i) => [keyOf(i), i]));
+let myList = [];
+try { myList = (JSON.parse(localStorage.getItem("moodio.list") || "[]")).map(k => idxByKey.get(k)).filter(i => i != null); } catch (e) { myList = []; }
+const saveList = () => { try { localStorage.setItem("moodio.list", JSON.stringify(myList.map(keyOf))); } catch (e) { /* private window: the list lasts for this visit only */ } };
+function paintAdd(b) {
+  const on = myList.includes(Number(b.dataset.add));
+  if (b.classList.contains("wide")) b.textContent = on ? "✓ In my list" : "+ Add to my list"; else b.textContent = on ? "✓" : "+";
+  b.classList.toggle("on", on); b.setAttribute("aria-label", on ? "Remove from my list" : "Add to my list");
+}
+function addBtn(i, wide) { const b = el("button", "addbtn" + (wide ? " wide" : "")); b.type = "button"; b.dataset.add = i; paintAdd(b); b.addEventListener("click", e => { e.stopPropagation(); toggleList(i); }); return b; }
+const addWide = i => addBtn(i, true);
+function toggleList(i) {
+  const at = myList.indexOf(i); if (at < 0) myList.push(i); else myList.splice(at, 1);
+  saveList(); document.querySelectorAll("[data-add]").forEach(paintAdd); $("listCount").textContent = myList.length;
+  if (listDrawer.classList.contains("on")) renderList();
+}
+const spotifyLinkFor = i => DATA[i][10] ? "https://open.spotify.com/track/" + DATA[i][10] : "";
+async function copyText(text, btn) {
+  const done = () => { const t = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(() => btn.textContent = t, 1600); };
+  try { await navigator.clipboard.writeText(text); done(); } catch (e) { const ta = document.createElement("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e2) { /* nothing more to try */ } ta.remove(); }
+}
+function renderList() {
+  const body = $("listBody"), acts = $("listActions"); body.replaceChildren(); acts.replaceChildren();
+  $("listCount").textContent = myList.length;
+  myList.forEach(i => { const r = el("div", "trow"); const info = el("div"); info.style.minWidth = "0"; info.append(el("div", "t", DATA[i][0]), el("div", "meta", DATA[i][1]));
+    const pb = el("button", "rplay"); pb.type = "button"; pb.dataset.play = i; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", () => playSong(i));
+    r.append(art(i, "sm"), info, addBtn(i), pb); r.addEventListener("click", () => { toggleListPanel(false); openSong(i); }); body.append(r); });
+  if (!myList.length) { $("listHelp").textContent = ""; return; }
+  const text = () => myList.map(i => DATA[i][0] + " - " + DATA[i][1]).join("\n");
+  const b1 = el("button", "btn", "Copy list"); b1.type = "button"; b1.addEventListener("click", () => copyText(text(), b1));
+  const b2 = el("button", "btn", "Download CSV"); b2.type = "button";
+  b2.addEventListener("click", () => {
+    const q = t => '"' + String(t).replace(/"/g, '""') + '"';
+    const csv = ["Title,Artist,Year,Language,Spotify link"].concat(myList.map(i => [q(DATA[i][0]), q(DATA[i][1].split(", ").join("; ")), DATA[i][7], q(DATA[i][4]), q(spotifyLinkFor(i))].join(","))).join("\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" })); a.download = "moodio-list.csv"; document.body.append(a); a.click(); a.remove();
+  });
+  const links = myList.map(spotifyLinkFor).filter(Boolean);
+  const b3 = el("button", "btn", "Copy Spotify links (" + links.length + ")"); b3.type = "button"; b3.disabled = !links.length; b3.addEventListener("click", () => copyText(links.join("\n"), b3));
+  const b4 = el("button", "btn ghost", "Clear list"); b4.type = "button"; b4.addEventListener("click", () => { myList = []; saveList(); document.querySelectorAll("[data-add]").forEach(paintAdd); renderList(); });
+  acts.append(b1, b2, b3, b4);
+  $("listHelp").textContent = "To make a Spotify playlist: open any playlist in the Spotify app, then paste the copied Spotify links into it. To make a Spotify or YouTube Music playlist from the whole list, import the downloaded file with a free playlist-transfer site such as TuneMyMusic or Soundiiz (check which import options they offer). Songs without a Spotify link are in the file by title and artist.";
+}
 
 // ---- tuning controls ----
 const FACTORS = ["tags", "emotion", "style", "context", "film", "era", "lang", "pop"];
@@ -529,7 +597,7 @@ function row(i, onOpen) {
   const info = el("div"); info.style.minWidth = "0"; info.append(el("div", "t", DATA[i][0]), el("div", "meta", DATA[i][1] + " · " + DATA[i][7]));
   const pb = el("button", "rplay"); pb.type = "button"; pb.dataset.play = i; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play");
   pb.addEventListener("click", e => { e.stopPropagation(); playSong(i); });
-  r.append(art(i, "sm"), info, el("span", "tier t" + DATA[i][11], TIER[DATA[i][11]]), pb);
+  r.append(art(i, "sm"), info, el("span", "tier t" + DATA[i][11], TIER[DATA[i][11]]), addBtn(i), pb);
   r.addEventListener("click", () => onOpen(i));
   return r;
 }
@@ -737,7 +805,7 @@ function renderSong(i) {
   const song = el("div", "song"), txt = el("div", "stxt");
   const bp = el("button", "playbig"); bp.type = "button"; bp.dataset.play = i; bp.innerHTML = ICON.play; bp.append(el("span", null, "Play")); bp.addEventListener("click", () => playSong(i));
   const big = el("button", "btn", "Enlarge player"); big.type = "button"; big.addEventListener("click", () => openFull(i));
-  const acts = el("div", "btnrow"); acts.append(bp, big);
+  const acts = el("div", "btnrow"); acts.append(bp, big, addWide(i));
   txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i), acts, fullLinks(i));
   song.append(art(i, "big"), txt);
   const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches"));
@@ -751,7 +819,7 @@ function renderSong(i) {
     const s = DATA[r.j], c = el("article", "card");
     const a = art(r.j, ""); a.append(el("span", "num", String(n + 1)));
     a.addEventListener("click", () => openSong(r.j));
-    const pb = el("button", "cplay"); pb.type = "button"; pb.dataset.play = r.j; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); }); a.append(pb);
+    const pb = el("button", "cplay"); pb.type = "button"; pb.dataset.play = r.j; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); }); a.append(pb, addBtn(r.j));
     const r1 = el("div", "row2"); r1.append(el("span", "pct", Math.round(r.score * 100) + "%"), el("span", "tier t" + s[11], TIER[s[11]]));
     const why = el("div", "why"); why.hidden = true;
     const shared = wordsOf(r.j).filter(w => mine.has(w));
@@ -800,6 +868,7 @@ let slideTimer = 0;
 FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).textContent = $("w_" + f).value; clearTimeout(slideTimer); slideTimer = setTimeout(() => { if (currentView && currentView.label === "song") go(currentView.render, "song", false); }, 250); }));
 ["variety", "minpop", "langmode"].forEach(id => $(id).addEventListener("change", () => { if (currentView) go(currentView.render, currentView.label, false); }));
 weights();
+$("listCount").textContent = myList.length;
 goHome();
 </script>
 </body>
