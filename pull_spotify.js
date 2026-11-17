@@ -30,6 +30,9 @@ const QUERIES = [
     .map(g => ({ g, lang: "Hindi", cap: 8 })),
   ...["punjabi pop", "punjabi hip hop", "bhangra", "desi pop", "punjabi folk", "punjabi"]
     .map(g => ({ g, lang: "Punjabi", cap: 8 })),
+  // classics, for the "Qawwali and get-togethers" and "Ghazals and old Bollywood" moments: older years, so a lower minYear
+  ...["ghazal", "classic bollywood", "qawwali", "sufi"]
+    .map(g => ({ g, lang: "Hindi", cap: 6, minYear: 1950, years: ["1950-1969", "1970-1979", "1980-1989", "1990-1999", "2000-2009"] })),
   ...["pop", "rock", "hip hop", "r&b", "dance pop", "indie pop", "alternative rock", "edm", "country", "soul",
       "singer-songwriter", "folk", "metal", "punk", "house", "pop rap", "trap", "acoustic"]
     .map(g => ({ g, lang: "English", cap: 3 })),
@@ -100,14 +103,14 @@ async function search(genre, year, offset) {
   let requests = 0;
   // every (year, genre) pair in a fixed random order, so stopping at any point still gives an even mix of years and genres
   const pairs = [];
-  for (const y of YEARS) for (const qy of QUERIES) pairs.push([y, qy]);
+  for (const qy of QUERIES) for (const y of (qy.years || YEARS)) pairs.push([y, qy]);
   let seed = 12345;
   for (let i = pairs.length - 1; i > 0; i--) {
     seed = (seed * 1103515245 + 12345) % 2147483648;
     const k = seed % (i + 1);
     [pairs[i], pairs[k]] = [pairs[k], pairs[i]];
   }
-  for (const [year, { g: genre, lang, cap }] of pairs) {
+  for (const [year, { g: genre, lang, cap, minYear }] of pairs) {
     let got = 0;
     for (let offset = 0; offset < 50 && got < cap; offset += 10) {
       if (rows.length >= TARGET) { save(); console.log("Reached target:", rows.length); return finish(); }
@@ -122,7 +125,7 @@ async function search(genre, year, offset) {
         const k = key(t.name, artist);
         if (seen.has(k)) continue;
         const date = t.album?.release_date || "";
-        if (date && Number(date.slice(0, 4)) < 2010) continue;   // keep only 2010 onward
+        if (date && Number(date.slice(0, 4)) < (minYear || 2010)) continue;   // 2010 onward, or older for the classics queries
         seen.add(k); seenId.add(t.id); got++;
         rows.push({ track_name: t.name, artist, genre, album_name: t.album?.name || "", tags: "", description: "", language: lang,
           release_date: date, spotify_id: t.id, spotify_url: t.external_urls?.spotify || "" });

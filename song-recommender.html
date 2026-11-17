@@ -90,12 +90,18 @@ a{color:inherit}
 .opt .dot{width:14px;height:14px;border-radius:50%;background:var(--c,var(--accent));flex:none}
 .opt small{display:block;font-weight:400;color:var(--muted);font-size:12px}
 
-/* heat map */
-.heat{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);gap:24px;align-items:start}
-.heatcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:24px;padding:12px}
-#heat{width:100%;height:auto;display:block;cursor:crosshair;touch-action:manipulation}
-.pickbox{display:flex;flex-direction:column;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}
-.pickbox h3{font-size:18px}
+/* moment heat map */
+.heatgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.hm{display:flex;flex-direction:column;gap:3px;text-align:left;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;min-height:112px;color:#fff}
+.hm b{font-family:var(--font-head);font-size:17px}
+.hm span{font-size:13px;opacity:.9}
+.hm small{margin-top:auto;font-size:12px;opacity:.85}
+.hm:hover{border-color:#fff;transform:translateY(-2px)}
+.hm.dim{color:var(--muted)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 16px;font-weight:600}
+.pill:hover{border-color:var(--accent2)}
+.pill.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);border-color:transparent}
 
 /* stacks and lists */
 .stackgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
@@ -239,6 +245,10 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
     <div class="srow"><label for="w_lang">Same language</label><input type="range" id="w_lang" min="0" max="100" step="5" value="15"><output id="o_lang"></output></div>
     <div class="srow"><label for="w_pop">Popularity and reel fame</label><input type="range" id="w_pop" min="0" max="100" step="5" value="15"><output id="o_pop"></output></div>
     <div>
+      <label class="meta" for="langmode" style="display:block;margin-bottom:6px">Language</label>
+      <select id="langmode"><option value="only" selected>Same language only</option><option value="first">Same language first, then others</option><option value="any">Any language</option></select>
+    </div>
+    <div>
       <label class="meta" for="minpop" style="display:block;margin-bottom:6px">Only recommend songs that are</label>
       <select id="minpop"><option value="4" selected>Hits and popular songs</option><option value="3">Well known and up</option><option value="2">Lesser known too</option><option value="1">Everything, deep cuts included</option></select>
     </div>
@@ -315,14 +325,22 @@ function diversify(ranked, count, perArtist, used) {
   }
   return out;
 }
-function recommend(i, wt, variety = "mix", count = 5, minPop = 1) {
+// langMode: "only" keeps the five in the same language (a Punjabi song gets Punjabi songs, even if that means fewer than five),
+// "first" prefers the same language and then fills up with others, "any" ignores language.
+function recommend(i, wt, variety = "mix", count = 5, minPop = 1, langMode = "any") {
   const total = (wt.tags + wt.emotion + wt.style + wt.context + wt.film + wt.era + wt.lang + wt.pop) || 1;
   const ranked = DATA.map((_, j) => {
     const p = { tags: cosine(i, j), emotion: emotionSim(i, j), style: styleSim(i, j), context: contextSim(i, j), film: filmSim(i, j), era: eraSim(i, j), lang: DATA[i][4] === DATA[j][4] ? 1 : 0, pop: popScore(j) };
     return { j, p, score: (wt.tags * p.tags + wt.emotion * p.emotion + wt.style * p.style + wt.context * p.context + wt.film * p.film + wt.era * p.era + wt.lang * p.lang + wt.pop * p.pop) / total };
-  }).filter(x => x.j !== i && DATA[x.j][11] >= minPop).sort((a, b) => b.score - a.score);
-  if (variety === "off") return ranked.slice(0, count);
-  return diversify(ranked, count, 1, variety === "strict" ? artistsOf(i) : []);
+  }).filter(x => x.j !== i).sort((a, b) => b.score - a.score);
+  const same = x => DATA[x.j][4] === DATA[i][4], pop = x => DATA[x.j][11] >= minPop;
+  // candidate lists, best first; each is already in score order
+  const pools = langMode === "only" ? [ranked.filter(x => same(x) && pop(x)), ranked.filter(x => same(x) && !pop(x))]
+    : langMode === "first" ? [ranked.filter(x => same(x) && pop(x)), ranked.filter(x => !same(x) && pop(x)), ranked.filter(x => same(x) && !pop(x))]
+    : [ranked.filter(pop)];
+  const list = pools.flat();
+  if (variety === "off") return list.slice(0, count);
+  return diversify(list, count, 1, variety === "strict" ? artistsOf(i) : []);
 }
 
 // ---- helpers ----
@@ -517,16 +535,16 @@ function row(i, onOpen) {
 }
 
 // ---- home: two ways in ----
-const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any" };
+const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any", moment: null };
 function renderHome() {
   const h = el("section", "homehero");
-  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Not sure what to play? Answer three quick questions. Know what you want? Tap your mood on the map. Or search for any song above."));
+  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Not sure what to play? Answer three quick questions. Know the moment? Pick it on the map. Or search for any song above."));
   const routes = el("div", "routes");
   const r1 = el("button", "route"); r1.type = "button";
   r1.append(el("span", "tag", "Not sure?"), el("h2", null, "Answer 3 quick questions"), el("p", null, "How you feel, what you are doing, and which language. That is all."), el("span", "go", "Start →"));
   r1.addEventListener("click", () => go(() => renderQuiz(0), "quiz"));
   const r2 = el("button", "route"); r2.type = "button";
-  r2.append(el("span", "tag", "Know your mood?"), el("h2", null, "Tap it on the mood map"), el("p", null, "Sad to happy, calm to intense. Point at the feeling and we do the rest."), el("span", "go", "Open the map →"));
+  r2.append(el("span", "tag", "Know the moment?"), el("h2", null, "Pick a moment on the map"), el("p", null, "Shower, late-night drive, gym, qawwali night, old ghazals. The brighter the tile, the more songs we have."), el("span", "go", "Open the map →"));
   r2.addEventListener("click", () => go(renderMapRoute, "map"));
   routes.append(r1, r2);
   view.append(h, routes);
@@ -557,56 +575,68 @@ function renderQuiz(step) {
   const opts = el("div", "opts");
   const title = ["How are you feeling right now?", "What are you up to?", "Which language do you want?"][step];
   if (step === 0) FEELINGS.forEach(f => { const b = el("button", "opt"); b.type = "button"; const d = el("i", "dot"); d.style.setProperty("--c", f.c); const t = el("span"); t.append(f.name, el("small", null, f.sub)); b.append(d, t);
-    b.addEventListener("click", () => { profile.point = f.pt; profile.label = f.name.toLowerCase(); go(() => renderQuiz(1), "quiz", false); }); opts.append(b); });
+    b.addEventListener("click", () => { profile.point = f.pt; profile.label = f.name.toLowerCase(); profile.moment = null; go(() => renderQuiz(1), "quiz", false); }); opts.append(b); });
   if (step === 1) ACTIVITIES.forEach(([n, o]) => { const b = el("button", "opt", n); b.type = "button"; b.addEventListener("click", () => { profile.occasion = o; profile.occLabel = n.toLowerCase(); go(() => renderQuiz(2), "quiz", false); }); opts.append(b); });
   if (step === 2) LANGS.forEach(([n, o]) => { const b = el("button", "opt", n); b.type = "button"; b.addEventListener("click", () => { profile.lang = o; go(renderStacks, "stacks"); }); opts.append(b); });
   q.append(el("div", "eyebrow", "Question " + (step + 1) + " of 3"), bar, el("h2", null, title), opts);
   view.append(q);
 }
 
-// ---- the mood map: a heat map of the whole library; tap anywhere ----
+// ---- the moment map: a heat map of everyday listening moments; the brighter a tile, the more songs we have for it ----
 const NS = "http://www.w3.org/2000/svg";
 function svg(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+const isHP = j => DATA[j][4] === "Hindi" || DATA[j][4] === "Punjabi";
+const E = j => point[j][1], Vv = j => point[j][0], has = (j, o) => DATA[j][9].includes(o), sty = j => DATA[j][12], yr = j => DATA[j][7];
+const MOMENTS = [
+  { group: "Everyday moments", id: "shower", name: "In the shower", sub: "Sing-along and feel-good", pt: [0.8, 0.62], test: j => Vv(j) >= 0.6 && E(j) >= 0.4 && E(j) <= 0.9 && ["viral-pop", "classy-groove", "romantic-ballad", "indie-acoustic", "retro", "club-edm"].includes(sty(j)) },
+  { group: "Everyday moments", id: "drive", name: "Late-night drive", sub: "Windows down, volume up", pt: [0.45, 0.4], test: j => has(j, "long drive") && Vv(j) < 0.75 && E(j) < 0.75 },
+  { group: "Everyday moments", id: "study", name: "Study and focus", sub: "Calm and steady", pt: [0.55, 0.15], test: j => has(j, "focus") || (["instrumental", "indie-acoustic"].includes(sty(j)) && E(j) < 0.4) },
+  { group: "Everyday moments", id: "meditate", name: "Meditation and prayer", sub: "Still and spiritual", pt: [0.6, 0.1], test: j => has(j, "prayer") || has(j, "sleep") || (["devotional", "instrumental"].includes(sty(j)) && E(j) < 0.3) },
+  { group: "Everyday moments", id: "work", name: "Work hours", sub: "Background that keeps you going", pt: [0.6, 0.35], test: j => (has(j, "focus") || has(j, "chill")) && E(j) >= 0.2 && E(j) <= 0.6 && Vv(j) >= 0.4 && ["instrumental", "indie-acoustic", "classy-groove", "retro", "romantic-ballad"].includes(sty(j)) },
+  { group: "Everyday moments", id: "gym", name: "At the gym", sub: "Pump and push", pt: [0.8, 0.9], test: j => has(j, "workout") || (E(j) >= 0.75 && DATA[j][11] >= 4) },
+  { group: "Everyday moments", id: "sit", name: "Sit back and listen", sub: "Lyrics and feeling", pt: [0.4, 0.25], test: j => ["soulful", "indie-acoustic", "romantic-ballad", "sad-ballad"].includes(sty(j)) && E(j) <= 0.45 },
+  { group: "With people", id: "party", name: "House party", sub: "Dance-floor energy", pt: [0.85, 0.9], test: j => has(j, "party") && E(j) >= 0.6 },
+  { group: "With people", id: "qawwali", name: "Qawwali and get-togethers", sub: "Soulful nights with friends", pt: [0.45, 0.45], test: j => (sty(j) === "soulful" || sty(j) === "devotional") && isHP(j) },
+  { group: "With people", id: "wedding", name: "Wedding and sangeet", sub: "Celebration and dance", pt: [0.85, 0.85], test: j => has(j, "wedding") || sty(j) === "wedding-dance" },
+  { group: "With people", id: "date", name: "Date night", sub: "Close and warm", pt: [0.75, 0.35], test: j => has(j, "romantic date") || (sty(j) === "romantic-ballad" && Vv(j) >= 0.55) },
+  { group: "Take me back", id: "pop16", name: "2016 pop nights", sub: "2014 to 2018 hits", pt: [0.7, 0.6], test: j => yr(j) >= 2014 && yr(j) <= 2018 && ["viral-pop", "club-edm", "classy-groove", "romantic-ballad", "rap"].includes(sty(j)) },
+  { group: "Take me back", id: "y2000", name: "2000s throwbacks", sub: "2000 to 2009", pt: [0.6, 0.5], test: j => yr(j) >= 2000 && yr(j) <= 2009 },
+  { group: "Take me back", id: "y90", name: "The 90s", sub: "1990 to 1999", pt: [0.6, 0.5], test: j => yr(j) >= 1990 && yr(j) <= 1999 },
+  { group: "Take me back", id: "ghazal", name: "Ghazals and old Bollywood", sub: "Classics from earlier generations", pt: [0.4, 0.25], test: j => DATA[j][4] === "Hindi" && (yr(j) <= 1999 || (sty(j) === "soulful" && yr(j) <= 2012)) },
+  { group: "Take me back", id: "hollywood", name: "Hollywood classics", sub: "Timeless English songs", pt: [0.6, 0.5], test: j => DATA[j][4] === "English" && yr(j) <= 1999 },
+];
 function renderMapRoute() {
-  const W = 620, H = 400, PADX = 30, PADY = 26, GX = 18, GY = 12;
-  const wrap = el("section", "heat");
-  const card = el("div", "heatcard");
-  const s = svg("svg", { id: "heat", viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Mood heat map. Tap a spot to choose a mood." });
-  const px = v => PADX + v * (W - 2 * PADX), py = v => PADY + (1 - v) * (H - 2 * PADY);
-  const cw = (W - 2 * PADX) / GX, ch = (H - 2 * PADY) / GY;
-  const counts = Array.from({ length: GX }, () => new Array(GY).fill(0)); let max = 1;
-  DATA.forEach((d, i) => { if (d[11] < minPop()) return; const gx = Math.min(GX - 1, Math.floor(point[i][0] * GX)), gy = Math.min(GY - 1, Math.floor(point[i][1] * GY)); max = Math.max(max, ++counts[gx][gy]); });
-  for (let gx = 0; gx < GX; gx++) for (let gy = 0; gy < GY; gy++) {
-    const a = counts[gx][gy] / max;
-    s.append(svg("rect", { x: PADX + gx * cw + 1, y: PADY + (GY - 1 - gy) * ch + 1, width: cw - 2, height: ch - 2, rx: 5, fill: "#ff7a59", "fill-opacity": (0.05 + 0.85 * Math.sqrt(a)).toFixed(2) }));
-  }
-  Object.entries(MAP).forEach(([e, [v, en]]) => {
-    s.append(svg("circle", { cx: px(v), cy: py(en), r: 4, fill: EMO_COLOR[e], stroke: "#fff", "stroke-width": 1 }));
-    const t = svg("text", { x: px(v), y: py(en) - 9, "text-anchor": "middle", "font-size": 12, "font-weight": 600, fill: "#fff", "paint-order": "stroke", stroke: "#090912", "stroke-width": 3 }); t.textContent = e; s.append(t);
-  });
-  [["SAD", PADX, H - 6, "start"], ["HAPPY", W - PADX, H - 6, "end"], ["INTENSE", W / 2, 14, "middle"], ["CALM", W / 2, H - 6, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 11, fill: "#8f8eb0", "letter-spacing": ".1em" }); t.textContent = w; s.append(t); });
-  const mark = svg("g", {}); s.append(mark);
-  card.append(s);
-  const box = el("div", "pickbox");
-  box.append(el("h3", null, "Tap the map"), el("p", "meta", "Bright squares have more songs. Left is sad, right is happy, up is intense, down is calm."));
-  const readout = el("div", "meta", "Nothing picked yet."); box.append(readout);
-  const langRow = el("div"); const ll = el("label", "meta", "Language"); ll.htmlFor = "mapLang"; ll.style.display = "block"; ll.style.marginBottom = "6px";
-  const sel = el("select"); sel.id = "mapLang"; sel.style.cssText = "width:100%;padding:10px;background:var(--bg2);border:1px solid var(--line);border-radius:10px";
-  LANGS.forEach(([n, o]) => sel.append(Object.assign(el("option", null, n), { value: o, selected: o === profile.lang })));
-  langRow.append(ll, sel); box.append(langRow);
-  const go2 = el("button", "btn go", "Show me songs →"); go2.type = "button"; go2.disabled = true; go2.style.opacity = ".5";
-  box.append(go2);
-  s.addEventListener("click", ev => {
-    const r = s.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * W, y = (ev.clientY - r.top) / r.height * H;
-    const v = Math.min(1, Math.max(0, (x - PADX) / (W - 2 * PADX))), en = Math.min(1, Math.max(0, 1 - (y - PADY) / (H - 2 * PADY)));
-    profile.point = [v, en]; profile.occasion = ""; profile.occLabel = "";
-    const nearest = Object.entries(MAP).sort((a, b) => Math.hypot(a[1][0] - v, a[1][1] - en) - Math.hypot(b[1][0] - v, b[1][1] - en))[0][0];
-    profile.label = nearest;
-    mark.replaceChildren(svg("circle", { cx: x, cy: y, r: 11, fill: "none", stroke: "#fff", "stroke-width": 2.5 }), svg("circle", { cx: x, cy: y, r: 4, fill: "#fff" }));
-    readout.textContent = "You picked a " + nearest + " mood."; go2.disabled = false; go2.style.opacity = "1";
-  });
-  go2.addEventListener("click", () => { profile.lang = sel.value; go(renderStacks, "stacks"); });
-  wrap.append(card, box); view.append(wrap);
+  const wrap = el("section");
+  const head = el("div", "sec"); head.append(el("h2", null, "Where will you be listening?"), el("span", "meta", "The brighter the tile, the more songs we have for it"));
+  const langs = el("div", "pills"); langs.style.marginBottom = "14px";
+  const holder = el("div");
+  const draw = () => {
+    holder.replaceChildren();
+    const pool = DATA.map((_, j) => j).filter(j => DATA[j][11] >= minPop() && (profile.lang === "any" || DATA[j][4] === profile.lang));
+    const counts = MOMENTS.map(m => pool.filter(m.test).length), max = Math.max(...counts, 1);
+    ["Everyday moments", "With people", "Take me back"].forEach(g => {
+      const sec = el("div", "sec"); sec.append(el("h2", null, g)); holder.append(sec);
+      const grid = el("div", "heatgrid");
+      MOMENTS.forEach((m, k) => {
+        if (m.group !== g) return;
+        const n = counts[k], soon = n < 4;
+        const t = el("button", "hm"); t.type = "button";
+        t.style.background = "rgba(255,122,89," + (0.07 + 0.78 * Math.sqrt(n / max)).toFixed(2) + ")";
+        t.append(el("b", null, m.name), el("span", null, m.sub), el("small", null, soon ? "More songs coming soon" : n.toLocaleString() + " songs"));
+        if (soon) t.classList.add("dim");
+        t.addEventListener("click", () => {
+          if (soon) { go(() => view.append(soonCard("We only have a few songs for “" + m.name + "” so far.")), "soon"); return; }
+          profile.point = m.pt; profile.label = m.name.toLowerCase(); profile.occasion = ""; profile.moment = m; go(renderStacks, "stacks");
+        });
+        grid.append(t);
+      });
+      holder.append(grid);
+    });
+  };
+  LANGS.forEach(([n, o]) => { const b = el("button", "pill" + (o === profile.lang ? " on" : ""), n); b.type = "button"; b.addEventListener("click", () => { profile.lang = o; langs.querySelectorAll(".pill").forEach(x => x.classList.toggle("on", x === b)); draw(); }); langs.append(b); });
+  const legend = el("div", "meta", "Language: pick one to see what we have in it."); legend.style.marginBottom = "8px";
+  wrap.append(head, legend, langs, holder); view.append(wrap);
+  draw();
 }
 
 // ---- stacks: themed groups of songs picked for your answers ----
@@ -614,27 +644,31 @@ const near = (j, pt) => Math.hypot(point[j][0] - pt[0], point[j][1] - pt[1]);
 function buildStacks(P) {
   const ok = j => DATA[j][11] >= minPop() && (P.lang === "any" || DATA[j][4] === P.lang);
   const pool = DATA.map((_, j) => j).filter(ok);
+  const base = P.moment ? P.moment.test : () => true;                          // a chosen moment already says which songs fit
+  const nearOk = (j, lim) => P.moment ? true : near(j, P.point) < lim;
   const make = (id, title, sub, filter, perArtist = 2, n = 12) => {
-    const ranked = pool.filter(filter).map(j => ({ j, score: -(near(j, P.point) - 0.05 * (popScore(j) - 0.4)) })).sort((a, b) => b.score - a.score);
+    const ranked = pool.filter(j => base(j) && filter(j)).map(j => ({ j, score: -(near(j, P.point) - 0.05 * (popScore(j) - 0.4)) })).sort((a, b) => b.score - a.score);
     return { id, title, sub, songs: diversify(ranked, n, perArtist).map(x => x.j) };
   };
   const stacks = [
-    make("mood", "Made for how you feel", "Closest to your " + (P.label || "mood"), () => true),
-    P.occasion ? make("act", "For " + (P.occLabel || P.occasion), "Songs people play for this", j => DATA[j][9].includes(P.occasion) && near(j, P.point) < 0.5) : null,
-    make("hits", "Biggest hits in your mood", "The ones everyone knows", j => DATA[j][11] === 5 && near(j, P.point) < 0.45),
-    make("reel", "Reel favourites", "Trending on reels and shorts", j => DATA[j][14] >= 4 && near(j, P.point) < 0.5),
-    make("throw", "Throwbacks", "Older songs, same feeling", j => DATA[j][7] <= 2015 && near(j, P.point) < 0.4),
-    make("new", "Fresh and new", "Released in the last few years", j => DATA[j][7] >= 2022 && near(j, P.point) < 0.4),
+    make("mood", P.moment ? "Top picks for " + P.moment.name.toLowerCase() : "Made for how you feel", P.moment ? P.moment.sub : "Closest to your " + (P.label || "mood"), () => true),
+    P.occasion ? make("act", "For " + (P.occLabel || P.occasion), "Songs people play for this", j => DATA[j][9].includes(P.occasion) && nearOk(j, 0.5)) : null,
+    make("hits", "Biggest hits", "The ones everyone knows", j => DATA[j][11] === 5 && nearOk(j, 0.45)),
+    make("reel", "Reel favourites", "Trending on reels and shorts", j => DATA[j][14] >= 4 && nearOk(j, 0.5)),
+    make("throw", "Throwbacks", "Older songs, same feeling", j => DATA[j][7] <= 2015 && nearOk(j, 0.4)),
+    make("new", "Fresh and new", "Released in the last few years", j => DATA[j][7] >= 2022 && nearOk(j, 0.4)),
   ].filter(Boolean).filter(s => s.songs.length >= 3);
   // one more stack for the style that shows up most in the first stack
   const first = stacks[0] && stacks[0].songs;
   if (first && first.length) {
     const count = {}; first.forEach(j => count[DATA[j][12]] = (count[DATA[j][12]] || 0) + 1);
     const top = Object.entries(count).sort((a, b) => b[1] - a[1])[0][0];
-    const st = make("style", "More " + (STYLE_NAME[top] || "pop") + " songs", "The sound you seem to like", j => DATA[j][12] === top && near(j, P.point) < 0.55);
+    const st = make("style", "More " + (STYLE_NAME[top] || "pop") + " songs", "The sound you seem to like", j => DATA[j][12] === top && nearOk(j, 0.55));
     if (st.songs.length >= 3) stacks.push(st);
   }
-  return stacks;
+  // drop a stack that is nearly the same list as one already shown
+  const seenSig = new Set();
+  return stacks.filter(s => { const sig = [...s.songs].sort((a, b) => a - b).slice(0, 6).join(","); if (seenSig.has(sig)) return false; seenSig.add(sig); return true; });
 }
 function renderStacks() {
   const head = el("div", "sec"); head.append(el("h2", null, "Picked for you"), el("span", "meta", "Open a stack, then tap a song to get songs like it"));
@@ -698,7 +732,7 @@ function openSong(i) { go(() => renderSong(i), "song"); }
 function renderSong(i) {
   const wt = weights(), me = DATA[i];
   document.documentElement.style.setProperty("--glowc", EMO_COLOR[me[5]] + "88");
-  const recs = recommend(i, wt, $("variety").value, 5, minPop());
+  const recs = recommend(i, wt, $("variety").value, 5, minPop(), $("langmode").value);
   const hero = el("section", "hero");
   const song = el("div", "song"), txt = el("div", "stxt");
   const bp = el("button", "playbig"); bp.type = "button"; bp.dataset.play = i; bp.innerHTML = ICON.play; bp.append(el("span", null, "Play")); bp.addEventListener("click", () => playSong(i));
@@ -729,6 +763,11 @@ function renderSong(i) {
   });
   view.append(hero, sec, cards);
   if (!recs.length) cards.replaceWith(soonCard("We could not find close matches with your current settings."));
+  else if (recs.length < 5 && $("langmode").value === "only") {
+    const n = el("div", "soon"); n.style.margin = "18px 0 0"; n.style.maxWidth = "none"; n.style.padding = "20px";
+    n.append(el("h3", null, "More " + me[4] + " songs coming soon"), el("p", "meta", "We only have " + recs.length + " " + me[4] + " " + (recs.length === 1 ? "song" : "songs") + " like this so far. Stay tuned! You can also set Language to “Same language first” in Tune to fill the list with other languages."));
+    view.append(n);
+  }
   const how = el("details", "how"); how.append(el("summary", null, "How Moodio works")); const steps = el("div", "steps"); how.append(steps); explain(i, steps); view.append(how);
   refreshIcons();
   prefetchArt([i, ...recs.map(r => r.j)]);
@@ -759,7 +798,7 @@ $("form").addEventListener("submit", e => {
 });
 let slideTimer = 0;
 FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).textContent = $("w_" + f).value; clearTimeout(slideTimer); slideTimer = setTimeout(() => { if (currentView && currentView.label === "song") go(currentView.render, "song", false); }, 250); }));
-["variety", "minpop"].forEach(id => $(id).addEventListener("change", () => { if (currentView) go(currentView.render, currentView.label, false); }));
+["variety", "minpop", "langmode"].forEach(id => $(id).addEventListener("change", () => { if (currentView) go(currentView.render, currentView.label, false); }));
 weights();
 goHome();
 </script>
