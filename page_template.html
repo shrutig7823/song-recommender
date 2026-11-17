@@ -7,221 +7,209 @@
 <meta name="description" content="Moodio: pick a song you like and get five songs that feel the same, from different artists, matched by emotion, lyric theme, occasion and release year. Listen right on the page.">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-/* Layout: a dark music-player app. Left sidebar (brand, tune the mix), a main column with a colour header that follows the song's emotion,
-   a track list, mood tiles, and a now-playing bar docked at the bottom. A deliberately dark-only design. */
+/* Layout: a night-sky page. Sticky top bar, a hero with the chosen song next to a "mood map" that plots it and its five matches,
+   five art-led cards, feeling and popularity pills, a floating mini player, and a slide-in drawer for the mix controls. Dark only. */
 :root{
-  --bg:#121212; --side:#000000; --panel:#181818; --panel2:#242424; --hover:#2d2d2d; --line:#2f2f2f;
-  --fg:#ffffff; --muted:#b3b3b3; --faint:#7a7a7a; --accent:#2be38b; --accent-fg:#04140c;
-  --hero:#5b8def;
+  --bg:#090912; --bg2:#0f0f1c; --panel:#15152a; --panel2:#1c1c36; --line:#2a2a47; --fg:#f4f3fa; --muted:#a3a2bd; --faint:#6f6e8c;
+  --accent:#ff7a59; --accent2:#ffc46b; --accent-fg:#1a0b06; --glow:#7a4dff;
   --font-head:"Space Grotesk","Segoe UI",system-ui,sans-serif;
   --font-body:"Inter","Segoe UI",system-ui,sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.45}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5}
+body{background-image:radial-gradient(900px 500px at 12% -10%,rgba(122,77,255,.22),transparent 60%),radial-gradient(800px 480px at 100% 0%,rgba(255,122,89,.14),transparent 60%);background-repeat:no-repeat;background-attachment:fixed}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 h1,h2,h3{font-family:var(--font-head);margin:0}
 .meta{color:var(--muted);font-size:13px}
 
-.app{display:grid;grid-template-columns:300px minmax(0,1fr);gap:8px;min-height:100vh;padding:8px 8px 0}
-.side{display:flex;flex-direction:column;gap:8px;position:sticky;top:8px;align-self:start;max-height:calc(100vh - 8px - 96px);overflow:auto}
-.card-box{background:var(--panel);border-radius:10px;padding:16px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:22px;letter-spacing:-.01em}
-.mark{display:flex;align-items:flex-end;gap:3px;height:24px}
-.mark i{display:block;width:4px;border-radius:2px;background:var(--accent)}
-.mark i:nth-child(1){height:10px}.mark i:nth-child(2){height:24px}.mark i:nth-child(3){height:16px}.mark i:nth-child(4){height:20px}
-.nav{display:flex;flex-direction:column;gap:2px;margin-top:14px}
-.nav button{display:flex;align-items:center;gap:12px;background:none;border:0;padding:9px 6px;border-radius:6px;font-weight:600;font-size:15px;color:var(--muted);text-align:left}
-.nav button:hover,.nav button.on{color:var(--fg)}
-.lib summary{list-style:none;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.lib summary::-webkit-details-marker{display:none}
-.lib summary::after{content:"+";color:var(--muted);font-size:20px}
-.lib[open] summary::after{content:"\2212"}
-.tuner{display:flex;flex-direction:column;gap:14px;margin-top:14px}
-.tuner .hint{color:var(--muted);font-size:12px}
-.srow{display:grid;grid-template-columns:1fr 34px;gap:2px 8px;align-items:center;font-size:13px}
-.srow label{grid-column:1 / 3;color:var(--muted)}
-.srow output{text-align:right;color:var(--faint);font-variant-numeric:tabular-nums}
-.srow input[type=range]{width:100%;accent-color:var(--accent)}
-.tuner select{width:100%;padding:9px 10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
-.side-foot{color:var(--faint);font-size:12px;padding:4px 8px}
-
-.main{position:relative;background:linear-gradient(180deg,color-mix(in srgb,var(--hero) 42%,#121212) 0,var(--bg) 380px);border-radius:10px;padding:0 24px 140px;min-width:0;transition:background .4s}
-.top{display:flex;gap:10px;align-items:center;padding:16px 0 8px;flex-wrap:wrap}
-.field{flex:1 1 320px;min-width:0;max-width:520px;display:flex;align-items:center;gap:10px;background:#242424;border:2px solid transparent;border-radius:999px;padding:0 18px}
-.field:hover{background:#2d2d2d}
-.field:focus-within{border-color:var(--fg)}
+.top{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(9,9,18,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--font-head);font-weight:700;font-size:21px;letter-spacing:-.01em;flex:none}
+.mark{display:flex;align-items:flex-end;gap:3px;height:22px}
+.mark i{display:block;width:4px;border-radius:2px;background:linear-gradient(var(--accent2),var(--accent))}
+.mark i:nth-child(1){height:9px}.mark i:nth-child(2){height:22px}.mark i:nth-child(3){height:14px}.mark i:nth-child(4){height:18px}
+.search{flex:1 1 auto;display:flex;gap:10px;min-width:0;max-width:640px;margin:0 auto}
+.field{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 14px}
+.field:focus-within{border-color:var(--accent2)}
 .field svg{flex:none;color:var(--muted)}
-.field input{flex:1;min-width:0;border:0;background:transparent;padding:13px 0;outline:none}
-.pill{border:0;border-radius:999px;padding:11px 20px;font-weight:700;background:var(--fg);color:#000}
-.pill.ghost{background:#2a2a2a;color:var(--fg)}
-.pill:hover{transform:scale(1.03)}
+.field input{flex:1;min-width:0;border:0;background:transparent;padding:11px 0;outline:none}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:10px 16px;font-weight:600;white-space:nowrap}
+.btn:hover{border-color:var(--accent2)}
+.btn.go{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);border:0}
+.btn.go:hover{filter:brightness(1.06)}
 
-.banner{display:flex;gap:22px;align-items:flex-end;padding:22px 0 18px;flex-wrap:wrap}
-.cover{position:relative;flex:none;display:grid;place-items:center;border-radius:6px;overflow:hidden;color:rgba(255,255,255,.85);font-family:var(--font-head);font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.45)}
-.cover.big{width:200px;height:200px;font-size:84px;border-radius:8px}
-.cover.md{width:44px;height:44px;font-size:20px}
-.cover.sm{width:56px;height:56px;font-size:24px}
-.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.btxt{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1 1 300px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.banner h1{font-size:clamp(30px,6vw,64px);line-height:1.02;letter-spacing:-.02em;overflow-wrap:anywhere}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 190px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:30px;align-items:center;padding:34px 0 10px}
+.song{display:flex;gap:22px;align-items:flex-end;min-width:0}
+.art{position:relative;flex:none;display:grid;place-items:center;overflow:hidden;color:rgba(255,255,255,.88);font-family:var(--font-head);font-weight:700;background:var(--panel2)}
+.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.art.big{width:210px;height:210px;border-radius:22px;font-size:84px;box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 60px -10px var(--glowc,rgba(122,77,255,.5))}
+.stxt{display:flex;flex-direction:column;gap:9px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+.stxt h1{font-size:clamp(30px,5vw,56px);line-height:1.02;letter-spacing:-.02em;overflow-wrap:anywhere}
 .chips{display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:6px}
-.chip{display:inline-flex;align-items:center;align-self:flex-start;gap:6px;font-size:12px;line-height:1.4;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.1);white-space:nowrap}
+.chip{display:inline-flex;align-items:center;align-self:flex-start;gap:6px;font-size:12px;line-height:1.4;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
 .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--accent))}
-.chip.soft{background:rgba(255,255,255,.06);color:var(--muted)}
-.actions{display:flex;align-items:center;gap:14px;padding:10px 0 4px}
-.bigplay{width:56px;height:56px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center}
-.bigplay:hover{transform:scale(1.06)}
-.bigplay svg{width:24px;height:24px}
+.chip.soft{background:transparent;color:var(--muted)}
+.playbig{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:6px;border:0;border-radius:999px;padding:12px 22px 12px 16px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg)}
+.playbig svg{width:18px;height:18px}
+.playbig:hover{filter:brightness(1.07)}
 
-.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:22px 0 6px}
+.mapcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:14px 14px 10px}
+.mapcard h2{font-size:15px;display:flex;justify-content:space-between;align-items:baseline}
+.mapcard h2 span{font-family:var(--font-body);font-weight:400;font-size:12px;color:var(--muted)}
+#map{width:100%;height:auto;display:block;margin-top:6px}
+
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 12px}
 .sec h2{font-size:22px}
-ol{list-style:none;margin:0;padding:0}
-.head,.row{display:grid;grid-template-columns:36px minmax(0,2fr) minmax(0,1.5fr) 62px 44px;gap:12px;align-items:center;padding:8px 12px}
-.head{color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line);margin-bottom:6px}
-.row{border-radius:6px;cursor:pointer}
-.row:hover{background:rgba(255,255,255,.08)}
-.row.playing .t{color:var(--accent)}
-.num{color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
-.who{display:flex;gap:12px;align-items:center;min-width:0}
-.who .txt{min-width:0}
-.t{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mood{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
-.tier{display:inline-block;margin-top:3px;font-size:11px;font-weight:700;letter-spacing:.03em;padding:1px 8px;border-radius:999px;background:#2a2a2a;color:var(--muted)}
-.tier.t5{background:#2be38b;color:#04140c}.tier.t4{background:#1f9d62;color:#fff}.tier.t3{background:#3a3a3a;color:#e6e6e6}.tier.t2,.tier.t1{background:#262626;color:var(--faint)}
-.match{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:600}
-.rplay{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:var(--fg);display:grid;place-items:center;justify-self:end}
-.row:hover .rplay,.row.playing .rplay{background:var(--accent);color:var(--accent-fg)}
-.rplay svg{width:16px;height:16px}
-.why{margin:0 12px 6px 60px;padding:10px 12px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:8px}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px;min-width:0;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:#3a3a64}
+.card .art{width:100%;aspect-ratio:1;border-radius:14px;font-size:54px}
+.card .num{position:absolute;left:8px;top:8px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(9,9,18,.72);font-size:13px;font-weight:700;z-index:1}
+.cplay{position:absolute;right:8px;bottom:8px;width:42px;height:42px;border-radius:50%;border:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);box-shadow:0 6px 18px rgba(0,0,0,.45);z-index:1}
+.cplay svg{width:16px;height:16px}
+.cplay:hover{transform:scale(1.07)}
+.card .t{font-weight:600;font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.row2{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pct{font-family:var(--font-head);font-weight:700;font-size:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tier{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--panel2);color:var(--muted);white-space:nowrap}
+.tier.t5{background:rgba(255,196,107,.18);color:var(--accent2)}.tier.t4{background:rgba(255,122,89,.16);color:#ff9b82}
+.card .chips{gap:5px}.card .chip{font-size:11px;padding:2px 8px}
+.whybtn{background:none;border:0;color:var(--muted);text-align:left;padding:0;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.why{font-size:12px;color:var(--muted);background:var(--bg2);border-radius:10px;padding:8px 10px}
 
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:12px}
-.tile{position:relative;overflow:hidden;border:0;border-radius:8px;padding:14px;min-height:96px;text-align:left;font-family:var(--font-head);font-weight:700;font-size:18px;color:#fff;background:var(--c)}
-.tile small{display:block;font-family:var(--font-body);font-weight:500;font-size:12px;opacity:.85;margin-top:2px}
-.tile::after{content:"";position:absolute;right:-18px;bottom:-14px;width:70px;height:70px;border-radius:12px;background:rgba(0,0,0,.22);transform:rotate(25deg)}
-.tile:hover{filter:brightness(1.1)}
-details.how{background:var(--panel);border-radius:10px;padding:4px 16px;margin-top:26px}
-details.how summary{cursor:pointer;font-weight:700;font-size:16px;padding:12px 0;list-style:none;display:flex;justify-content:space-between}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 14px;font-weight:500}
+.pill:hover{border-color:var(--accent2)}
+.pill .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.pill small{color:var(--faint);font-size:12px}
+details.how{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:4px 18px;margin-top:30px}
+details.how summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:16px;padding:14px 0;list-style:none;display:flex;justify-content:space-between}
 details.how summary::-webkit-details-marker{display:none}
 details.how summary::after{content:"+";color:var(--muted);font-size:20px}
 details.how[open] summary::after{content:"\2212"}
 .steps{display:flex;flex-direction:column;gap:14px;padding-bottom:16px}
 .step b{display:block;margin-bottom:2px}
-code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}
+code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;padding:2px 6px;border-radius:5px;overflow-wrap:anywhere}
 .foot{margin-top:26px;color:var(--faint);font-size:12px;display:flex;flex-direction:column;gap:6px}
 
-/* now-playing bar */
-.dock{position:fixed;left:8px;right:8px;bottom:8px;z-index:20;display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2fr) 40px;gap:16px;align-items:center;background:#000;border:1px solid var(--line);border-radius:10px;padding:10px 14px;box-shadow:0 -8px 30px rgba(0,0,0,.5)}
-.dock .now{display:flex;gap:12px;align-items:center;min-width:0}
-.dock .now .t{font-size:14px}
-.ctl{display:flex;align-items:center;gap:12px;min-width:0}
-.ctl .pp{width:38px;height:38px;border-radius:50%;border:0;background:var(--fg);color:#000;display:grid;place-items:center;flex:none}
+/* floating mini player */
+.mini{position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
+.mini .head{display:flex;gap:12px;align-items:center}
+.mini .art{width:52px;height:52px;border-radius:12px;font-size:22px}
+.mini .txt{min-width:0;flex:1}
+.mini .txt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .x{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:16px}
+.mini .x:hover{background:var(--panel2);color:var(--fg)}
+.ctl{display:flex;align-items:center;gap:10px}
+.ctl .pp{width:38px;height:38px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);display:grid;place-items:center;flex:none}
 .ctl .pp svg{width:16px;height:16px}
 .ctl input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
-.ctl time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px}
-.ctl iframe{width:100%;height:80px;border:0;border-radius:12px}
-.dock.spot{grid-template-columns:minmax(0,1fr) 40px}
-.dock.spot .now{display:none}
-.close{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:18px}
-.close:hover{color:var(--fg);background:var(--hover)}
+.ctl time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:32px}
+.mini iframe{width:100%;height:152px;border:0;border-radius:12px}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);z-index:41;background:var(--bg2);border-left:1px solid var(--line);padding:20px;overflow:auto;transform:translateX(102%);transition:transform .25s}
+.drawer.on{transform:none}
+.drawer h2{font-size:20px;display:flex;justify-content:space-between;align-items:center}
+.drawer .x{width:34px;height:34px;border-radius:50%;border:0;background:var(--panel);font-size:16px}
+.tuner{display:flex;flex-direction:column;gap:16px;margin-top:14px}
+.hint{color:var(--muted);font-size:12px}
+.srow{display:grid;grid-template-columns:1fr 34px;gap:2px 8px;align-items:center;font-size:13px}
+.srow label{grid-column:1 / 3;color:var(--muted)}
+.srow output{text-align:right;color:var(--faint);font-variant-numeric:tabular-nums}
+.srow input[type=range]{width:100%;accent-color:var(--accent)}
+.tuner select{width:100%;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
 
 @media (max-width:900px){
-  .app{grid-template-columns:1fr;padding:0}
-  .side{position:static;max-height:none;flex-direction:column;padding:8px 8px 0}
-  .main{border-radius:10px;padding:0 14px 150px;margin:8px 8px 0}
-  .cover.big{width:132px;height:132px;font-size:56px}
-  .head,.row{grid-template-columns:26px minmax(0,1fr) 48px 38px}
-  .head .hmood,.row .mood{display:none}
-  .why{margin-left:12px}
-  .dock{grid-template-columns:minmax(0,1fr) 36px;left:6px;right:6px;bottom:6px}
-  .dock .ctl{grid-column:1 / 2;grid-row:2}
-  .dock .now{grid-column:1 / 2}
-  .dock .close{grid-row:1;grid-column:2}
-  .dock.spot{grid-template-columns:minmax(0,1fr) 36px}
+  .hero{grid-template-columns:1fr;gap:20px}
+  .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(170px,62%);overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
+  .card{scroll-snap-align:start}
+  .top{flex-wrap:wrap}
+  .search{order:3;flex-basis:100%;max-width:none}
+  .btn.hide-s{display:none}
+  .art.big{width:140px;height:140px;font-size:58px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="app">
-  <aside class="side">
-    <div class="card-box">
-      <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Moodio</div>
-      <nav class="nav">
-        <button type="button" id="navHome" class="on">Home</button>
-        <button type="button" id="rand">Surprise me</button>
-      </nav>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Moodio</div>
+  <form class="search" id="form">
+    <label class="field" for="q">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" list="songs" autocomplete="off" placeholder="Search a song you love" aria-label="Song name">
+    </label>
+    <datalist id="songs"></datalist>
+    <button class="btn go" type="submit">Recommend</button>
+  </form>
+  <button class="btn hide-s" type="button" id="rand">Surprise me</button>
+  <button class="btn" type="button" id="tuneBtn">Tune</button>
+</header>
+
+<div class="wrap">
+  <section class="hero" id="hero"></section>
+
+  <section>
+    <div class="sec"><h2>Five songs that feel the same</h2><span class="meta">from five different artists</span></div>
+    <div class="cards" id="cards" aria-live="polite"></div>
+  </section>
+
+  <section>
+    <div class="sec"><h2>Start from a feeling</h2><span class="meta">Tap one to jump to a song with that mood</span></div>
+    <div class="pills" id="feel"></div>
+  </section>
+  <section>
+    <div class="sec"><h2>Start from popularity</h2><span class="meta">How widely a song is played</span></div>
+    <div class="pills" id="poptiles"></div>
+  </section>
+
+  <details class="how">
+    <summary>How Moodio works</summary>
+    <div class="steps" id="how"></div>
+  </details>
+
+  <footer class="foot">
+    <span><span id="count"></span> songs in the library. Emotion, lyric theme, occasion and popularity labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
+    <span>Songs play right here. Songs pulled from Spotify use Spotify's player (30-second previews, or full songs when you are signed in to Spotify). The other songs play a 30-second preview from iTunes.</span>
+  </footer>
+</div>
+
+<aside class="mini" id="mini" hidden>
+  <div class="head"><div id="miniArt"></div><div class="txt" id="miniTxt"></div><button class="x" id="miniClose" type="button" aria-label="Close player">✕</button></div>
+  <div class="ctl" id="miniCtl"></div>
+</aside>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Tune the mix">
+  <h2>Tune the mix <button class="x" id="drawerClose" type="button" aria-label="Close">✕</button></h2>
+  <div class="tuner">
+    <div class="hint">How much should each factor count? The numbers are relative, so they do not need to add up to 100.</div>
+    <div class="srow"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="5" value="35"><output id="o_tags"></output></div>
+    <div class="srow"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="5" value="25"><output id="o_emotion"></output></div>
+    <div class="srow"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="5" value="20"><output id="o_context"></output></div>
+    <div class="srow"><label for="w_era">Release year</label><input type="range" id="w_era" min="0" max="100" step="5" value="5"><output id="o_era"></output></div>
+    <div class="srow"><label for="w_lang">Same language</label><input type="range" id="w_lang" min="0" max="100" step="5" value="15"><output id="o_lang"></output></div>
+    <div class="srow"><label for="w_pop">Popularity</label><input type="range" id="w_pop" min="0" max="100" step="5" value="15"><output id="o_pop"></output></div>
+    <div>
+      <label class="meta" for="minpop" style="display:block;margin-bottom:6px">Only recommend songs that are</label>
+      <select id="minpop"><option value="4" selected>Hits and popular songs</option><option value="3">Well known and up</option><option value="2">Lesser known too</option><option value="1">Everything, deep cuts included</option></select>
     </div>
-    <details class="card-box lib" id="lib">
-      <summary>Tune the mix</summary>
-      <div class="tuner">
-        <div class="hint">How much should each factor count? The numbers are relative, so they do not need to add up to 100.</div>
-        <div class="srow"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="5" value="35"><output id="o_tags"></output></div>
-        <div class="srow"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="5" value="25"><output id="o_emotion"></output></div>
-        <div class="srow"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="5" value="20"><output id="o_context"></output></div>
-        <div class="srow"><label for="w_era">Release year</label><input type="range" id="w_era" min="0" max="100" step="5" value="5"><output id="o_era"></output></div>
-        <div class="srow"><label for="w_lang">Same language</label><input type="range" id="w_lang" min="0" max="100" step="5" value="15"><output id="o_lang"></output></div>
-        <div class="srow"><label for="w_pop">Popularity</label><input type="range" id="w_pop" min="0" max="100" step="5" value="15"><output id="o_pop"></output></div>
-        <div>
-          <label class="meta" for="minpop" style="display:block;margin-bottom:6px">Only recommend songs that are</label>
-          <select id="minpop"><option value="4" selected>Hits and popular songs</option><option value="3">Well known and up</option><option value="2">Lesser known too</option><option value="1">Everything, deep cuts included</option></select>
-        </div>
-        <div>
-          <label class="meta" for="variety" style="display:block;margin-bottom:6px">Artist variety</label>
-          <select id="variety"><option value="mix">Mix: 1 song per artist</option><option value="strict">Strict: not the artist I picked</option><option value="off">Off: same artist allowed</option></select>
-        </div>
-      </div>
-    </details>
-    <div class="side-foot"><span id="count"></span> songs in the library</div>
-  </aside>
-
-  <main class="main" id="main">
-    <header class="top">
-      <form class="search" id="form" style="display:contents">
-        <label class="field" for="q">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" list="songs" autocomplete="off" placeholder="What song do you love?" aria-label="Song name">
-        </label>
-        <datalist id="songs"></datalist>
-        <button class="pill" type="submit">Recommend</button>
-      </form>
-    </header>
-
-    <section id="out" aria-live="polite"></section>
-
-    <section>
-      <div class="sec"><h2>Start from a mood</h2><span class="meta">Tap one to pick a song with that feeling</span></div>
-      <div class="tiles" id="tiles"></div>
-    </section>
-
-    <section>
-      <div class="sec"><h2>Browse by popularity</h2><span class="meta">How widely played a song is</span></div>
-      <div class="tiles" id="poptiles"></div>
-    </section>
-
-    <details class="how">
-      <summary>How Moodio works</summary>
-      <div class="steps" id="how"></div>
-    </details>
-
-    <footer class="foot">
-      <span>Emotion, lyric theme and occasion labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
-      <span>Songs play right here. Songs pulled from Spotify use Spotify's player (30-second previews, or full songs when you are signed in to Spotify). The other songs play a 30-second preview from iTunes.</span>
-    </footer>
-  </main>
-</div>
-
-<div class="dock" id="dock" hidden>
-  <div class="now" id="dockInfo"></div>
-  <div class="ctl" id="dockCtl"></div>
-  <button class="close" id="dockClose" type="button" aria-label="Close player">✕</button>
-</div>
+    <div>
+      <label class="meta" for="variety" style="display:block;margin-bottom:6px">Artist variety</label>
+      <select id="variety"><option value="mix">Mix: 1 song per artist</option><option value="strict">Strict: not the artist I picked</option><option value="off">Off: same artist allowed</option></select>
+    </div>
+  </div>
+</aside>
 
 <script>
 const DATA = /*DATA*/null; // each song: [title, artists, genre, tags line, language, main emotion, second emotion, year, lyric theme, occasions, spotify id, popularity 1-5]
@@ -249,8 +237,8 @@ const MAP = {
   romantic: [0.75, 0.35], happy: [0.85, 0.65], euphoric: [0.90, 0.95], confident: [0.70, 0.85],
   angry: [0.10, 0.90], intense: [0.20, 0.75], spiritual: [0.65, 0.15],
 };
-const EMO_COLOR = { heartbreak: "#e5484d", sad: "#4b7bec", nostalgic: "#b9803a", mellow: "#2fa593", romantic: "#e0508f", happy: "#e8a800",
-  euphoric: "#f2762e", confident: "#7d5be6", angry: "#c92d12", intense: "#8e44ad", spiritual: "#2c9b72" };
+const EMO_COLOR = { heartbreak: "#ff5a68", sad: "#5b8def", nostalgic: "#d9993f", mellow: "#3cc4ad", romantic: "#ff6fae", happy: "#ffd23f",
+  euphoric: "#ff8a3d", confident: "#9b7bff", angry: "#ff3b1f", intense: "#c06bff", spiritual: "#3fd6a0" };
 const point = DATA.map(s => { const p = MAP[s[5]], q = MAP[s[6]] || p; return [0.7 * p[0] + 0.3 * q[0], 0.7 * p[1] + 0.3 * q[1]]; });
 const emotionSim = (a, b) => 1 - Math.hypot(point[a][0] - point[b][0], point[a][1] - point[b][1]) / Math.SQRT2;
 
@@ -289,7 +277,7 @@ function recommend(i, wt, variety = "mix", count = 5, minPop = 1) {
   return out;
 }
 
-// ---- Page helpers ----
+// ---- helpers ----
 const $ = id => document.getElementById(id);
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 const ICON = {
@@ -303,13 +291,16 @@ function moodChips(i) {
   s[9].forEach(o => d.append(chip("at " + o, "soft")));
   return d;
 }
-// a colourful cover, made from the song's two emotions, with its first letter
-function cover(i, size) {
-  const s = DATA[i], d = el("div", "cover " + size), c1 = EMO_COLOR[s[5]], c2 = EMO_COLOR[s[6]] || c1;
-  d.style.background = "linear-gradient(135deg," + c1 + "," + c2 + ")";
+// an art tile: a colour gradient from the song's two emotions with its first letter; real album art is laid over it once found
+function art(i, cls) {
+  const s = DATA[i], d = el("div", "art " + cls), c1 = EMO_COLOR[s[5]], c2 = EMO_COLOR[s[6]] || c1;
+  d.style.background = "linear-gradient(135deg," + c1 + "," + c2 + ")"; d.style.setProperty("--glowc", c1 + "99"); d.dataset.art = i;
   d.append(el("span", null, ([...s[0].replace(/[^\p{L}\p{N}]/gu, "")][0] || "♪").toUpperCase()));
+  const hit = previewCache.get(i); if (hit) addImg(d, hit);
   return d;
 }
+function addImg(d, hit) { if (d.querySelector("img")) return; const im = document.createElement("img"); im.alt = ""; im.src = hit.artworkUrl100.replace("100x100", "400x400"); im.onerror = () => im.remove(); d.append(im); }
+function paintArt(i, hit) { document.querySelectorAll('.art[data-art="' + i + '"]').forEach(d => addImg(d, hit)); }
 
 const labels = DATA.map(s => s[0] + " — " + s[1].split(", ").slice(0, 2).join(", "));
 const seenLabel = new Map();
@@ -328,58 +319,73 @@ function findSong(text) {
 }
 
 // ---- listening, always inside the page: Spotify player when we have the song id, otherwise a 30-second iTunes preview ----
-const norm2 = t => t.toLowerCase().replace(/\(.*?\)|\[.*?\]|- from .*|- remaster.*/g, "").replace(/[^\p{L}\p{N}]/gu, "");
-const previewCache = new Map();
-async function findPreview(i) {
+const norm2 = t => t.toLowerCase().replace(/\(.*?\)|\[.*?\]|- from .*|- remaster.*|- live.*/g, "").replace(/[^\p{L}\p{N}]/gu, "");
+const previewCache = new Map();          // song index -> iTunes match, or null when iTunes has none
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+// iTunes allows only about 20 searches a minute. A 403 or 429 means "slow down": background album-art lookups then pause for a minute,
+// while a song you press Play on waits and retries, so it still plays.
+let coolUntil = 0;
+async function itunes(term, patient) {
+  if (!patient && Date.now() < coolUntil) return undefined;
+  for (let attempt = 0; attempt < (patient ? 5 : 1); attempt++) {
+    try {
+      const r = await fetch("https://itunes.apple.com/search?media=music&entity=song&limit=10&term=" + encodeURIComponent(term));
+      if (r.ok) return (await r.json()).results.filter(x => x.previewUrl);
+      if (r.status === 403 || r.status === 429) coolUntil = Date.now() + 60000;
+    } catch (e) { /* network hiccup: try again */ }
+    if (patient) await sleep(3000 * (attempt + 1));
+  }
+  return undefined;                      // could not ask (not the same as "no match")
+}
+async function findPreview(i, patient = true) {
   if (previewCache.has(i)) return previewCache.get(i);
   const title = DATA[i][0], artist = DATA[i][1].split(", ")[0];
-  let hit = null;
-  try {
-    const r = await fetch("https://itunes.apple.com/search?media=music&entity=song&limit=8&term=" + encodeURIComponent(title + " " + artist));
-    const list = (await r.json()).results.filter(x => x.previewUrl);
-    const t = norm2(title), a = norm2(artist);
-    hit = list.find(x => norm2(x.trackName) === t && norm2(x.artistName).includes(a))
-       || list.find(x => (norm2(x.trackName).includes(t) || t.includes(norm2(x.trackName))) && norm2(x.artistName).includes(a))
-       || null;
-  } catch (e) { hit = null; }
+  const t = norm2(title), a = norm2(artist);
+  const best = list => list.find(x => norm2(x.trackName) === t && norm2(x.artistName).includes(a))
+    || list.find(x => (norm2(x.trackName).startsWith(t) || t.startsWith(norm2(x.trackName)) || norm2(x.trackName).includes(t)) && norm2(x.artistName).includes(a))
+    || null;
+  let list = await itunes(title + " " + artist, patient);
+  if (list === undefined) return null;   // do not remember a failure: try again next time
+  let hit = best(list);
+  if (!hit) { const second = await itunes(title.replace(/\(.*?\)/g, "") + " " + (DATA[i][1].split(", ")[1] || artist), patient); if (second) hit = best(second); }
+  if (!hit) hit = list.find(x => norm2(x.trackName) === t) || null;     // same title, artist spelled differently
   previewCache.set(i, hit);
+  if (hit) paintArt(i, hit);
   return hit;
 }
 
-const dock = $("dock"), dockInfo = $("dockInfo"), dockCtl = $("dockCtl");
+const mini = $("mini"), miniArt = $("miniArt"), miniTxt = $("miniTxt"), miniCtl = $("miniCtl");
 let audio = null, nowI = -1;
 const mmss = s => isFinite(s) ? Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0") : "0:00";
 function refreshIcons() {
   document.querySelectorAll("[data-play]").forEach(b => {
     const on = Number(b.dataset.play) === nowI && audio && !audio.paused;
-    b.innerHTML = on ? ICON.pause : ICON.play;
-    b.setAttribute("aria-label", on ? "Pause" : "Play");
+    const lab = b.querySelector("span");
+    if (lab) lab.textContent = on ? "Pause" : "Play"; else b.innerHTML = on ? ICON.pause : ICON.play;
+    if (lab) b.insertAdjacentHTML("afterbegin", ""); b.setAttribute("aria-label", on ? "Pause" : "Play");
   });
-  document.querySelectorAll(".row").forEach(r => r.classList.toggle("playing", Number(r.dataset.i) === nowI));
 }
 function stopAll() {
   if (audio) { audio.pause(); audio = null; }
-  dockCtl.replaceChildren(); dockInfo.replaceChildren(); dock.hidden = true; dock.classList.remove("spot"); nowI = -1; refreshIcons();
+  miniCtl.replaceChildren(); miniArt.replaceChildren(); miniTxt.replaceChildren(); mini.hidden = true; nowI = -1; refreshIcons();
 }
 async function playSong(i) {
   if (nowI === i && audio) { audio.paused ? audio.play() : audio.pause(); return; }
-  stopAll(); nowI = i; dock.hidden = false;
+  stopAll(); nowI = i; mini.hidden = false;
   const s = DATA[i];
-  const info = el("div", "txt"); info.append(el("div", "t", s[0]), el("div", "meta", s[1]));
-  dockInfo.replaceChildren(cover(i, "sm"), info);
+  miniArt.replaceChildren(art(i, "")); miniTxt.replaceChildren(el("b", null, s[0]), el("span", "meta", s[1]));
   refreshIcons();
-  if (s[10]) {                                         // Spotify embed (compact)
+  if (s[10]) {                                         // Spotify embed
     const f = document.createElement("iframe");
     f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator";
     f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.title = "Spotify player: " + s[0];
-    dock.classList.add("spot"); dockCtl.replaceChildren(f); return;
+    miniCtl.replaceChildren(f); return;
   }
-  dockCtl.replaceChildren(el("span", "meta", "Finding the song…"));
+  miniCtl.replaceChildren(el("span", "meta", "Finding the song…"));
   const hit = await findPreview(i);
   if (nowI !== i) return;
-  if (!hit) { dockCtl.replaceChildren(el("span", "meta", "No preview is available for this song.")); return; }
-  const art = document.createElement("img"); art.src = hit.artworkUrl100.replace("100x100", "300x300"); art.alt = "";
-  dockInfo.firstChild.append(art);                     // real album art over the colour cover
+  if (!hit) { miniCtl.replaceChildren(el("span", "meta", "Sorry, no preview could be found for this song.")); return; }
+  addImg(miniArt.firstChild, hit);
   audio = new Audio(hit.previewUrl);
   const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = ICON.pause; pp.setAttribute("aria-label", "Pause");
   const cur = el("time", null, "0:00"), dur = el("time", null, "0:30");
@@ -390,56 +396,82 @@ async function playSong(i) {
   audio.addEventListener("play", () => { pp.innerHTML = ICON.pause; refreshIcons(); });
   audio.addEventListener("pause", () => { pp.innerHTML = ICON.play; refreshIcons(); });
   audio.addEventListener("ended", () => { pp.innerHTML = ICON.play; bar.value = 0; refreshIcons(); });
-  dockCtl.replaceChildren(pp, cur, bar, dur);
+  miniCtl.replaceChildren(pp, cur, bar, dur);
   audio.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
 }
-$("dockClose").addEventListener("click", stopAll);
+$("miniClose").addEventListener("click", stopAll);
+
+// ---- the mood map: every song is a faint dot, your song and its five matches are drawn on top ----
+const NS = "http://www.w3.org/2000/svg", MW = 340, MH = 270, PAD = 22;
+const mx = v => PAD + v * (MW - 2 * PAD), my = v => PAD + (1 - v) * (MH - 2 * PAD);
+function svg(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+const mapSvg = svg("svg", { id: "map", viewBox: "0 0 " + MW + " " + MH, role: "img", "aria-label": "Map of song moods: sad to happy across, calm to intense up" });
+const dots = svg("g", {}), over = svg("g", {});
+DATA.forEach((s, i) => dots.append(svg("circle", { cx: mx(point[i][0]).toFixed(1), cy: my(point[i][1]).toFixed(1), r: 1.5, fill: EMO_COLOR[s[5]], opacity: 0.35 })));
+mapSvg.append(dots);
+Object.entries(MAP).forEach(([e, [v, en]]) => { const t = svg("text", { x: mx(v), y: my(en) - 6, "text-anchor": "middle", "font-size": 8.5, fill: "#8f8eb0" }); t.textContent = e; mapSvg.append(t); });
+[["sad", PAD, MH - 4, "start"], ["happy", MW - PAD, MH - 4, "end"], ["intense", MW / 2, 10, "middle"], ["calm", MW / 2, MH - 4, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 9, fill: "#6f6e8c", "letter-spacing": ".08em" }); t.textContent = w.toUpperCase(); mapSvg.append(t); });
+mapSvg.append(over);
+function drawMap(i, recs) {
+  over.replaceChildren();
+  const px = mx(point[i][0]), py = my(point[i][1]);
+  recs.forEach(r => over.append(svg("line", { x1: px, y1: py, x2: mx(point[r.j][0]), y2: my(point[r.j][1]), stroke: "#ffc46b", "stroke-opacity": 0.35, "stroke-width": 1 })));
+  recs.forEach((r, n) => {
+    const x = mx(point[r.j][0]), y = my(point[r.j][1]);
+    over.append(svg("circle", { cx: x, cy: y, r: 8.5, fill: "#15152a", stroke: EMO_COLOR[DATA[r.j][5]], "stroke-width": 2 }));
+    const t = svg("text", { x, y: y + 3.4, "text-anchor": "middle", "font-size": 9.5, "font-weight": 700, fill: "#fff" }); t.textContent = n + 1; over.append(t);
+  });
+  over.append(svg("circle", { cx: px, cy: py, r: 13, fill: "none", stroke: "#ffc46b", "stroke-width": 2 }));
+  over.append(svg("circle", { cx: px, cy: py, r: 6, fill: EMO_COLOR[DATA[i][5]], stroke: "#fff", "stroke-width": 1.5 }));
+}
 
 // ---- the page ----
 let current = 0;
 const FACTORS = ["tags", "emotion", "context", "era", "lang", "pop"];
 const minPop = () => Number($("minpop").value);
-const popPool = () => DATA.map((s, i) => s[11] >= minPop() ? i : -1).filter(i => i >= 0);   // songs allowed by the popularity setting
+const popPool = () => DATA.map((s, i) => s[11] >= minPop() ? i : -1).filter(i => i >= 0);
 function weights() { const o = {}; FACTORS.forEach(f => { o[f] = Number($("w_" + f).value); $("o_" + f).textContent = o[f]; }); return o; }
-function playBtn(cls, i) { const b = el("button", cls); b.type = "button"; b.dataset.play = i; b.innerHTML = ICON.play; b.setAttribute("aria-label", "Play"); return b; }
+function playBtn(cls, i, label) {
+  const b = el("button", cls); b.type = "button"; b.dataset.play = i; b.setAttribute("aria-label", "Play");
+  if (label) { b.innerHTML = ICON.play; b.append(el("span", null, label)); } else b.innerHTML = ICON.play;
+  return b;
+}
 
 function show(i) {
   current = i;
-  const wt = weights(), me = DATA[i], out = $("out");
-  out.replaceChildren();
-  $("main").style.setProperty("--hero", EMO_COLOR[me[5]]);
+  const wt = weights(), me = DATA[i], hero = $("hero"), cards = $("cards");
+  document.documentElement.style.setProperty("--glowc", EMO_COLOR[me[5]] + "88");
+  const recs = recommend(i, wt, $("variety").value, 5, minPop());
 
-  const banner = el("div", "banner");
-  const txt = el("div", "btxt");
-  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i));
-  const act = el("div", "actions"); const bp = playBtn("bigplay", i); bp.addEventListener("click", () => playSong(i)); act.append(bp);
-  txt.append(act);
-  banner.append(cover(i, "big"), txt);
+  hero.replaceChildren();
+  const song = el("div", "song"), txt = el("div", "stxt");
+  const bp = playBtn("playbig", i, "Play"); bp.addEventListener("click", () => playSong(i));
+  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i), bp);
+  song.append(art(i, "big"), txt);
+  const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches")); mc.append(h, mapSvg);
+  hero.append(song, mc);
+  drawMap(i, recs);
 
-  const head = el("div", "sec"); head.append(el("h2", null, "Five songs that feel the same"), el("span", "meta", "from five different artists"));
-  const cols = el("div", "head");
-  cols.append(el("span", null, "#"), el("span", null, "Title"), Object.assign(el("span", "hmood", "Mood"), {}), el("span", null, "Match"), el("span"));
-  const list = el("ol");
+  cards.replaceChildren();
   const mine = new Set(wordsOf(i));
-  recommend(i, wt, $("variety").value, 5, minPop()).forEach((r, n) => {
-    const s = DATA[r.j], li = el("li");
-    const row = el("div", "row"); row.dataset.i = r.j;
-    const who = el("div", "who"); const t2 = el("div", "txt"); t2.append(el("div", "t", s[0]), el("div", "meta", s[1] + " · " + s[7]));
-    t2.append(Object.assign(el("span", "tier t" + s[11], TIER[s[11]]), {}));
-    who.append(cover(r.j, "md"), t2);
+  recs.forEach((r, n) => {
+    const s = DATA[r.j], c = el("article", "card");
+    const a = art(r.j, ""); a.append(el("span", "num", String(n + 1)));
+    const pb = playBtn("cplay", r.j); pb.addEventListener("click", () => playSong(r.j)); a.append(pb);
     const pct = Math.round(r.score * 100);
-    const rp = playBtn("rplay", r.j); rp.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); });
-    row.append(el("div", "num", String(n + 1)), who, Object.assign(moodChips(r.j), { className: "mood chips" }), el("div", "match", pct + "%"), rp);
+    const r1 = el("div", "row2"); r1.append(el("span", "pct", pct + "%"), el("span", "tier t" + s[11], TIER[s[11]]));
     const why = el("div", "why"); why.hidden = true;
     const shared = wordsOf(r.j).filter(w => mine.has(w));
-    why.textContent = "Why this match: tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · theme and occasion " + Math.round(r.p.context * 100) + "% · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
-    row.addEventListener("click", () => { why.hidden = !why.hidden; });
-    li.append(row, why); list.append(li);
+    why.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · theme and occasion " + Math.round(r.p.context * 100) + "% · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
+    const wb = el("button", "whybtn", "Why this match"); wb.type = "button"; wb.addEventListener("click", () => { why.hidden = !why.hidden; });
+    c.append(a, el("div", "t", s[0]), el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j), wb, why);
+    cards.append(c);
   });
-  out.append(banner, head, cols, list);
   explain(i);
   $("q").value = labels[i];
   refreshIcons();
+  // fetch real album art for the song and its matches, one at a time so the free iTunes search is not hammered
+  (async () => { await sleep(600); for (const j of [i, ...recs.map(r => r.j)]) { if (current !== i) return; if (!previewCache.has(j)) { await findPreview(j, false); await sleep(1800); } } })();
 }
 
 function explain(i) {
@@ -450,39 +482,41 @@ function explain(i) {
   add("2. Turn the text into numbers", "Every song becomes a row of " + vocab.length.toLocaleString() + " counts, one per word in the vocabulary. This song has " + nz.length + " non-zero counts; the rest are 0.", nz.join(" = 1, ") + " = 1");
   add("3. Compare two songs", "Cosine similarity multiplies the two rows, adds it up, and divides by their lengths. It gives 0 for nothing in common and 1 for identical.");
   const pt = point[i].map(n => n.toFixed(2));
-  add("4. Add the emotion", "Each song has a main and a second emotion. Each emotion is a point on a map: how positive it feels and how intense it feels. This song sits at " + pt[0] + " positive, " + pt[1] + " intense. Songs whose points are close feel alike, so sad is near nostalgic and far from euphoric.");
-  add("5. Add theme, occasion, year and language", "Each song also has a lyric theme (what the words are about), the occasions it is played at, and a release year. Same theme and shared occasions raise the score, and so do songs from the same era (25 or more years apart counts as 0). Years of songs pulled from Spotify are real release dates. For classical pieces the year is when it was composed. Songs in the same language get a bonus too. Each song also has a popularity group, from chart hit down to deep cut, and the sidebar can hide the lesser-known ones so you only get songs people actually play. Popularity groups are an AI estimate for now.");
-  add("6. Recommend", "Final score = each factor's match multiplied by its slider, added up, and divided by the total of the sliders. Score the picked song against all " + DATA.length.toLocaleString() + " songs, skip itself, and show the 5 highest. Artist variety then skips any song whose artist is already in your 5.");
+  add("4. Add the emotion", "Each song has a main and a second emotion. Each emotion is a point on the mood map: how positive it feels and how intense it feels. This song sits at " + pt[0] + " positive, " + pt[1] + " intense. Songs whose points are close feel alike, so sad is near nostalgic and far from euphoric.");
+  add("5. Add theme, occasion, year, language and popularity", "Each song also has a lyric theme (what the words are about), the occasions it is played at, a release year, a language and a popularity group. Same theme and shared occasions raise the score, and so do songs from the same era (25 or more years apart counts as 0), the same language, and more popular songs. Years of songs pulled from Spotify are real release dates; the rest, and the popularity groups, are AI estimates.");
+  add("6. Recommend", "Final score = each factor's match multiplied by its slider, added up, and divided by the total of the sliders. Score the picked song against all " + DATA.length.toLocaleString() + " songs, hide the ones below your popularity setting, and show the 5 highest. Artist variety skips any song whose artist is already in your 5.");
 }
 
-// mood tiles: tap one to jump to a random song with that main emotion
-const tiles = $("tiles");
+// feeling and popularity pills
 Object.keys(MAP).forEach(e => {
-  const t = el("button", "tile"); t.type = "button"; t.style.setProperty("--c", EMO_COLOR[e]);
-  const count = DATA.filter(s => s[5] === e && s[11] >= 3).length;
-  t.append(e.charAt(0).toUpperCase() + e.slice(1)); t.append(el("small", null, count.toLocaleString() + " songs"));
-  t.addEventListener("click", () => { const pool = DATA.map((s, i) => s[5] === e && s[11] >= Math.max(minPop(), 3) ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); $("main").scrollIntoView({ behavior: "smooth" }); window.scrollTo({ top: 0, behavior: "smooth" }); });
-  tiles.append(t);
+  const n = DATA.filter(s => s[5] === e && s[11] >= 3).length;
+  const b = el("button", "pill"); b.type = "button"; b.style.setProperty("--c", EMO_COLOR[e]);
+  b.append(Object.assign(el("i", "dot"), {}), e.charAt(0).toUpperCase() + e.slice(1), el("small", null, n.toLocaleString()));
+  b.addEventListener("click", () => { const pool = DATA.map((s, i) => s[5] === e && s[11] >= Math.max(minPop(), 3) ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); window.scrollTo({ top: 0, behavior: "smooth" }); });
+  $("feel").append(b);
 });
-
-// popularity tiles: tap one to start from a random song in that group
-const POPCOL = { 5: "#1db77a", 4: "#2a7de1", 3: "#8a5cd1", 2: "#a0643c", 1: "#5c5c5c" };
 [5, 4, 3, 2].forEach(level => {
-  const t = el("button", "tile"); t.type = "button"; t.style.setProperty("--c", POPCOL[level]);
   const n = DATA.filter(s => s[11] === level).length;
-  t.append({ 5: "Chart hits", 4: "Popular songs", 3: "Well-known songs", 2: "Lesser-known songs" }[level]); t.append(el("small", null, n.toLocaleString() + " songs"));
-  t.addEventListener("click", () => { const pool = DATA.map((s, i) => s[11] === level ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); window.scrollTo({ top: 0, behavior: "smooth" }); });
-  $("poptiles").append(t);
+  const b = el("button", "pill"); b.type = "button";
+  b.append({ 5: "Chart hits", 4: "Popular songs", 3: "Well-known songs", 2: "Lesser-known songs" }[level], el("small", null, n.toLocaleString()));
+  b.addEventListener("click", () => { const pool = DATA.map((s, i) => s[11] === level ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); window.scrollTo({ top: 0, behavior: "smooth" }); });
+  $("poptiles").append(b);
 });
 
-$("form").addEventListener("submit", e => { e.preventDefault(); const i = findSong($("q").value); if (i < 0) { $("out").replaceChildren(el("p", "meta", "No song found. Try another name, or pick one from the list.")); return; } show(i); });
-FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => show(current)));
+// controls
+const drawer = $("drawer"), scrim = $("scrim");
+const toggleDrawer = on => { drawer.classList.toggle("on", on); scrim.classList.toggle("on", on); };
+$("tuneBtn").addEventListener("click", () => toggleDrawer(true));
+$("drawerClose").addEventListener("click", () => toggleDrawer(false));
+scrim.addEventListener("click", () => toggleDrawer(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape") toggleDrawer(false); });
+$("form").addEventListener("submit", e => { e.preventDefault(); const i = findSong($("q").value); if (i < 0) { $("cards").replaceChildren(el("p", "meta", "No song found. Try another name, or pick one from the list.")); return; } show(i); });
+let slideTimer = 0;
+FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).textContent = $("w_" + f).value; clearTimeout(slideTimer); slideTimer = setTimeout(() => show(current), 250); }));
 $("variety").addEventListener("change", () => show(current));
 $("minpop").addEventListener("change", () => show(current));
 $("rand").addEventListener("click", () => { const pool = popPool(); show(pool[Math.floor(Math.random() * pool.length)]); });
-$("navHome").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 $("q").addEventListener("change", () => { const i = byLabel.get($("q").value.trim().toLowerCase()); if (i != null) show(i); });
-$("lib").open = window.matchMedia("(min-width: 901px)").matches;   // sliders open on wide screens, folded on phones
 show(Math.max(0, DATA.findIndex(s => s[0] === "Khairiyat")));
 </script>
 </body>
