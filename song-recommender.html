@@ -165,7 +165,9 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .foot{margin-top:26px;color:var(--faint);font-size:12px;display:flex;flex-direction:column;gap:6px}
 
 /* mini player, expanded player, drawer */
-.mini{position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
+.group{display:flex;flex-direction:column;gap:8px}
+.glabel{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mini{cursor:pointer;position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
 .mini .head{display:flex;gap:12px;align-items:center}
 .mini .art{width:52px;height:52px;border-radius:12px;font-size:22px}
 .mini .txt{min-width:0;flex:1}
@@ -229,8 +231,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
   <div class="crumb" id="crumb"></div>
   <main id="view" aria-live="polite"></main>
   <footer class="foot">
-    <span><span id="count"></span> songs in the library, and more coming soon. Emotion, style, lyric theme, occasion and popularity labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
-    <span>Songs play right here. Songs pulled from Spotify use Spotify's player. The others play a 30-second preview from iTunes. For the whole song, use the Spotify or YouTube buttons on a song.</span>
+    <span><span id="count"></span> songs, and more coming soon. Moods, styles and popularity are AI estimates, so some are guesses. Previews are 30 seconds; open a song to hear it whole on Spotify or YouTube.</span>
   </footer>
 </div>
 
@@ -369,10 +370,12 @@ const ICON = {
   pause: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4.5" height="16" rx="1"/><rect x="13.5" y="4" width="4.5" height="16" rx="1"/></svg>',
 };
 function chip(text, cls, color) { const c = el("span", "chip" + (cls ? " " + cls : "")); if (color) { const d = el("i", "dot"); d.style.setProperty("--c", color); c.append(d); } c.append(text); return c; }
-function moodChips(i) {
+// compact = three small tags (feeling, sound, a moment) for cards; the full set is for the song page and the enlarged player
+function moodChips(i, compact) {
   const s = DATA[i], d = el("div", "chips");
-  d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(s[6], "soft", EMO_COLOR[s[6]]), chip(STYLE_NAME[s[12]] || "pop", "soft"), chip("about " + s[8], "soft"));
-  s[9].forEach(o => d.append(chip("at " + o, "soft")));
+  if (compact) { d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(STYLE_NAME[s[12]] || "pop", "soft")); if (s[9][0]) d.append(chip("at " + s[9][0], "soft")); return d; }
+  d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(STYLE_NAME[s[12]] || "pop", "soft"), chip("about " + s[8], "soft"));
+  if (s[9][0]) d.append(chip("at " + s[9][0], "soft"));
   return d;
 }
 // an art tile: a colour gradient from the song's two emotions with its first letter; real album art is laid over it once found
@@ -479,18 +482,22 @@ async function startPlayer(i, host, tall) {
   if (!hit) { host.replaceChildren(el("span", "meta", "Sorry, no preview could be found for this song. Try the Spotify or YouTube button for the whole song.")); return; }
   document.querySelectorAll('.art[data-art="' + i + '"]').forEach(d => addImg(d, hit));
   audio = new Audio(hit.previewUrl);
-  const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = ICON.pause; pp.setAttribute("aria-label", "Pause");
-  const cur = el("time", null, "0:00"), dur = el("time", null, "0:30");
-  const bar = document.createElement("input"); bar.type = "range"; bar.min = 0; bar.max = 1000; bar.value = 0; bar.setAttribute("aria-label", "Seek");
-  const a = audio;
+  const pp = bindControls(audio, host);
+  audio.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
+}
+// play and pause, a seek bar and the time, wired to one audio element; can be shown in the mini player or the enlarged one
+function bindControls(a, host) {
+  const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = a.paused ? ICON.play : ICON.pause; pp.setAttribute("aria-label", a.paused ? "Play" : "Pause");
+  const cur = el("time", null, mmss(a.currentTime)), dur = el("time", null, isFinite(a.duration) ? mmss(a.duration) : "0:30");
+  const bar = document.createElement("input"); bar.type = "range"; bar.min = 0; bar.max = 1000; bar.value = a.duration ? Math.round(a.currentTime / a.duration * 1000) : 0; bar.setAttribute("aria-label", "Seek");
   pp.addEventListener("click", () => a.paused ? a.play() : a.pause());
   bar.addEventListener("input", () => { if (a.duration) a.currentTime = a.duration * bar.value / 1000; });
-  a.addEventListener("timeupdate", () => { cur.textContent = mmss(a.currentTime); if (a.duration) { bar.value = Math.round(a.currentTime / a.duration * 1000); dur.textContent = mmss(a.duration); } });
+  a.addEventListener("timeupdate", () => { if (!host.contains(bar)) return; cur.textContent = mmss(a.currentTime); if (a.duration) { bar.value = Math.round(a.currentTime / a.duration * 1000); dur.textContent = mmss(a.duration); } });
   a.addEventListener("play", () => { pp.innerHTML = ICON.pause; refreshIcons(); });
   a.addEventListener("pause", () => { pp.innerHTML = ICON.play; refreshIcons(); });
   a.addEventListener("ended", () => { pp.innerHTML = ICON.play; bar.value = 0; refreshIcons(); });
   host.replaceChildren(pp, cur, bar, dur);
-  a.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
+  return pp;
 }
 async function playSong(i) {
   if (nowI === i && audio) { audio.paused ? audio.play() : audio.pause(); return; }
@@ -502,23 +509,35 @@ async function playSong(i) {
 }
 $("miniClose").addEventListener("click", stopAll);
 $("miniExpand").addEventListener("click", () => { if (nowI >= 0) openFull(nowI); });
+// tapping anywhere on the small player opens the full one (the buttons, seek bar and Spotify player keep their own taps)
+mini.addEventListener("click", e => { if (e.target.closest("button, input, a, iframe")) return; if (nowI >= 0) openFull(nowI); });
 
 // the enlarged player: big cover, the player, and links to the whole song
 const full = $("full"), scrim = $("scrim"), drawer = $("drawer");
 function openFull(i) {
-  stopAll(); nowI = i;
+  const keep = nowI === i && audio;                   // a preview that is already playing carries on without restarting
+  if (!keep) { stopAll(); nowI = i; }
+  mini.hidden = true;
   const s = DATA[i];
   full.replaceChildren();
-  const head = el("div", "fullhead"); const t = el("div"); t.append(el("div", "eyebrow", "Now playing"), el("h2", null, s[0]), el("div", "meta", s[1] + " · " + s[7]));
+  const head = el("div", "fullhead"); const t = el("div"); t.append(el("h2", null, s[0]), el("div", "meta", s[1] + " · " + s[7]));
   const x = el("button", "xbtn", "✕"); x.type = "button"; x.setAttribute("aria-label", "Close"); x.addEventListener("click", closeFull);
   head.append(t, x);
   const host = el("div", "ctl"); host.style.flexDirection = s[10] ? "column" : "row"; host.style.alignItems = "stretch";
-  const fl = fullLinks(i); fl.prepend(addWide(i));
-  full.append(head, art(i, ""), moodChips(i), host, fl);
+  const group = (label, items, note) => { const g = el("div", "group"); g.append(el("div", "glabel", label)); const r = el("div", "btnrow"); items.forEach(n => r.append(n)); g.append(r); if (note) g.append(el("div", "hint", note)); return g; };
+  const link = (text, href) => { const a = el("a", "btn", text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
+  const listen = group("Listen to the whole song", [link("Spotify ↗", spotifyUrl(i)), link("YouTube ↗", youtubeUrl(i))]);
+  const yt = link("YouTube playlist ↗", youtubeUrl(i));
+  const save = group("Save it", [addWide(i), spotifyAddBtn([i], "Spotify playlist"), yt], "For a YouTube playlist, press Save under the video on YouTube.");
+  const similar = el("button", "btn ghost", "See songs like this →"); similar.type = "button"; similar.addEventListener("click", () => { closeFull(); openSong(i); });
+  full.append(head, art(i, ""), host, listen, save, similar);
   full.hidden = false; scrim.classList.add("on");
-  startPlayer(i, host, true);
+  if (keep) bindControls(audio, host); else startPlayer(i, host, true);
 }
-function closeFull() { full.hidden = true; full.replaceChildren(); scrim.classList.remove("on"); stopAll(); }
+function closeFull() {
+  full.hidden = true; full.replaceChildren(); scrim.classList.remove("on");
+  if (audio && nowI >= 0) { mini.hidden = false; bindControls(audio, miniCtl); refreshIcons(); } else stopAll();   // keep a playing preview going in the small player
+}
 const listDrawer = $("listDrawer");
 const toggleDrawer = on => { drawer.classList.toggle("on", on); if (on) listDrawer.classList.remove("on"); scrim.classList.toggle("on", on || !full.hidden || listDrawer.classList.contains("on")); };
 const toggleListPanel = on => { listDrawer.classList.toggle("on", on); if (on) { drawer.classList.remove("on"); renderList(); } scrim.classList.toggle("on", on || drawer.classList.contains("on") || !full.hidden); };
@@ -570,8 +589,109 @@ function renderList() {
   const links = myList.map(spotifyLinkFor).filter(Boolean);
   const b3 = el("button", "btn", "Copy Spotify links (" + links.length + ")"); b3.type = "button"; b3.disabled = !links.length; b3.addEventListener("click", () => copyText(links.join("\n"), b3));
   const b4 = el("button", "btn ghost", "Clear list"); b4.type = "button"; b4.addEventListener("click", () => { myList = []; saveList(); document.querySelectorAll("[data-add]").forEach(paintAdd); renderList(); });
-  acts.append(b1, b2, b3, b4);
+  const b5 = spotifyAddBtn(myList.slice(), "Add all to my Spotify playlist");
+  acts.append(b5, b1, b2, b3, b4);
   $("listHelp").textContent = "To make a Spotify playlist: open any playlist in the Spotify app, then paste the copied Spotify links into it. To make a Spotify or YouTube Music playlist from the whole list, import the downloaded file with a free playlist-transfer site such as TuneMyMusic or Soundiiz (check which import options they offer). Songs without a Spotify link are in the file by title and artist.";
+}
+
+// ---- Spotify: add songs straight into a playlist in the listener's own account (sign in with Spotify, no password goes through Moodio) ----
+// The client ID below is public by design. This page holds no secret: sign-in uses the PKCE method, which needs none.
+// Moodio is in Spotify's development mode, so only the owner and up to 4 people the owner adds can connect.
+const SPOTIFY_CLIENT_ID = "cebef00561f5443f8c7c496a5dd7fd28";
+const REDIRECT = location.hostname.endsWith("github.io") ? "https://shrutig7823.github.io/song-recommender/" : location.origin + location.pathname;
+const b64url = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const randomString = n => b64url(crypto.getRandomValues(new Uint8Array(n)));
+const spSaved = () => { try { return JSON.parse(localStorage.getItem("moodio.spotify") || "null"); } catch (e) { return null; } };
+const spStore = t => { try { if (t) localStorage.setItem("moodio.spotify", JSON.stringify(t)); else localStorage.removeItem("moodio.spotify"); } catch (e) { /* private window: the sign-in lasts for this visit only */ } };
+let toastTimer = 0;
+function toast(msg, sticky, href, linkText) {
+  let t = $("toast"); if (!t) { t = el("div"); t.id = "toast"; t.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;max-width:min(560px,calc(100vw - 24px));background:#1c1c36;border:1px solid #38386a;border-radius:16px;padding:12px 16px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;gap:12px;align-items:center"; document.body.append(t); }
+  t.replaceChildren(el("span", null, msg)); t.hidden = false;
+  if (href) { const a = el("a", "btn", linkText || "Open"); a.href = href; a.target = "_blank"; a.rel = "noopener"; t.append(a); }
+  const x = el("button", "xbtn", "✕"); x.type = "button"; x.setAttribute("aria-label", "Dismiss"); x.addEventListener("click", () => { t.hidden = true; }); t.append(x);
+  clearTimeout(toastTimer); if (!sticky) toastTimer = setTimeout(() => { t.hidden = true; }, 9000);
+}
+async function spConnect(pendingKeys) {
+  const verifier = randomString(48), state = randomString(12);
+  const challenge = b64url(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier)));
+  try { sessionStorage.setItem("moodio.pkce", JSON.stringify({ verifier, state })); if (pendingKeys) sessionStorage.setItem("moodio.pending", JSON.stringify(pendingKeys)); }
+  catch (e) { toast("Your browser is blocking storage, so Spotify sign-in cannot start. Try a normal window."); return; }
+  location.href = "https://accounts.spotify.com/authorize?" + new URLSearchParams({ response_type: "code", client_id: SPOTIFY_CLIENT_ID, scope: "playlist-modify-private playlist-modify-public", redirect_uri: REDIRECT, state, code_challenge_method: "S256", code_challenge: challenge });
+}
+async function spTokenCall(params) {
+  const r = await fetch("https://accounts.spotify.com/api/token", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams({ client_id: SPOTIFY_CLIENT_ID, ...params }) });
+  const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error_description || j.error || r.status); return j;
+}
+async function spFinishLogin() {          // runs on every page load: picks up the code Spotify sends back
+  const p = new URLSearchParams(location.search), code = p.get("code"), err = p.get("error");
+  if (!code && !err) return;
+  history.replaceState(null, "", location.pathname);
+  let saved = null; try { saved = JSON.parse(sessionStorage.getItem("moodio.pkce") || "null"); } catch (e) { /* none */ }
+  if (err) { toast("Spotify sign-in was cancelled."); return; }
+  if (!saved || saved.state !== p.get("state")) { toast("Spotify sign-in could not be checked. Please try again."); return; }
+  try {
+    const j = await spTokenCall({ grant_type: "authorization_code", code, redirect_uri: REDIRECT, code_verifier: saved.verifier });
+    spStore({ access: j.access_token, refresh: j.refresh_token, expires: Date.now() + j.expires_in * 1000 - 60000, playlist: (spSaved() || {}).playlist || null });
+  } catch (e) { toast("Spotify sign-in failed: " + e.message); return; }
+  try { sessionStorage.removeItem("moodio.pkce"); } catch (e) { /* ignore */ }
+  let pend = null; try { pend = JSON.parse(sessionStorage.getItem("moodio.pending") || "null"); sessionStorage.removeItem("moodio.pending"); } catch (e) { /* none */ }
+  const list = (pend || []).map(k => idxByKey.get(k)).filter(i => i != null);
+  if (list.length) sendToSpotify(list); else toast("Spotify connected. You can now add songs to your Spotify playlist.");
+}
+async function spToken() {
+  const s = spSaved(); if (!s) return null;
+  if (Date.now() < s.expires) return s.access;
+  try { const j = await spTokenCall({ grant_type: "refresh_token", refresh_token: s.refresh }); spStore({ ...s, access: j.access_token, refresh: j.refresh_token || s.refresh, expires: Date.now() + j.expires_in * 1000 - 60000 }); return j.access_token; }
+  catch (e) { spStore(null); return null; }
+}
+async function spApi(method, path, body) {
+  const t = await spToken(); if (!t) { const e = new Error("not connected"); e.status = 401; throw e; }
+  const r = await fetch("https://api.spotify.com/v1" + path, { method, headers: { Authorization: "Bearer " + t, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  const text = await r.text(); let j = null; try { j = text ? JSON.parse(text) : null; } catch (e) { /* not JSON */ }
+  if (!r.ok) { const e = new Error((j && j.error && j.error.message) || String(r.status)); e.status = r.status; throw e; }
+  return j;
+}
+async function spFind(i) {                // songs we have no Spotify ID for: search by title and artist
+  const title = DATA[i][0].replace(/\(.*?\)|- from .*/gi, "").replace(/"/g, "").trim(), artist = DATA[i][1].split(", ")[0].replace(/"/g, "");
+  const j = await spApi("GET", "/search?type=track&limit=10&q=" + encodeURIComponent('track:"' + title + '" artist:"' + artist + '"'));
+  const list = (j && j.tracks && j.tracks.items) || [], t = norm2(DATA[i][0]), a = norm2(artist);
+  const hit = list.find(x => norm2(x.name) === t && x.artists.some(y => norm2(y.name).includes(a) || a.includes(norm2(y.name)))) || list.find(x => (norm2(x.name).includes(t) || t.includes(norm2(x.name))) && x.artists.some(y => norm2(y.name).includes(a)));
+  return hit ? hit.uri : null;
+}
+async function sendToSpotify(idxs) {
+  if (!idxs.length) return;
+  if (!spSaved()) { spConnect(idxs.map(keyOf)); return; }
+  toast("Adding to your Spotify playlist…", true);
+  try {
+    let s = spSaved(), pl = s.playlist || { id: null, added: [] };
+    const uris = [], missing = [], already = new Set(pl.added || []);
+    for (const i of idxs) {
+      let u = DATA[i][10] ? "spotify:track:" + DATA[i][10] : await spFind(i);
+      if (!u) { missing.push(i); continue; }
+      if (already.has(u) || uris.includes(u)) continue;
+      uris.push(u);
+    }
+    if (!uris.length) { toast(missing.length ? "We could not find those songs on Spotify." : "Those songs are already in your Moodio playlist.", false, pl.url, "Open playlist"); return; }
+    const make = async () => { const c = await spApi("POST", "/me/playlists", { name: "Moodio picks", public: false, description: "Songs saved from Moodio" }); pl = { id: c.id, url: c.external_urls && c.external_urls.spotify, added: [] }; };
+    if (!pl.id) await make();
+    const add = async () => { for (let k = 0; k < uris.length; k += 100) await spApi("POST", "/playlists/" + pl.id + "/items", { uris: uris.slice(k, k + 100) }); };
+    try { await add(); } catch (e) { if (e.status === 404) { await make(); await add(); } else throw e; }
+    pl.added = [...(pl.added || []), ...uris]; spStore({ ...spSaved(), playlist: pl });
+    toast("Added " + uris.length + (uris.length === 1 ? " song" : " songs") + " to your private Spotify playlist “Moodio picks”." + (missing.length ? " " + missing.length + " could not be found." : ""), false, pl.url, "Open playlist");
+  } catch (e) {
+    if (e.status === 403) toast("Spotify did not allow this. Moodio is in testing mode, so the owner has to add your Spotify email to the allowed list first.", true);
+    else if (e.status === 401) { spStore(null); toast("Your Spotify sign-in ended. Press the button again to reconnect.", true); }
+    else if (e.status === 429) toast("Spotify asked us to slow down. Try again in a minute.", true);
+    else toast("Could not add to Spotify: " + e.message, true);
+  }
+}
+// Switched on once https://shrutig7823.github.io/song-recommender/ is added as a Redirect URI in the Spotify app settings
+const SPOTIFY_CONNECT = false;
+function spotifyAddBtn(idxs, label) {
+  if (!SPOTIFY_CONNECT) { const h = el("span"); h.hidden = true; return h; }
+  const b = el("button", "btn go", label || "Add to my Spotify playlist"); b.type = "button";
+  b.addEventListener("click", () => sendToSpotify(typeof idxs === "function" ? idxs() : idxs));
+  return b;
 }
 
 // ---- tuning controls ----
@@ -804,9 +924,9 @@ function renderSong(i) {
   const hero = el("section", "hero");
   const song = el("div", "song"), txt = el("div", "stxt");
   const bp = el("button", "playbig"); bp.type = "button"; bp.dataset.play = i; bp.innerHTML = ICON.play; bp.append(el("span", null, "Play")); bp.addEventListener("click", () => playSong(i));
-  const big = el("button", "btn", "Enlarge player"); big.type = "button"; big.addEventListener("click", () => openFull(i));
-  const acts = el("div", "btnrow"); acts.append(bp, big, addWide(i));
-  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i), acts, fullLinks(i));
+  const more = el("button", "btn", "Listen and save →"); more.type = "button"; more.addEventListener("click", () => openFull(i));
+  const acts = el("div", "btnrow"); acts.append(bp, addWide(i), more);
+  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4]), moodChips(i), acts);
   song.append(art(i, "big"), txt);
   const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches"));
   const m = buildMiniMap(); mc.append(h, m); drawOver(m, i, recs);
@@ -820,13 +940,14 @@ function renderSong(i) {
     const a = art(r.j, ""); a.append(el("span", "num", String(n + 1)));
     a.addEventListener("click", () => openSong(r.j));
     const pb = el("button", "cplay"); pb.type = "button"; pb.dataset.play = r.j; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); }); a.append(pb, addBtn(r.j));
-    const r1 = el("div", "row2"); r1.append(el("span", "pct", Math.round(r.score * 100) + "%"), el("span", "tier t" + s[11], TIER[s[11]]));
+    const pctBtn = el("button", "pct", Math.round(r.score * 100) + "%"); pctBtn.type = "button"; pctBtn.title = "Tap to see why"; pctBtn.style.cssText = "border:0;background:none;padding:0;cursor:pointer";
+    const r1 = el("div", "row2"); r1.append(pctBtn, el("span", "tier t" + s[11], TIER[s[11]]));
     const why = el("div", "why"); why.hidden = true;
     const shared = wordsOf(r.j).filter(w => mine.has(w));
     why.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · style " + Math.round(r.p.style * 100) + "% (" + (STYLE_NAME[s[12]] || "pop") + ") · theme and occasion " + Math.round(r.p.context * 100) + "% · film " + (DATA[i][13] === s[13] ? "same kind" : "different kind") + " · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
-    const wb = el("button", "whybtn", "Why this match"); wb.type = "button"; wb.addEventListener("click", () => { why.hidden = !why.hidden; });
+    pctBtn.addEventListener("click", () => { why.hidden = !why.hidden; });
     const title = el("div", "t", s[0]); title.addEventListener("click", () => openSong(r.j));
-    c.append(a, title, el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j), wb, why);
+    c.append(a, title, el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j, true), why);
     cards.append(c);
   });
   view.append(hero, sec, cards);
@@ -870,6 +991,7 @@ FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).t
 weights();
 $("listCount").textContent = myList.length;
 goHome();
+spFinishLogin();
 </script>
 </body>
 </html>
