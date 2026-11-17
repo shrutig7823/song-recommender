@@ -47,6 +47,7 @@ a{color:inherit}
 .btn.ghost{background:transparent}
 
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px 190px}
+.crumb:empty{display:none}
 .crumb{display:flex;align-items:center;gap:10px;padding:18px 0 4px;min-height:52px}
 .crumb button{border:0;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600}
 .crumb button:hover{border-color:var(--accent2)}
@@ -72,6 +73,17 @@ a{color:inherit}
 .homehero p{color:var(--muted);font-size:16px;margin:14px 0 0;max-width:56ch}
 .routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:12px}
 .blend{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:20px;align-items:start}
+.blend.compact{grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:16px}
+.blend.compact #blend{max-height:330px}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 4px}
+.optcard{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.optcard b{font-family:var(--font-head);font-size:16px}
+.optcard span{font-size:13px;color:var(--muted)}
+.optcard:hover{border-color:var(--accent2)}
+.optcard.on{border-color:var(--accent2);background:linear-gradient(160deg,var(--panel2),var(--panel))}
+.homehero{padding:12px 0 0!important}
+.homehero h1{font-size:clamp(26px,4.2vw,42px)!important}
+.homehero p{margin:6px 0 0!important;font-size:15px!important}
 .blendcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:24px;padding:10px 10px 14px}
 #blend{width:100%;height:auto;display:block}
 #blend ellipse{transition:opacity .3s}
@@ -148,6 +160,12 @@ a{color:inherit}
 .playbig{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:12px 22px 12px 16px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg)}
 .playbig svg{width:18px;height:18px}
 .playbig:hover{filter:brightness(1.07)}
+.whycard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:20px 22px}
+.whycard h2{font-size:20px;margin-bottom:4px}
+.whylist{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.whylist li{position:relative;padding-left:22px;font-size:15px}
+.whylist li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.reason{font-size:12px;color:var(--accent2);line-height:1.4}
 .mapcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:14px 14px 10px}
 .mapcard h2{font-size:15px;display:flex;justify-content:space-between;align-items:baseline}
 .mapcard h2 span{font-family:var(--font-body);font-weight:400;font-size:12px;color:var(--muted)}
@@ -210,7 +228,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .tuner select{width:100%;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
 
 @media (max-width:900px){
-  .routes,.heat,.hero,.blend{grid-template-columns:1fr}
+  .routes,.heat,.hero,.blend,.blend.compact,.options{grid-template-columns:1fr}
   .hero{gap:20px}
   .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(170px,62%);overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
   .card{scroll-snap-align:start}
@@ -723,9 +741,10 @@ function go(render, label, push = true) {
   render(); window.scrollTo({ top: 0 });
 }
 function back() { const prev = trail.pop(); if (prev) go(prev.render, prev.label, false); }
-function row(i, onOpen) {
+function row(i, onOpen, reason) {
   const r = el("div", "trow");
   const info = el("div"); info.style.minWidth = "0"; info.append(el("div", "t", DATA[i][0]), el("div", "meta", DATA[i][1] + " · " + DATA[i][7]));
+  if (reason) info.append(el("div", "reason", reason));
   const pb = el("button", "rplay"); pb.type = "button"; pb.dataset.play = i; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play");
   pb.addEventListener("click", e => { e.stopPropagation(); playSong(i); });
   r.append(art(i, "sm"), info, el("span", "tier t" + DATA[i][11], TIER[DATA[i][11]]), addBtn(i), pb);
@@ -733,7 +752,52 @@ function row(i, onOpen) {
   return r;
 }
 
-// ---- home: two ways in ----
+// ---- popular right now: today's real charts, plus reel fame, recency and old songs having a comeback ----
+// Apple publishes each country's most-played songs as a public feed (no key). We fetch a few countries in the browser and match them to the library.
+const CHARTS = [["in", "India", 1.0], ["us", "the US", 0.9], ["gb", "the UK", 0.7], ["ae", "the UAE", 0.5], ["au", "Australia", 0.4], ["ca", "Canada", 0.4], ["br", "Brazil", 0.3]];
+const chartHits = new Map();             // song index -> [{ name, rank, w }]
+const myCountry = ((navigator.language || "").split("-")[1] || "").toLowerCase();   // for example "in" for en-IN
+let chartsReady = false, chartsPromise = null;
+const titleIndex = new Map(); DATA.forEach((s, i) => { const k = norm2(s[0]); if (!titleIndex.has(k)) titleIndex.set(k, []); titleIndex.get(k).push(i); });
+function matchCharts(feeds) {
+  chartHits.clear();
+  feeds.forEach(({ cc, name, w, list }) => list.forEach(([title, artist], k) => {
+    const cands = titleIndex.get(norm2(title)) || [], a = norm2(artist);
+    const j = cands.find(c => { const first = norm2(DATA[c][1].split(", ")[0]); return first && (a.includes(first.slice(0, 6)) || first.includes(a.slice(0, 6))); });
+    if (j != null) { if (!chartHits.has(j)) chartHits.set(j, []); chartHits.get(j).push({ name, rank: k + 1, w: cc === myCountry ? w * 1.6 : w }); }   // the visitor's own country counts more
+  }));
+}
+let chartsUpdated = "";
+// charts.json is refreshed every day by a scheduled job (browsers cannot read Apple's feed directly)
+function loadCharts() {
+  if (chartsPromise) return chartsPromise;
+  chartsPromise = (async () => {
+    try {
+      const r = await fetch("charts.json?h=" + Math.floor(Date.now() / 3600000));
+      if (r.ok) { const j = await r.json(); chartsUpdated = j.updated || ""; if (j.feeds && j.feeds.length) { matchCharts(j.feeds); chartsReady = true; } }
+    } catch (e) { /* stay on the ranking without live charts */ }
+  })();
+  return chartsPromise;
+}
+function trendScore(j) {
+  const hits = chartHits.get(j) || []; let chart = 0; hits.forEach(h => chart += h.w * (101 - h.rank) / 100);
+  const yr = DATA[j][7], recency = yr >= 2025 ? 0.35 : yr >= 2023 ? 0.2 : yr >= 2021 ? 0.1 : 0;
+  return 1.1 * Math.min(chart, 1.5) + 0.35 * (DATA[j][14] - 1) / 4 + 0.4 * DATA[j][15] / 3 + (DATA[j][16] === "resurgence" ? 0.25 : 0) + recency + 0.25 * popScore(j);
+}
+function trendReason(j) {
+  const hits = chartHits.get(j);
+  if (hits && hits.length) { const best = hits.slice().sort((a, b) => a.rank / a.w - b.rank / b.w)[0]; return "On the charts: #" + best.rank + " in " + best.name + (hits.length > 1 ? " and " + (hits.length - 1) + " more " + (hits.length === 2 ? "country" : "countries") : ""); }
+  if (DATA[j][16] === "resurgence") return "Back in the spotlight";
+  if (DATA[j][16] === "new-hit" || DATA[j][7] >= 2025) return "New and popular";
+  if (DATA[j][14] >= 4) return "Big on reels";
+  return "Popular everywhere";
+}
+function popularNow(n) {
+  const ranked = DATA.map((_, j) => j).filter(j => DATA[j][11] >= 4 || chartHits.has(j)).map(j => ({ j, score: trendScore(j) })).sort((a, b) => b.score - a.score);
+  return diversify(ranked, n, 1).map(x => x.j);
+}
+
+// ---- home: the blend map first, then other ways in ----
 const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any", moment: null };
 function renderHome() {
   const h = el("section", "homehero");
@@ -751,12 +815,33 @@ function renderHome() {
   const other = el("div", "sec"); other.append(el("h2", null, "Other ways in"), el("span", "meta", "Not sure? Or know the moment?"));
   view.append(other, routes);
   // a taste of the library right on the home page
-  const hits = DATA.map((s, i) => i).filter(i => DATA[i][11] === 5 && DATA[i][14] >= 4).sort(() => Math.random() - 0.5).slice(0, 6);
-  if (hits.length) {
-    const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Tap a song to find ones like it"));
-    const rows = el("div", "rows"); hits.forEach(i => rows.append(row(i, openSong)));
-    view.append(sec, rows);
-  }
+  const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Live charts, reels and comebacks"));
+  const rows = el("div", "rows"); const note = el("p", "meta"); note.style.margin = "0 0 10px";
+  view.append(sec, note, rows);
+  const fill = () => { if (!rows.isConnected) return; rows.replaceChildren(); popularNow(8).forEach(i => rows.append(row(i, openSong, trendReason(i)))); note.textContent = chartsReady ? "Ranked from the most-played charts in India, the US, the UK and more (updated " + chartsUpdated + "), plus what is big on reels, new releases, and older songs making a comeback." : "Ranked from reel fame, new releases and older songs making a comeback. Loading the latest charts…"; };
+  fill();
+  loadCharts().then(fill);
+}
+
+// ---- the home page: three ways in side by side, then a compact blend map, then what is popular right now ----
+function renderHome2() {
+  const h = el("section", "homehero");
+  h.append(el("h1", null, "What are you in the mood for?"), el("p", null, "Pick a way in below, or search for any song above."));
+  const opts = el("div", "options");
+  const mk = (title, sub, onClick, on) => { const b = el("button", "optcard" + (on ? " on" : "")); b.type = "button"; b.append(el("b", null, title), el("span", null, sub)); b.addEventListener("click", onClick); return b; };
+  opts.append(
+    mk("Blend your moods", "Tap up to three moods on the map", () => { const s = $("blendSec"); if (s) s.scrollIntoView({ behavior: "smooth", block: "start" }); }, true),
+    mk("Answer 3 quick questions", "Not sure what to play?", () => go(() => renderQuiz(0), "quiz")),
+    mk("Pick a moment", "Shower, drive, gym, qawwali night", () => go(renderMapRoute, "map")));
+  const holder = el("div"); holder.id = "blendSec";
+  view.append(h, opts, holder);
+  renderBlendRoute({ preselect: ["nostalgic", "romantic"], compact: true, into: holder });
+  const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Live charts, reels and comebacks"));
+  const rows = el("div", "rows"); const note = el("p", "meta"); note.style.margin = "0 0 10px";
+  view.append(sec, note, rows);
+  const fill = () => { if (!rows.isConnected) return; rows.replaceChildren(); popularNow(6).forEach(i => rows.append(row(i, openSong, trendReason(i)))); note.textContent = chartsReady ? "Ranked from the most-played charts in India, the US, the UK and more (updated " + chartsUpdated + "), plus what is big on reels, new releases, and older songs making a comeback." : "Ranked from reel fame, new releases and older songs making a comeback. Loading the latest charts..."; };
+  fill();
+  loadCharts().then(fill);
 }
 
 // ---- the three questions ----
@@ -843,14 +928,15 @@ function renderMapRoute() {
 
 // ---- blend your moods: tap up to three moods on a glowing map; songs where they overlap light up, and the list updates live ----
 function renderBlendRoute(opts = {}) {
-  const W = 760, H = 470, PX = 44, PY = 34, R = 0.42;
+  const compact = !!opts.compact;                                   // the home page version is shorter and shows five songs
+  const W = 760, H = compact ? 320 : 470, PX = 44, PY = compact ? 24 : 34, R = 0.42, LIMIT = compact ? 5 : 10;
   const px = v => PX + v * (W - 2 * PX), py = v => PY + (1 - v) * (H - 2 * PY);
   const sel = (opts.preselect || []).slice(0, 3);                    // chosen moods, at most three
   const wrap = el("section");
   const head = el("div", "sec"); head.append(el("h2", null, "Blend your moods"), el("span", "meta", "Tap up to three. Songs where your moods overlap light up."));
   const langs = el("div", "pills"); langs.style.marginBottom = "14px";
   LANGS.forEach(([n, o]) => { const b = el("button", "pill" + (o === profile.lang ? " on" : ""), n); b.type = "button"; b.addEventListener("click", () => { profile.lang = o; langs.querySelectorAll(".pill").forEach(x => x.classList.toggle("on", x === b)); update(); }); langs.append(b); });
-  const layout = el("div", "blend");
+  const layout = el("div", "blend" + (compact ? " compact" : ""));
   const card = el("div", "blendcard");
   const s = svg("svg", { id: "blend", viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Mood map. Tap up to three moods to blend." });
   const dotsG = svg("g", {}), zonesG = svg("g", {}), blendG = svg("g", {}), orbsG = svg("g", {});
@@ -871,7 +957,7 @@ function renderBlendRoute(opts = {}) {
   const chosen = el("div", "pills"); chosen.style.cssText = "margin-top:12px;min-height:38px";
   card.append(chosen);
   const res = el("div", "blendres");
-  layout.append(card, res); wrap.append(head, langs, layout); view.append(wrap);
+  layout.append(card, res); wrap.append(head, langs, layout); (opts.into || view).append(wrap);
 
   const pool = () => DATA.map((_, j) => j).filter(j => DATA[j][11] >= minPop() && (profile.lang === "any" || DATA[j][4] === profile.lang));
   // how well a song sits inside ALL the chosen moods: the geometric mean of its closeness to each one
@@ -884,7 +970,7 @@ function renderBlendRoute(opts = {}) {
     for (const minP of [minPop(), 1]) {
       const p = DATA.map((_, j) => j).filter(j => DATA[j][11] >= minP && (profile.lang === "any" || DATA[j][4] === profile.lang));
       const strict = p.map(j => ({ j, f: fit(j, moods) })).filter(x => x.f > 0.12).map(x => ({ j: x.j, score: x.f * 0.85 + 0.15 * popScore(x.j) })).sort((a, b) => b.score - a.score);
-      let list = diversify(strict, 10, 2), note = "";
+      let list = diversify(strict, LIMIT, 2), note = "";
       if (list.length < 5) {
         const soft = p.map(j => {
           let c = 0; for (const m of moods) c += Math.max(0, 1 - Math.hypot(point[j][0] - MAP[m][0], point[j][1] - MAP[m][1]) / 0.9); c /= moods.length;
@@ -892,7 +978,7 @@ function renderBlendRoute(opts = {}) {
           return { j, score: 0.5 * c + 0.35 * mid + 0.15 * popScore(j) };
         }).sort((a, b) => b.score - a.score);
         const have = new Set(list.map(x => x.j));
-        list = list.concat(diversify(soft.filter(x => !have.has(x.j)), 10 - list.length, 2));
+        list = list.concat(diversify(soft.filter(x => !have.has(x.j)), LIMIT - list.length, 2));
         if (moods.length > 1) note = "These moods sit far apart, so here are the songs closest to the middle of your blend.";
       }
       out = { list, note };
@@ -1042,9 +1128,7 @@ function renderSong(i) {
   const acts = el("div", "btnrow"); acts.append(bp, addWide(i), more);
   txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4]), moodChips(i), acts);
   song.append(art(i, "big"), txt);
-  const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches"));
-  const m = buildMiniMap(); mc.append(h, m); drawOver(m, i, recs);
-  hero.append(song, mc);
+  hero.append(song, whyCard(i, recs));
 
   const sec = el("div", "sec"); sec.append(el("h2", null, "Five songs that feel the same"), el("span", "meta", "from five different artists"));
   const cards = el("div", "cards");
@@ -1054,14 +1138,9 @@ function renderSong(i) {
     const a = art(r.j, ""); a.append(el("span", "num", String(n + 1)));
     a.addEventListener("click", () => openSong(r.j));
     const pb = el("button", "cplay"); pb.type = "button"; pb.dataset.play = r.j; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); }); a.append(pb, addBtn(r.j));
-    const pctBtn = el("button", "pct", Math.round(r.score * 100) + "%"); pctBtn.type = "button"; pctBtn.title = "Tap to see why"; pctBtn.style.cssText = "border:0;background:none;padding:0;cursor:pointer";
-    const r1 = el("div", "row2"); r1.append(pctBtn, el("span", "tier t" + s[11], TIER[s[11]]));
-    const why = el("div", "why"); why.hidden = true;
-    const shared = wordsOf(r.j).filter(w => mine.has(w));
-    why.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · style " + Math.round(r.p.style * 100) + "% (" + (STYLE_NAME[s[12]] || "pop") + ") · theme and occasion " + Math.round(r.p.context * 100) + "% · film " + (DATA[i][13] === s[13] ? "same kind" : "different kind") + " · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
-    pctBtn.addEventListener("click", () => { why.hidden = !why.hidden; });
+    const r1 = el("div", "row2"); r1.append(el("span", "pct", Math.round(r.score * 100) + "% match"), el("span", "tier t" + s[11], TIER[s[11]]));
     const title = el("div", "t", s[0]); title.addEventListener("click", () => openSong(r.j));
-    c.append(a, title, el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j, true), why);
+    c.append(a, title, el("div", "meta", s[1] + " · " + s[7]), el("div", "reason", reasonFor(i, r.j)), r1);
     cards.append(c);
   });
   view.append(hero, sec, cards);
@@ -1071,9 +1150,41 @@ function renderSong(i) {
     n.append(el("h3", null, "More " + me[4] + " songs coming soon"), el("p", "meta", "We only have " + recs.length + " " + me[4] + " " + (recs.length === 1 ? "song" : "songs") + " like this so far. Stay tuned! You can also set Language to “Same language first” in Tune to fill the list with other languages."));
     view.append(n);
   }
-  const how = el("details", "how"); how.append(el("summary", null, "How Moodio works")); const steps = el("div", "steps"); how.append(steps); explain(i, steps); view.append(how);
   refreshIcons();
   prefetchArt([i, ...recs.map(r => r.j)]);
+}
+
+// ---- why these songs, in plain words (no maths shown) ----
+const OCC_PHRASE = { "long drive": "a long drive", party: "a party", workout: "working out", "romantic date": "a date night", wedding: "a wedding", chill: "chilling out", focus: "studying or working", festival: "a festival", sleep: "winding down", prayer: "a quiet moment" };
+// one short sentence: the strongest things a recommended song has in common with the song you picked
+function reasonFor(i, j) {
+  const a = DATA[i], b = DATA[j], parts = [];
+  if (a[5] === b[5]) parts.push("same " + a[5] + " mood"); else if (a[5] === b[6] || a[6] === b[5]) parts.push("a close " + b[5] + " feeling");
+  if (a[12] === b[12]) parts.push("same " + (STYLE_NAME[a[12]] || "pop") + " sound");
+  if (a[8] === b[8]) parts.push("also about " + a[8]);
+  const occ = a[9].find(o => b[9].includes(o)); if (occ) parts.push("also good for " + OCC_PHRASE[occ]);
+  if (a[4] === b[4]) parts.push("also in " + a[4]);
+  if (Math.abs(a[7] - b[7]) <= 2) parts.push("from the same time");
+  if (!parts.length) return "Close in mood and sound";
+  const s = parts.slice(0, 3).join(" · "); return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function whyCard(i, recs) {
+  const me = DATA[i], n = recs.length, c = el("div", "whycard");
+  c.append(el("h2", null, "Why these songs"));
+  const sub = el("p", "meta", "Here is what " + me[0] + " has in common with the " + (n === 1 ? "song" : n + " songs") + " below."); c.append(sub);
+  const count = f => recs.filter(r => f(DATA[r.j])).length, need = Math.max(2, Math.ceil(n * 0.6)), items = [];
+  const add = (k, text) => { if (n && k >= need) items.push({ k, text: (k === n ? "All " + n : k + " of " + n) + text }); };
+  add(count(s => s[4] === me[4]), " are " + me[4] + " songs");
+  add(count(s => s[5] === me[5] || s[6] === me[5]), " carry the same " + me[5] + " feeling");
+  add(count(s => s[12] === me[12]), " have the same " + (STYLE_NAME[me[12]] || "pop") + " sound");
+  add(count(s => s[8] === me[8]), " are about " + me[8]);
+  if (me[9][0]) add(count(s => s[9].includes(me[9][0])), " are good for " + OCC_PHRASE[me[9][0]]);
+  add(count(s => Math.abs(s[7] - me[7]) <= 4), " came out within four years of " + me[7]);
+  add(count(s => s[11] >= 4), " are songs people really play");
+  const list = el("ul", "whylist");
+  (items.length ? items.sort((x, y) => y.k - x.k).slice(0, 4) : [{ text: "These are the closest matches we have for it right now." }]).forEach(x => list.append(el("li", null, x.text)));
+  c.append(list);
+  return c;
 }
 
 function explain(i, how) {
@@ -1089,7 +1200,7 @@ function explain(i, how) {
 }
 
 // ---- wiring ----
-function goHome() { trail.length = 0; currentView = null; go(renderHome, "home", false); }
+function goHome() { trail.length = 0; currentView = null; go(renderHome2, "home", false); }
 $("brand").addEventListener("click", goHome);
 $("form").addEventListener("submit", e => {
   e.preventDefault();

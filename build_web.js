@@ -22,6 +22,11 @@ const overrides = fs.existsSync("overrides.json") ? JSON.parse(fs.readFileSync("
 const keyOf = s => (s.track_name + "|" + s.artist.split(";")[0].trim()).toLowerCase();
 const vibeOf = i => { const e = { ...(vibe[i] || {}), ...(overrides[keyOf(songs[i])] || {}) }; if (!STYLES.has(e.style) || !FILMS.has(e.film) || !(e.reel >= 1 && e.reel <= 5)) { vibeBad++; return { style: STYLES.has(e.style) ? e.style : "other", film: FILMS.has(e.film) ? e.film : "none", reel: e.reel >= 1 && e.reel <= 5 ? e.reel : 2 }; } return e; };
 
+// "popular right now": 0 to 3, and what kind of momentum it is (new hit, comeback, evergreen); an AI estimate, used alongside live charts in the page
+const trend = {};
+if (fs.existsSync("trend/out")) for (const f of fs.readdirSync("trend/out")) for (const e of JSON.parse(fs.readFileSync("trend/out/" + f, "utf8"))) trend[e.i] = e;
+const KINDS = new Set(["new-hit", "resurgence", "evergreen", "none"]);
+
 const data = songs.map((s, i) => [
   s.track_name,
   s.artist.split(";").map(a => a.trim()).filter(Boolean).join(", "),
@@ -38,6 +43,8 @@ const data = songs.map((s, i) => [
   vibeOf(i).style,
   vibeOf(i).film,
   vibeOf(i).reel,
+  (trend[i] && trend[i].now >= 0 && trend[i].now <= 3) ? trend[i].now : 0,
+  (trend[i] && KINDS.has(trend[i].kind)) ? trend[i].kind : "none",
 ]);
 console.log("vibe labels:", Object.keys(vibe).length, "| values that needed a default:", vibeBad);
 
