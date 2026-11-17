@@ -226,9 +226,16 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .ctl time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:32px}
 .mini iframe{width:100%;height:152px;border:0;border-radius:12px}
 .fullcard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:51;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overscroll-behavior:contain;overflow:auto;background:var(--bg2);border:1px solid #38386a;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.fullcard{gap:12px;padding:18px 20px}
 .fullcard .art{width:min(320px,70%);aspect-ratio:1;height:auto;border-radius:24px;font-size:110px;align-self:center}
+.fullmain{display:flex;gap:16px;align-items:center}
+.fullcard .fullmain .art{width:128px;height:128px;aspect-ratio:auto;border-radius:18px;font-size:50px;align-self:auto;flex:none}
+.fullplay{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.fullcard .group{gap:6px}
+.fullcard .btnrow{gap:8px}
+.fullcard .btn{padding:9px 14px}
 .fullcard h2{font-size:26px}
-.fullcard iframe{width:100%;height:352px;border:0;border-radius:14px}
+.fullcard iframe{width:100%;height:152px;border:0;border-radius:14px}
 .fullhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 .scrim.on{opacity:1;pointer-events:auto}
@@ -271,8 +278,11 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
   .mini{left:calc(10px + var(--sal));right:calc(10px + var(--sar));bottom:calc(10px + var(--sab));width:auto}
   .mini iframe{height:80px}
   .fullcard{left:0;right:0;top:auto;bottom:0;transform:none;width:100%;max-height:92vh;max-height:92dvh;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + var(--sab))}
-  .fullcard iframe{height:232px}
-  .fullcard .art{width:min(240px,62%)}
+  .fullcard iframe{height:152px}
+  .fullcard .fullmain .art{width:92px;height:92px;font-size:38px}
+  .fullcard{gap:10px}
+  .fullcard h2{font-size:21px}
+  .fullcard .btn{padding:8px 12px;min-height:40px;font-size:13.5px}
   .drawer{width:100%;border-left:0}
   #toast{left:12px!important;right:12px!important;transform:none!important;bottom:calc(12px + var(--sab))!important;max-width:none!important}
 }
@@ -552,7 +562,7 @@ async function startPlayer(i, host, tall) {
     const f = document.createElement("iframe");
     f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator";
     f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.title = "Spotify player: " + s[0];
-    if (tall) f.style.height = "352px";
+    if (tall) f.style.height = "152px";
     host.replaceChildren(f); return;
   }
   host.replaceChildren(el("span", "meta", "Finding the song…"));
@@ -619,11 +629,25 @@ function openFull(i) {
   const host = el("div", "ctl"); host.style.flexDirection = s[10] ? "column" : "row"; host.style.alignItems = "stretch";
   const group = (label, items, note) => { const g = el("div", "group"); g.append(el("div", "glabel", label)); const r = el("div", "btnrow"); items.forEach(n => r.append(n)); g.append(r); if (note) g.append(el("div", "hint", note)); return g; };
   const link = (text, href) => { const a = el("a", "btn", text); a.href = href; a.target = "_blank"; a.rel = "noopener"; return a; };
-  const listen = group("Listen to the whole song", [link("Spotify ↗", spotifyUrl(i)), link("YouTube ↗", youtubeUrl(i))]);
-  const yt = link("YouTube playlist ↗", youtubeUrl(i));
-  const save = group("Save it", [addWide(i), spotifyAddBtn([i], "Spotify playlist"), yt], "For a YouTube playlist, press Save under the video on YouTube.");
+  // everything needed to hear the whole song sits on the first screen, with no scrolling
+  const hereBtns = [];
+  if (s[10]) {                                                     // play the whole song right here through Spotify's own player (full for anyone signed in to Spotify)
+    const hb = el("button", "btn go", "▶ Play whole song here"); hb.type = "button";
+    hb.addEventListener("click", () => {
+      if (audio) { audio.pause(); audio = null; } if (sp.player && sp.nowI >= 0) { try { sp.player.pause(); } catch (e) { /* idle */ } sp.nowI = -1; sp.playing = false; sp.ui = null; }
+      host.style.flexDirection = "column"; host.querySelectorAll("*").forEach(n => n.remove());
+      const f = document.createElement("iframe"); f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator"; f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.title = "Spotify player: " + s[0]; f.style.height = "152px";
+      host.replaceChildren(f); host.parentElement.querySelectorAll(".fullhint").forEach(n => n.remove()); hb.hidden = true;
+      const tip = el("div", "hint fullhint", "Sign in to Spotify inside the player to hear the whole song. A free account works."); host.insertAdjacentElement("afterend", tip);
+    });
+    hereBtns.push(hb);
+  }
+  const listen = group("Whole song", [...hereBtns, link("Open in Spotify ↗", spotifyUrl(i)), link("Watch on YouTube ↗", youtubeUrl(i))]);
+  const yt = link("YouTube playlist ↗", youtubeUrl(i)); yt.title = "Press Save under the video on YouTube";
+  const save = group("Save it", [addWide(i), spotifyAddBtn([i], "Spotify playlist"), yt]);
   const similar = el("button", "btn ghost", "See songs like this →"); similar.type = "button"; similar.addEventListener("click", () => { closeFull(); openSong(i); });
-  full.append(head, art(i, ""), host, listen, save, similar);
+  const main = el("div", "fullmain"); const pbox = el("div", "fullplay"); pbox.append(host); main.append(art(i, ""), pbox);
+  full.append(head, main, listen, save, similar);
   full.hidden = false; scrim.classList.add("on");
   if (keep) { if (sp.nowI === i) bindSdkControls(host); else { bindControls(audio, host); addFullHint(host); } } else startPlayer(i, host, true);
 }
