@@ -9,6 +9,10 @@ for (const f of fs.readdirSync("emotions/out")) for (const e of JSON.parse(fs.re
 const ctx = {};
 for (const f of fs.readdirSync("context/out")) for (const e of JSON.parse(fs.readFileSync("context/out/" + f, "utf8"))) ctx[e.i] = e;
 
+// popularity 1 (deep cut) to 5 (chart hit), rated per song; 3 if a song has no rating
+const popularity = {};
+if (fs.existsSync("popularity/out")) for (const f of fs.readdirSync("popularity/out")) for (const e of JSON.parse(fs.readFileSync("popularity/out/" + f, "utf8"))) popularity[e.i] = e.pop;
+
 const data = songs.map((s, i) => [
   s.track_name,
   s.artist.split(";").map(a => a.trim()).filter(Boolean).join(", "),
@@ -21,6 +25,7 @@ const data = songs.map((s, i) => [
   ctx[i].theme,
   ctx[i].occ,
   s.spotify_id || "",
+  popularity[i] || 3,
 ]);
 
 const html = fs.readFileSync("page_template.html", "utf8").replace("/*DATA*/null", JSON.stringify(data));

@@ -15,6 +15,7 @@ Pick a song you like and get 5 similar songs. A beginner-friendly machine learni
 7. **Mix.** Combine tags and emotion with weights.
 8. **Theme, occasion, year.** Lyric theme (what the words are about), where the song is played (party, workout, long drive...), and release year.
 9. **Language.** Songs in the same language get a bonus.
+   **Popularity.** Every song has a popularity group from 1 (deep cut) to 5 (chart hit), and the page can hide the lesser-known ones (the default shows hits and popular songs only). These ratings are an AI estimate from what it knows of each song, and about 40% are marked as guesses. Real play counts would be better: Spotify's popularity field or Last.fm play counts are the next step (Deezer was tried and returns nothing in India).
 10. **Final score** = each factor's match x its weight, added up, divided by the total weight. The page has one slider per factor, plus an **artist variety** rule so one artist cannot fill all five results.
 
 ## Files
