@@ -70,7 +70,7 @@ a{color:inherit}
 .homehero{padding:34px 0 8px;max-width:760px}
 .homehero h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-.025em}
 .homehero p{color:var(--muted);font-size:16px;margin:14px 0 0;max-width:56ch}
-.routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:12px}
 .blend{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:20px;align-items:start}
 .blendcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:24px;padding:10px 10px 14px}
 #blend{width:100%;height:auto;display:block}
@@ -737,7 +737,7 @@ function row(i, onOpen) {
 const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any", moment: null };
 function renderHome() {
   const h = el("section", "homehero");
-  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Blend one to three moods on the map, answer three quick questions, or pick a moment. Or search for any song above."));
+  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Tap up to three moods on the map below and watch songs appear where they overlap. Or search for any song above."));
   const routes = el("div", "routes");
   const r1 = el("button", "route"); r1.type = "button";
   r1.append(el("span", "tag", "Not sure?"), el("h2", null, "Answer 3 quick questions"), el("p", null, "How you feel, what you are doing, and which language. That is all."), el("span", "go", "Start →"));
@@ -745,11 +745,11 @@ function renderHome() {
   const r2 = el("button", "route"); r2.type = "button";
   r2.append(el("span", "tag", "Know the moment?"), el("h2", null, "Pick a moment on the map"), el("p", null, "Shower, late-night drive, gym, qawwali night, old ghazals. The brighter the tile, the more songs we have."), el("span", "go", "Open the map →"));
   r2.addEventListener("click", () => go(renderMapRoute, "map"));
-  const r3 = el("button", "route"); r3.type = "button";
-  r3.append(el("span", "tag", "Mixed feelings?"), el("h2", null, "Blend your moods"), el("p", null, "Tap up to three moods on a glowing map. Songs where they overlap light up, and the list changes as you tap."), el("span", "go", "Open the blend map →"));
-  r3.addEventListener("click", () => go(renderBlendRoute, "blend"));
-  routes.append(r3, r1, r2);
-  view.append(h, routes);
+  routes.append(r1, r2);
+  view.append(h);
+  renderBlendRoute({ preselect: ["nostalgic", "romantic"] });       // the blend map is the heart of the home page, already glowing
+  const other = el("div", "sec"); other.append(el("h2", null, "Other ways in"), el("span", "meta", "Not sure? Or know the moment?"));
+  view.append(other, routes);
   // a taste of the library right on the home page
   const hits = DATA.map((s, i) => i).filter(i => DATA[i][11] === 5 && DATA[i][14] >= 4).sort(() => Math.random() - 0.5).slice(0, 6);
   if (hits.length) {
@@ -842,10 +842,10 @@ function renderMapRoute() {
 }
 
 // ---- blend your moods: tap up to three moods on a glowing map; songs where they overlap light up, and the list updates live ----
-function renderBlendRoute() {
+function renderBlendRoute(opts = {}) {
   const W = 760, H = 470, PX = 44, PY = 34, R = 0.42;
   const px = v => PX + v * (W - 2 * PX), py = v => PY + (1 - v) * (H - 2 * PY);
-  const sel = [];                                                    // chosen moods, at most three
+  const sel = (opts.preselect || []).slice(0, 3);                    // chosen moods, at most three
   const wrap = el("section");
   const head = el("div", "sec"); head.append(el("h2", null, "Blend your moods"), el("span", "meta", "Tap up to three. Songs where your moods overlap light up."));
   const langs = el("div", "pills"); langs.style.marginBottom = "14px";
