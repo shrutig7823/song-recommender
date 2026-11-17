@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Moodio</title>
-<meta name="description" content="Moodio: pick a song you like and get five songs that feel the same, from different artists, matched by emotion, lyric theme, occasion and release year. Listen right on the page.">
+<meta name="description" content="Moodio: tell us how you feel, or pick a song you love, and get songs that match the mood. Listen right on the page.">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-/* Layout: a night-sky page. Sticky top bar, a hero with the chosen song next to a "mood map" that plots it and its five matches,
-   five art-led cards, feeling and popularity pills, a floating mini player, and a slide-in drawer for the mix controls. Dark only. */
+/* Layout: a night-sky app with one view at a time inside <main>:
+   home (two ways in: 3 questions, or tap the mood map) -> stacks of songs -> one stack -> one song with five matches.
+   A top bar with search and a back button, a floating mini player, an expanded player, and a tuning drawer. Dark only. */
 :root{
   --bg:#090912; --bg2:#0f0f1c; --panel:#15152a; --panel2:#1c1c36; --line:#2a2a47; --fg:#f4f3fa; --muted:#a3a2bd; --faint:#6f6e8c;
-  --accent:#ff7a59; --accent2:#ffc46b; --accent-fg:#1a0b06; --glow:#7a4dff;
+  --accent:#ff7a59; --accent2:#ffc46b; --accent-fg:#1a0b06;
   --font-head:"Space Grotesk","Segoe UI",system-ui,sans-serif;
   --font-body:"Inter","Segoe UI",system-ui,sans-serif;
   color-scheme:dark;
@@ -27,68 +28,118 @@ button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 h1,h2,h3{font-family:var(--font-head);margin:0}
 .meta{color:var(--muted);font-size:13px}
+a{color:inherit}
 
-.top{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(9,9,18,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:9px;font-family:var(--font-head);font-weight:700;font-size:21px;letter-spacing:-.01em;flex:none}
+.top{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:12px;padding:12px 20px;background:rgba(9,9,18,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--font-head);font-weight:700;font-size:21px;letter-spacing:-.01em;flex:none;background:none;border:0;padding:0}
 .mark{display:flex;align-items:flex-end;gap:3px;height:22px}
 .mark i{display:block;width:4px;border-radius:2px;background:linear-gradient(var(--accent2),var(--accent))}
 .mark i:nth-child(1){height:9px}.mark i:nth-child(2){height:22px}.mark i:nth-child(3){height:14px}.mark i:nth-child(4){height:18px}
-.search{flex:1 1 auto;display:flex;gap:10px;min-width:0;max-width:640px;margin:0 auto}
+.search{flex:1 1 auto;display:flex;gap:10px;min-width:0;max-width:600px;margin:0 auto}
 .field{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 14px}
 .field:focus-within{border-color:var(--accent2)}
 .field svg{flex:none;color:var(--muted)}
 .field input{flex:1;min-width:0;border:0;background:transparent;padding:11px 0;outline:none}
-.btn{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:10px 16px;font-weight:600;white-space:nowrap}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:10px 16px;font-weight:600;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
 .btn:hover{border-color:var(--accent2)}
 .btn.go{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);border:0}
 .btn.go:hover{filter:brightness(1.06)}
+.btn.ghost{background:transparent}
 
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px 190px}
-.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:30px;align-items:center;padding:34px 0 10px}
-.song{display:flex;gap:22px;align-items:flex-end;min-width:0}
+.crumb{display:flex;align-items:center;gap:10px;padding:18px 0 4px;min-height:52px}
+.crumb button{border:0;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600}
+.crumb button:hover{border-color:var(--accent2)}
+
+/* art tiles */
 .art{position:relative;flex:none;display:grid;place-items:center;overflow:hidden;color:rgba(255,255,255,.88);font-family:var(--font-head);font-weight:700;background:var(--panel2)}
 .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .art.big{width:210px;height:210px;border-radius:22px;font-size:84px;box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 60px -10px var(--glowc,rgba(122,77,255,.5))}
-.stxt{display:flex;flex-direction:column;gap:9px;min-width:0}
-.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);font-weight:600}
-.stxt h1{font-size:clamp(30px,5vw,56px);line-height:1.02;letter-spacing:-.02em;overflow-wrap:anywhere}
+.art.sm{width:48px;height:48px;border-radius:10px;font-size:20px}
 .chips{display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:6px}
 .chip{display:inline-flex;align-items:center;align-self:flex-start;gap:6px;font-size:12px;line-height:1.4;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
 .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--accent))}
 .chip.soft{background:transparent;color:var(--muted)}
-.playbig{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:6px;border:0;border-radius:999px;padding:12px 22px 12px 16px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg)}
+.eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 12px}
+.sec h2{font-size:22px}
+.tier{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--panel2);color:var(--muted);white-space:nowrap}
+.tier.t5{background:rgba(255,196,107,.18);color:var(--accent2)}.tier.t4{background:rgba(255,122,89,.16);color:#ff9b82}
+
+/* home */
+.homehero{padding:34px 0 8px;max-width:760px}
+.homehero h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:-.025em}
+.homehero p{color:var(--muted);font-size:16px;margin:14px 0 0;max-width:56ch}
+.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:26px}
+.route{display:flex;flex-direction:column;gap:8px;text-align:left;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:24px;padding:24px;min-height:170px}
+.route:hover{border-color:var(--accent2);transform:translateY(-2px)}
+.route h2{font-size:24px}
+.route .tag{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+.route p{margin:0;color:var(--muted)}
+.route .go{margin-top:auto;font-weight:700;color:var(--accent2)}
+
+/* quiz */
+.quiz{max-width:760px;padding:10px 0}
+.steps3{display:flex;gap:8px;margin:6px 0 18px}
+.steps3 i{flex:1;height:5px;border-radius:3px;background:var(--panel2)}
+.steps3 i.on{background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.quiz h2{font-size:clamp(26px,4vw,40px);letter-spacing:-.02em;margin-bottom:18px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;font-weight:600;font-size:15px}
+.opt:hover{border-color:var(--accent2);background:var(--panel2)}
+.opt .dot{width:14px;height:14px;border-radius:50%;background:var(--c,var(--accent));flex:none}
+.opt small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+
+/* heat map */
+.heat{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);gap:24px;align-items:start}
+.heatcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:24px;padding:12px}
+#heat{width:100%;height:auto;display:block;cursor:crosshair;touch-action:manipulation}
+.pickbox{display:flex;flex-direction:column;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}
+.pickbox h3{font-size:18px}
+
+/* stacks and lists */
+.stackgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.stackcard{display:flex;flex-direction:column;gap:12px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:14px}
+.stackcard:hover{border-color:var(--accent2);transform:translateY(-3px)}
+.mosaic{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;border-radius:14px;overflow:hidden}
+.mosaic .art{width:100%;aspect-ratio:1.6;font-size:26px}
+.stackcard h3{font-size:18px}
+.rows{display:flex;flex-direction:column}
+.trow{display:grid;grid-template-columns:48px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:8px 10px;border-radius:12px;cursor:pointer}
+.trow:hover{background:rgba(255,255,255,.06)}
+.trow .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rplay{width:38px;height:38px;border-radius:50%;border:0;display:grid;place-items:center;background:var(--panel2);color:var(--fg)}
+.trow:hover .rplay{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg)}
+.rplay svg{width:15px;height:15px}
+.soon{max-width:560px;margin:50px auto;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:34px}
+.soon h2{font-size:28px;margin-bottom:8px}
+
+/* song view */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:30px;align-items:center;padding:20px 0 10px}
+.song{display:flex;gap:22px;align-items:flex-end;min-width:0}
+.stxt{display:flex;flex-direction:column;gap:9px;min-width:0}
+.stxt h1{font-size:clamp(30px,5vw,56px);line-height:1.02;letter-spacing:-.02em;overflow-wrap:anywhere}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.playbig{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:12px 22px 12px 16px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg)}
 .playbig svg{width:18px;height:18px}
 .playbig:hover{filter:brightness(1.07)}
-
 .mapcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:14px 14px 10px}
 .mapcard h2{font-size:15px;display:flex;justify-content:space-between;align-items:baseline}
 .mapcard h2 span{font-family:var(--font-body);font-weight:400;font-size:12px;color:var(--muted)}
 #map{width:100%;height:auto;display:block;margin-top:6px}
-
-.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 12px}
-.sec h2{font-size:22px}
 .cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .card{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px;min-width:0;transition:transform .15s,border-color .15s}
 .card:hover{transform:translateY(-3px);border-color:#3a3a64}
-.card .art{width:100%;aspect-ratio:1;border-radius:14px;font-size:54px}
+.card .art{width:100%;aspect-ratio:1;border-radius:14px;font-size:54px;cursor:pointer}
 .card .num{position:absolute;left:8px;top:8px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(9,9,18,.72);font-size:13px;font-weight:700;z-index:1}
 .cplay{position:absolute;right:8px;bottom:8px;width:42px;height:42px;border-radius:50%;border:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);box-shadow:0 6px 18px rgba(0,0,0,.45);z-index:1}
 .cplay svg{width:16px;height:16px}
-.cplay:hover{transform:scale(1.07)}
-.card .t{font-weight:600;font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.card .t{font-weight:600;font-size:14px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;cursor:pointer}
 .row2{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .pct{font-family:var(--font-head);font-weight:700;font-size:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.tier{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--panel2);color:var(--muted);white-space:nowrap}
-.tier.t5{background:rgba(255,196,107,.18);color:var(--accent2)}.tier.t4{background:rgba(255,122,89,.16);color:#ff9b82}
 .card .chips{gap:5px}.card .chip{font-size:11px;padding:2px 8px}
 .whybtn{background:none;border:0;color:var(--muted);text-align:left;padding:0;font-size:12px;text-decoration:underline;text-underline-offset:3px}
 .why{font-size:12px;color:var(--muted);background:var(--bg2);border-radius:10px;padding:8px 10px}
-
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:8px 14px;font-weight:500}
-.pill:hover{border-color:var(--accent2)}
-.pill .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
-.pill small{color:var(--faint);font-size:12px}
 details.how{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:4px 18px;margin-top:30px}
 details.how summary{cursor:pointer;font-family:var(--font-head);font-weight:700;font-size:16px;padding:14px 0;list-style:none;display:flex;justify-content:space-between}
 details.how summary::-webkit-details-marker{display:none}
@@ -99,28 +150,30 @@ details.how[open] summary::after{content:"\2212"}
 code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;padding:2px 6px;border-radius:5px;overflow-wrap:anywhere}
 .foot{margin-top:26px;color:var(--faint);font-size:12px;display:flex;flex-direction:column;gap:6px}
 
-/* floating mini player */
+/* mini player, expanded player, drawer */
 .mini{position:fixed;right:16px;bottom:16px;width:min(390px,calc(100vw - 32px));z-index:30;background:rgba(21,21,42,.96);backdrop-filter:blur(10px);border:1px solid #38386a;border-radius:20px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:10px}
 .mini .head{display:flex;gap:12px;align-items:center}
 .mini .art{width:52px;height:52px;border-radius:12px;font-size:22px}
 .mini .txt{min-width:0;flex:1}
 .mini .txt b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mini .x{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:16px}
-.mini .x:hover{background:var(--panel2);color:var(--fg)}
+.xbtn{width:32px;height:32px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:16px}
+.xbtn:hover{background:var(--panel2);color:var(--fg)}
 .ctl{display:flex;align-items:center;gap:10px}
 .ctl .pp{width:38px;height:38px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-fg);display:grid;place-items:center;flex:none}
 .ctl .pp svg{width:16px;height:16px}
 .ctl input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
 .ctl time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:32px}
 .mini iframe{width:100%;height:152px;border:0;border-radius:12px}
-
-/* drawer */
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+.fullcard{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:51;width:min(560px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;background:var(--bg2);border:1px solid #38386a;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.fullcard .art{width:min(320px,70%);aspect-ratio:1;height:auto;border-radius:24px;font-size:110px;align-self:center}
+.fullcard h2{font-size:26px}
+.fullcard iframe{width:100%;height:352px;border:0;border-radius:14px}
+.fullhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 .scrim.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);z-index:41;background:var(--bg2);border-left:1px solid var(--line);padding:20px;overflow:auto;transform:translateX(102%);transition:transform .25s}
 .drawer.on{transform:none}
 .drawer h2{font-size:20px;display:flex;justify-content:space-between;align-items:center}
-.drawer .x{width:34px;height:34px;border-radius:50%;border:0;background:var(--panel);font-size:16px}
 .tuner{display:flex;flex-direction:column;gap:16px;margin-top:14px}
 .hint{color:var(--muted);font-size:12px}
 .srow{display:grid;grid-template-columns:1fr 34px;gap:2px 8px;align-items:center;font-size:13px}
@@ -130,76 +183,61 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 .tuner select{width:100%;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
 
 @media (max-width:900px){
-  .hero{grid-template-columns:1fr;gap:20px}
+  .routes,.heat,.hero{grid-template-columns:1fr}
+  .hero{gap:20px}
   .cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(170px,62%);overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity}
   .card{scroll-snap-align:start}
   .top{flex-wrap:wrap}
   .search{order:3;flex-basis:100%;max-width:none}
-  .btn.hide-s{display:none}
   .art.big{width:140px;height:140px;font-size:58px}
+  .trow{grid-template-columns:48px minmax(0,1fr) auto}
+  .trow .tier{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Moodio</div>
+  <button class="brand" id="brand" type="button" aria-label="Moodio home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Moodio</button>
   <form class="search" id="form">
     <label class="field" for="q">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" list="songs" autocomplete="off" placeholder="Search a song you love" aria-label="Song name">
+      <input id="q" list="songs" autocomplete="off" placeholder="Search for a song or artist" aria-label="Search for a song or artist">
     </label>
     <datalist id="songs"></datalist>
-    <button class="btn go" type="submit">Recommend</button>
+    <button class="btn go" type="submit">Search</button>
   </form>
-  <button class="btn hide-s" type="button" id="rand">Surprise me</button>
   <button class="btn" type="button" id="tuneBtn">Tune</button>
 </header>
 
 <div class="wrap">
-  <section class="hero" id="hero"></section>
-
-  <section>
-    <div class="sec"><h2>Five songs that feel the same</h2><span class="meta">from five different artists</span></div>
-    <div class="cards" id="cards" aria-live="polite"></div>
-  </section>
-
-  <section>
-    <div class="sec"><h2>Start from a feeling</h2><span class="meta">Tap one to jump to a song with that mood</span></div>
-    <div class="pills" id="feel"></div>
-  </section>
-  <section>
-    <div class="sec"><h2>Start from popularity</h2><span class="meta">How widely a song is played</span></div>
-    <div class="pills" id="poptiles"></div>
-  </section>
-
-  <details class="how">
-    <summary>How Moodio works</summary>
-    <div class="steps" id="how"></div>
-  </details>
-
+  <div class="crumb" id="crumb"></div>
+  <main id="view" aria-live="polite"></main>
   <footer class="foot">
-    <span><span id="count"></span> songs in the library. Emotion, lyric theme, occasion and popularity labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
-    <span>Songs play right here. Songs pulled from Spotify use Spotify's player (30-second previews, or full songs when you are signed in to Spotify). The other songs play a 30-second preview from iTunes.</span>
+    <span><span id="count"></span> songs in the library, and more coming soon. Emotion, style, lyric theme, occasion and popularity labels were written by an AI from what it knows of each song, so some are guesses. Lyrics are not copied.</span>
+    <span>Songs play right here. Songs pulled from Spotify use Spotify's player. The others play a 30-second preview from iTunes. For the whole song, use the Spotify or YouTube buttons on a song.</span>
   </footer>
 </div>
 
 <aside class="mini" id="mini" hidden>
-  <div class="head"><div id="miniArt"></div><div class="txt" id="miniTxt"></div><button class="x" id="miniClose" type="button" aria-label="Close player">✕</button></div>
+  <div class="head"><div id="miniArt"></div><div class="txt" id="miniTxt"></div><button class="xbtn" id="miniExpand" type="button" aria-label="Enlarge player" title="Enlarge">⤢</button><button class="xbtn" id="miniClose" type="button" aria-label="Close player">✕</button></div>
   <div class="ctl" id="miniCtl"></div>
 </aside>
 
 <div class="scrim" id="scrim"></div>
+<section class="fullcard" id="full" hidden aria-label="Player"></section>
 <aside class="drawer" id="drawer" aria-label="Tune the mix">
-  <h2>Tune the mix <button class="x" id="drawerClose" type="button" aria-label="Close">✕</button></h2>
+  <h2>Tune the mix <button class="xbtn" id="drawerClose" type="button" aria-label="Close">✕</button></h2>
   <div class="tuner">
-    <div class="hint">How much should each factor count? The numbers are relative, so they do not need to add up to 100.</div>
-    <div class="srow"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="5" value="35"><output id="o_tags"></output></div>
-    <div class="srow"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="5" value="25"><output id="o_emotion"></output></div>
-    <div class="srow"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="5" value="20"><output id="o_context"></output></div>
+    <div class="hint">How much should each factor count when you pick a song and ask for similar ones? The numbers are relative.</div>
+    <div class="srow"><label for="w_tags">Artist, genre, tags</label><input type="range" id="w_tags" min="0" max="100" step="5" value="20"><output id="o_tags"></output></div>
+    <div class="srow"><label for="w_emotion">Emotion</label><input type="range" id="w_emotion" min="0" max="100" step="5" value="20"><output id="o_emotion"></output></div>
+    <div class="srow"><label for="w_style">Style and vibe</label><input type="range" id="w_style" min="0" max="100" step="5" value="25"><output id="o_style"></output></div>
+    <div class="srow"><label for="w_context">Lyric theme, occasion</label><input type="range" id="w_context" min="0" max="100" step="5" value="15"><output id="o_context"></output></div>
+    <div class="srow"><label for="w_film">Kind of film</label><input type="range" id="w_film" min="0" max="100" step="5" value="5"><output id="o_film"></output></div>
     <div class="srow"><label for="w_era">Release year</label><input type="range" id="w_era" min="0" max="100" step="5" value="5"><output id="o_era"></output></div>
     <div class="srow"><label for="w_lang">Same language</label><input type="range" id="w_lang" min="0" max="100" step="5" value="15"><output id="o_lang"></output></div>
-    <div class="srow"><label for="w_pop">Popularity</label><input type="range" id="w_pop" min="0" max="100" step="5" value="15"><output id="o_pop"></output></div>
+    <div class="srow"><label for="w_pop">Popularity and reel fame</label><input type="range" id="w_pop" min="0" max="100" step="5" value="15"><output id="o_pop"></output></div>
     <div>
       <label class="meta" for="minpop" style="display:block;margin-bottom:6px">Only recommend songs that are</label>
       <select id="minpop"><option value="4" selected>Hits and popular songs</option><option value="3">Well known and up</option><option value="2">Lesser known too</option><option value="1">Everything, deep cuts included</option></select>
@@ -212,7 +250,7 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#000;
 </aside>
 
 <script>
-const DATA = /*DATA*/null; // each song: [title, artists, genre, tags line, language, main emotion, second emotion, year, lyric theme, occasions, spotify id, popularity 1-5]
+const DATA = /*DATA*/null; // each song: [0 title, 1 artists, 2 genre, 3 tags line, 4 language, 5 main emotion, 6 second emotion, 7 year, 8 lyric theme, 9 occasions, 10 spotify id, 11 popularity 1-5, 12 style, 13 film kind, 14 reel fame 1-5]
 
 // ---- Step 3: vocabulary and vectors (same as CountVectorizer) ----
 const MAX_FEATURES = 5000;
@@ -242,7 +280,7 @@ const EMO_COLOR = { heartbreak: "#ff5a68", sad: "#5b8def", nostalgic: "#d9993f",
 const point = DATA.map(s => { const p = MAP[s[5]], q = MAP[s[6]] || p; return [0.7 * p[0] + 0.3 * q[0], 0.7 * p[1] + 0.3 * q[1]]; });
 const emotionSim = (a, b) => 1 - Math.hypot(point[a][0] - point[b][0], point[a][1] - point[b][1]) / Math.SQRT2;
 
-// ---- Step 7: lyric theme, occasion and release year ----
+// ---- Step 7: lyric theme, occasion, release year, style and film ----
 const RELATED = { "love|heartbreak": 0.4, "heartbreak|nostalgia": 0.4, "nostalgia|reflection": 0.5, "reflection|struggle": 0.4,
   "struggle|rebellion": 0.4, "ambition|party": 0.3, "party|freedom": 0.4, "devotion|reflection": 0.3 };
 const themeSim = (a, b) => a === b ? 1 : (RELATED[a + "|" + b] || RELATED[b + "|" + a] || 0);
@@ -253,28 +291,38 @@ function occasionSim(a, b) {
 }
 const contextSim = (a, b) => 0.5 * themeSim(DATA[a][8], DATA[b][8]) + 0.5 * occasionSim(a, b);
 const eraSim = (a, b) => Math.max(0, 1 - Math.abs(DATA[a][7] - DATA[b][7]) / 25);
+// a classy, peppy song and a showy item number can share a mood and still be very different, so style is its own factor
+const STYLE_REL = { "item-number|wedding-dance": 0.5, "item-number|club-edm": 0.4, "wedding-dance|club-edm": 0.3, "classy-groove|viral-pop": 0.4, "classy-groove|retro": 0.4,
+  "classy-groove|indie-acoustic": 0.25, "romantic-ballad|soulful": 0.5, "romantic-ballad|sad-ballad": 0.5, "soulful|sad-ballad": 0.5, "romantic-ballad|indie-acoustic": 0.4,
+  "retro|romantic-ballad": 0.3, "rock-band|rap": 0.2, "viral-pop|club-edm": 0.3, "viral-pop|item-number": 0.3, "soulful|devotional": 0.4, "instrumental|devotional": 0.3 };
+const styleSim = (a, b) => { const x = DATA[a][12], y = DATA[b][12]; return x === y ? 1 : (STYLE_REL[x + "|" + y] || STYLE_REL[y + "|" + x] || 0); };
+const filmSim = (a, b) => { const x = DATA[a][13], y = DATA[b][13]; return x === y ? (x === "none" ? 0.5 : 1) : 0; };
+const popScore = j => (0.6 * (DATA[j][11] - 1) / 4 + 0.4 * (DATA[j][14] - 1) / 4);   // streams-style popularity blended with reel fame
 
-// ---- Step 5 + 7: recommend. wt = how much each factor counts ----
+// ---- Step 5 + 7: recommend from a chosen song. wt = how much each factor counts ----
 const artistsOf = i => DATA[i][1].split(", ").map(a => a.toLowerCase());
 const TIER = { 5: "Chart hit", 4: "Popular", 3: "Well known", 2: "Lesser known", 1: "Deep cut" };
-function recommend(i, wt, variety = "mix", count = 5, minPop = 1) {
-  const total = (wt.tags + wt.emotion + wt.context + wt.era + wt.lang + wt.pop) || 1;
-  const ranked = DATA.map((_, j) => {
-    const p = { tags: cosine(i, j), emotion: emotionSim(i, j), context: contextSim(i, j), era: eraSim(i, j), lang: DATA[i][4] === DATA[j][4] ? 1 : 0, pop: (DATA[j][11] - 1) / 4 };
-    return { j, p, score: (wt.tags * p.tags + wt.emotion * p.emotion + wt.context * p.context + wt.era * p.era + wt.lang * p.lang + wt.pop * p.pop) / total };
-  }).filter(x => x.j !== i && DATA[x.j][11] >= minPop).sort((a, b) => b.score - a.score);
-  if (variety === "off") return ranked.slice(0, count);
-  // variety: skip a song if any of its artists already appears in the list ("strict" also blocks the picked song's artists)
-  const used = new Set(variety === "strict" ? artistsOf(i) : []);
+const STYLE_NAME = { "item-number": "item number", "classy-groove": "classy groove", "wedding-dance": "wedding dance", "club-edm": "club and EDM", "romantic-ballad": "romantic ballad", soulful: "soulful", "sad-ballad": "sad ballad", rap: "rap", "rock-band": "rock", "indie-acoustic": "indie and acoustic", retro: "retro", devotional: "devotional", instrumental: "instrumental", "viral-pop": "viral pop", other: "pop" };
+function diversify(ranked, count, perArtist, used) {
+  const seen = new Map(); (used || []).forEach(n => seen.set(n, 99));
   const out = [];
   for (const x of ranked) {
     const a = artistsOf(x.j);
-    if (a.some(n => used.has(n))) continue;
-    a.forEach(n => used.add(n));
+    if (a.some(n => (seen.get(n) || 0) >= perArtist)) continue;
+    a.forEach(n => seen.set(n, (seen.get(n) || 0) + 1));
     out.push(x);
     if (out.length === count) break;
   }
   return out;
+}
+function recommend(i, wt, variety = "mix", count = 5, minPop = 1) {
+  const total = (wt.tags + wt.emotion + wt.style + wt.context + wt.film + wt.era + wt.lang + wt.pop) || 1;
+  const ranked = DATA.map((_, j) => {
+    const p = { tags: cosine(i, j), emotion: emotionSim(i, j), style: styleSim(i, j), context: contextSim(i, j), film: filmSim(i, j), era: eraSim(i, j), lang: DATA[i][4] === DATA[j][4] ? 1 : 0, pop: popScore(j) };
+    return { j, p, score: (wt.tags * p.tags + wt.emotion * p.emotion + wt.style * p.style + wt.context * p.context + wt.film * p.film + wt.era * p.era + wt.lang * p.lang + wt.pop * p.pop) / total };
+  }).filter(x => x.j !== i && DATA[x.j][11] >= minPop).sort((a, b) => b.score - a.score);
+  if (variety === "off") return ranked.slice(0, count);
+  return diversify(ranked, count, 1, variety === "strict" ? artistsOf(i) : []);
 }
 
 // ---- helpers ----
@@ -287,7 +335,7 @@ const ICON = {
 function chip(text, cls, color) { const c = el("span", "chip" + (cls ? " " + cls : "")); if (color) { const d = el("i", "dot"); d.style.setProperty("--c", color); c.append(d); } c.append(text); return c; }
 function moodChips(i) {
   const s = DATA[i], d = el("div", "chips");
-  d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(s[6], "soft", EMO_COLOR[s[6]]), chip("about " + s[8], "soft"));
+  d.append(chip(s[5], "", EMO_COLOR[s[5]]), chip(s[6], "soft", EMO_COLOR[s[6]]), chip(STYLE_NAME[s[12]] || "pop", "soft"), chip("about " + s[8], "soft"));
   s[9].forEach(o => d.append(chip("at " + o, "soft")));
   return d;
 }
@@ -308,14 +356,14 @@ labels.forEach((l, i) => { if (seenLabel.has(l)) labels[i] = l + " (" + DATA[i][
 const byLabel = new Map(labels.map((l, i) => [l.toLowerCase(), i]));
 $("count").textContent = DATA.length.toLocaleString();
 $("songs").append(...labels.map(l => Object.assign(document.createElement("option"), { value: l })));
-function findSong(text) {
+// search: an exact pick opens the song; otherwise every song whose title or artist contains the words
+function searchSongs(text) {
   const t = text.trim().toLowerCase();
-  if (!t) return -1;
-  if (byLabel.has(t)) return byLabel.get(t);
-  let i = DATA.findIndex(s => s[0].toLowerCase() === t);
-  if (i < 0) i = DATA.findIndex(s => s[0].toLowerCase().startsWith(t));
-  if (i < 0) i = DATA.findIndex(s => s[0].toLowerCase().includes(t));
-  return i;
+  if (!t) return [];
+  if (byLabel.has(t)) return [byLabel.get(t)];
+  const words = t.split(/\s+/).filter(Boolean);
+  return DATA.map((s, i) => i).filter(i => { const hay = (DATA[i][0] + " " + DATA[i][1]).toLowerCase(); return words.every(w => hay.includes(w)); })
+    .sort((a, b) => DATA[b][11] - DATA[a][11]);
 }
 
 // ---- listening, always inside the page: Spotify player when we have the song id, otherwise a 30-second iTunes preview ----
@@ -344,7 +392,7 @@ async function findPreview(i, patient = true) {
   const best = list => list.find(x => norm2(x.trackName) === t && norm2(x.artistName).includes(a))
     || list.find(x => (norm2(x.trackName).startsWith(t) || t.startsWith(norm2(x.trackName)) || norm2(x.trackName).includes(t)) && norm2(x.artistName).includes(a))
     || null;
-  let list = await itunes(title + " " + artist, patient);
+  const list = await itunes(title + " " + artist, patient);
   if (list === undefined) return null;   // do not remember a failure: try again next time
   let hit = best(list);
   if (!hit) { const second = await itunes(title.replace(/\(.*?\)/g, "") + " " + (DATA[i][1].split(", ")[1] || artist), patient); if (second) hit = best(second); }
@@ -352,6 +400,14 @@ async function findPreview(i, patient = true) {
   previewCache.set(i, hit);
   if (hit) paintArt(i, hit);
   return hit;
+}
+// the whole song: Spotify and YouTube open in a new tab, because full songs can only be streamed by the services that license them
+const spotifyUrl = i => DATA[i][10] ? "https://open.spotify.com/track/" + DATA[i][10] : "https://open.spotify.com/search/" + encodeURIComponent(DATA[i][0] + " " + DATA[i][1].split(", ")[0]);
+const youtubeUrl = i => "https://www.youtube.com/results?search_query=" + encodeURIComponent(DATA[i][0] + " " + DATA[i][1].split(", ")[0] + " official");
+function fullLinks(i) {
+  const d = el("div", "btnrow");
+  [["Full song on Spotify", spotifyUrl(i)], ["Watch on YouTube", youtubeUrl(i)]].forEach(([t, u]) => { const a = el("a", "btn", t + " ↗"); a.href = u; a.target = "_blank"; a.rel = "noopener"; d.append(a); });
+  return d;
 }
 
 const mini = $("mini"), miniArt = $("miniArt"), miniTxt = $("miniTxt"), miniCtl = $("miniCtl");
@@ -361,13 +417,44 @@ function refreshIcons() {
   document.querySelectorAll("[data-play]").forEach(b => {
     const on = Number(b.dataset.play) === nowI && audio && !audio.paused;
     const lab = b.querySelector("span");
-    if (lab) lab.textContent = on ? "Pause" : "Play"; else b.innerHTML = on ? ICON.pause : ICON.play;
-    if (lab) b.insertAdjacentHTML("afterbegin", ""); b.setAttribute("aria-label", on ? "Pause" : "Play");
+    if (lab) lab.textContent = on ? "Pause" : "Play";
+    const svgEl = b.querySelector("svg"); const tmp = document.createElement("span"); tmp.innerHTML = on ? ICON.pause : ICON.play;
+    if (svgEl) svgEl.replaceWith(tmp.firstChild); else b.prepend(tmp.firstChild);
+    b.setAttribute("aria-label", on ? "Pause" : "Play");
   });
 }
 function stopAll() {
   if (audio) { audio.pause(); audio = null; }
   miniCtl.replaceChildren(); miniArt.replaceChildren(); miniTxt.replaceChildren(); mini.hidden = true; nowI = -1; refreshIcons();
+}
+// build the player for song i inside `host` (the mini player, or the enlarged one)
+async function startPlayer(i, host, tall) {
+  const s = DATA[i];
+  if (s[10]) {                                         // Spotify embed
+    const f = document.createElement("iframe");
+    f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator";
+    f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.title = "Spotify player: " + s[0];
+    if (tall) f.style.height = "352px";
+    host.replaceChildren(f); return;
+  }
+  host.replaceChildren(el("span", "meta", "Finding the song…"));
+  const hit = await findPreview(i);
+  if (nowI !== i) return;
+  if (!hit) { host.replaceChildren(el("span", "meta", "Sorry, no preview could be found for this song. Try the Spotify or YouTube button for the whole song.")); return; }
+  document.querySelectorAll('.art[data-art="' + i + '"]').forEach(d => addImg(d, hit));
+  audio = new Audio(hit.previewUrl);
+  const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = ICON.pause; pp.setAttribute("aria-label", "Pause");
+  const cur = el("time", null, "0:00"), dur = el("time", null, "0:30");
+  const bar = document.createElement("input"); bar.type = "range"; bar.min = 0; bar.max = 1000; bar.value = 0; bar.setAttribute("aria-label", "Seek");
+  const a = audio;
+  pp.addEventListener("click", () => a.paused ? a.play() : a.pause());
+  bar.addEventListener("input", () => { if (a.duration) a.currentTime = a.duration * bar.value / 1000; });
+  a.addEventListener("timeupdate", () => { cur.textContent = mmss(a.currentTime); if (a.duration) { bar.value = Math.round(a.currentTime / a.duration * 1000); dur.textContent = mmss(a.duration); } });
+  a.addEventListener("play", () => { pp.innerHTML = ICON.pause; refreshIcons(); });
+  a.addEventListener("pause", () => { pp.innerHTML = ICON.play; refreshIcons(); });
+  a.addEventListener("ended", () => { pp.innerHTML = ICON.play; bar.value = 0; refreshIcons(); });
+  host.replaceChildren(pp, cur, bar, dur);
+  a.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
 }
 async function playSong(i) {
   if (nowI === i && audio) { audio.paused ? audio.play() : audio.pause(); return; }
@@ -375,107 +462,279 @@ async function playSong(i) {
   const s = DATA[i];
   miniArt.replaceChildren(art(i, "")); miniTxt.replaceChildren(el("b", null, s[0]), el("span", "meta", s[1]));
   refreshIcons();
-  if (s[10]) {                                         // Spotify embed
-    const f = document.createElement("iframe");
-    f.src = "https://open.spotify.com/embed/track/" + s[10] + "?utm_source=generator";
-    f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"; f.title = "Spotify player: " + s[0];
-    miniCtl.replaceChildren(f); return;
-  }
-  miniCtl.replaceChildren(el("span", "meta", "Finding the song…"));
-  const hit = await findPreview(i);
-  if (nowI !== i) return;
-  if (!hit) { miniCtl.replaceChildren(el("span", "meta", "Sorry, no preview could be found for this song.")); return; }
-  addImg(miniArt.firstChild, hit);
-  audio = new Audio(hit.previewUrl);
-  const pp = el("button", "pp"); pp.type = "button"; pp.innerHTML = ICON.pause; pp.setAttribute("aria-label", "Pause");
-  const cur = el("time", null, "0:00"), dur = el("time", null, "0:30");
-  const bar = document.createElement("input"); bar.type = "range"; bar.min = 0; bar.max = 1000; bar.value = 0; bar.setAttribute("aria-label", "Seek");
-  pp.addEventListener("click", () => audio.paused ? audio.play() : audio.pause());
-  bar.addEventListener("input", () => { if (audio.duration) audio.currentTime = audio.duration * bar.value / 1000; });
-  audio.addEventListener("timeupdate", () => { cur.textContent = mmss(audio.currentTime); if (audio.duration) { bar.value = Math.round(audio.currentTime / audio.duration * 1000); dur.textContent = mmss(audio.duration); } });
-  audio.addEventListener("play", () => { pp.innerHTML = ICON.pause; refreshIcons(); });
-  audio.addEventListener("pause", () => { pp.innerHTML = ICON.play; refreshIcons(); });
-  audio.addEventListener("ended", () => { pp.innerHTML = ICON.play; bar.value = 0; refreshIcons(); });
-  miniCtl.replaceChildren(pp, cur, bar, dur);
-  audio.play().catch(() => { pp.innerHTML = ICON.play; refreshIcons(); });   // if autoplay is blocked, press play
+  await startPlayer(i, miniCtl, false);
 }
 $("miniClose").addEventListener("click", stopAll);
+$("miniExpand").addEventListener("click", () => { if (nowI >= 0) openFull(nowI); });
 
-// ---- the mood map: every song is a faint dot, your song and its five matches are drawn on top ----
-const NS = "http://www.w3.org/2000/svg", MW = 340, MH = 270, PAD = 22;
-const mx = v => PAD + v * (MW - 2 * PAD), my = v => PAD + (1 - v) * (MH - 2 * PAD);
-function svg(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
-const mapSvg = svg("svg", { id: "map", viewBox: "0 0 " + MW + " " + MH, role: "img", "aria-label": "Map of song moods: sad to happy across, calm to intense up" });
-const dots = svg("g", {}), over = svg("g", {});
-DATA.forEach((s, i) => dots.append(svg("circle", { cx: mx(point[i][0]).toFixed(1), cy: my(point[i][1]).toFixed(1), r: 1.5, fill: EMO_COLOR[s[5]], opacity: 0.35 })));
-mapSvg.append(dots);
-Object.entries(MAP).forEach(([e, [v, en]]) => { const t = svg("text", { x: mx(v), y: my(en) - 6, "text-anchor": "middle", "font-size": 8.5, fill: "#8f8eb0" }); t.textContent = e; mapSvg.append(t); });
-[["sad", PAD, MH - 4, "start"], ["happy", MW - PAD, MH - 4, "end"], ["intense", MW / 2, 10, "middle"], ["calm", MW / 2, MH - 4, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 9, fill: "#6f6e8c", "letter-spacing": ".08em" }); t.textContent = w.toUpperCase(); mapSvg.append(t); });
-mapSvg.append(over);
-function drawMap(i, recs) {
-  over.replaceChildren();
-  const px = mx(point[i][0]), py = my(point[i][1]);
-  recs.forEach(r => over.append(svg("line", { x1: px, y1: py, x2: mx(point[r.j][0]), y2: my(point[r.j][1]), stroke: "#ffc46b", "stroke-opacity": 0.35, "stroke-width": 1 })));
-  recs.forEach((r, n) => {
-    const x = mx(point[r.j][0]), y = my(point[r.j][1]);
-    over.append(svg("circle", { cx: x, cy: y, r: 8.5, fill: "#15152a", stroke: EMO_COLOR[DATA[r.j][5]], "stroke-width": 2 }));
-    const t = svg("text", { x, y: y + 3.4, "text-anchor": "middle", "font-size": 9.5, "font-weight": 700, fill: "#fff" }); t.textContent = n + 1; over.append(t);
-  });
-  over.append(svg("circle", { cx: px, cy: py, r: 13, fill: "none", stroke: "#ffc46b", "stroke-width": 2 }));
-  over.append(svg("circle", { cx: px, cy: py, r: 6, fill: EMO_COLOR[DATA[i][5]], stroke: "#fff", "stroke-width": 1.5 }));
+// the enlarged player: big cover, the player, and links to the whole song
+const full = $("full"), scrim = $("scrim"), drawer = $("drawer");
+function openFull(i) {
+  stopAll(); nowI = i;
+  const s = DATA[i];
+  full.replaceChildren();
+  const head = el("div", "fullhead"); const t = el("div"); t.append(el("div", "eyebrow", "Now playing"), el("h2", null, s[0]), el("div", "meta", s[1] + " · " + s[7]));
+  const x = el("button", "xbtn", "✕"); x.type = "button"; x.setAttribute("aria-label", "Close"); x.addEventListener("click", closeFull);
+  head.append(t, x);
+  const host = el("div", "ctl"); host.style.flexDirection = s[10] ? "column" : "row"; host.style.alignItems = "stretch";
+  full.append(head, art(i, ""), moodChips(i), host, fullLinks(i));
+  full.hidden = false; scrim.classList.add("on");
+  startPlayer(i, host, true);
 }
+function closeFull() { full.hidden = true; full.replaceChildren(); scrim.classList.remove("on"); stopAll(); }
+const toggleDrawer = on => { drawer.classList.toggle("on", on); scrim.classList.toggle("on", on || !full.hidden); };
+$("tuneBtn").addEventListener("click", () => toggleDrawer(true));
+$("drawerClose").addEventListener("click", () => toggleDrawer(false));
+scrim.addEventListener("click", () => { if (!full.hidden) closeFull(); toggleDrawer(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!full.hidden) closeFull(); toggleDrawer(false); } });
 
-// ---- the page ----
-let current = 0;
-const FACTORS = ["tags", "emotion", "context", "era", "lang", "pop"];
+// ---- tuning controls ----
+const FACTORS = ["tags", "emotion", "style", "context", "film", "era", "lang", "pop"];
 const minPop = () => Number($("minpop").value);
-const popPool = () => DATA.map((s, i) => s[11] >= minPop() ? i : -1).filter(i => i >= 0);
 function weights() { const o = {}; FACTORS.forEach(f => { o[f] = Number($("w_" + f).value); $("o_" + f).textContent = o[f]; }); return o; }
-function playBtn(cls, i, label) {
-  const b = el("button", cls); b.type = "button"; b.dataset.play = i; b.setAttribute("aria-label", "Play");
-  if (label) { b.innerHTML = ICON.play; b.append(el("span", null, label)); } else b.innerHTML = ICON.play;
-  return b;
+
+// ---- navigation: one view at a time, with a back button ----
+const view = $("view"), crumb = $("crumb");
+const trail = [];                       // earlier views, so Back works
+let currentView = null;
+function go(render, label, push = true) {
+  if (push && currentView) trail.push(currentView);
+  currentView = { render, label };
+  full.hidden || closeFull();
+  view.replaceChildren(); crumb.replaceChildren();
+  if (trail.length) { const b = el("button", null, "← Back"); b.type = "button"; b.addEventListener("click", back); crumb.append(b); }
+  render(); window.scrollTo({ top: 0 });
+}
+function back() { const prev = trail.pop(); if (prev) go(prev.render, prev.label, false); }
+function row(i, onOpen) {
+  const r = el("div", "trow");
+  const info = el("div"); info.style.minWidth = "0"; info.append(el("div", "t", DATA[i][0]), el("div", "meta", DATA[i][1] + " · " + DATA[i][7]));
+  const pb = el("button", "rplay"); pb.type = "button"; pb.dataset.play = i; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play");
+  pb.addEventListener("click", e => { e.stopPropagation(); playSong(i); });
+  r.append(art(i, "sm"), info, el("span", "tier t" + DATA[i][11], TIER[DATA[i][11]]), pb);
+  r.addEventListener("click", () => onOpen(i));
+  return r;
 }
 
-function show(i) {
-  current = i;
-  const wt = weights(), me = DATA[i], hero = $("hero"), cards = $("cards");
+// ---- home: two ways in ----
+const profile = { point: null, label: "", occasion: "", occLabel: "", lang: "any" };
+function renderHome() {
+  const h = el("section", "homehero");
+  h.append(el("div", "eyebrow", "Moodio"), el("h1", null, "What are you in the mood for?"), el("p", null, "Tell us how you feel and we will find songs to match. Not sure what to play? Answer three quick questions. Know what you want? Tap your mood on the map. Or search for any song above."));
+  const routes = el("div", "routes");
+  const r1 = el("button", "route"); r1.type = "button";
+  r1.append(el("span", "tag", "Not sure?"), el("h2", null, "Answer 3 quick questions"), el("p", null, "How you feel, what you are doing, and which language. That is all."), el("span", "go", "Start →"));
+  r1.addEventListener("click", () => go(() => renderQuiz(0), "quiz"));
+  const r2 = el("button", "route"); r2.type = "button";
+  r2.append(el("span", "tag", "Know your mood?"), el("h2", null, "Tap it on the mood map"), el("p", null, "Sad to happy, calm to intense. Point at the feeling and we do the rest."), el("span", "go", "Open the map →"));
+  r2.addEventListener("click", () => go(renderMapRoute, "map"));
+  routes.append(r1, r2);
+  view.append(h, routes);
+  // a taste of the library right on the home page
+  const hits = DATA.map((s, i) => i).filter(i => DATA[i][11] === 5 && DATA[i][14] >= 4).sort(() => Math.random() - 0.5).slice(0, 6);
+  if (hits.length) {
+    const sec = el("div", "sec"); sec.append(el("h2", null, "Popular right now"), el("span", "meta", "Tap a song to find ones like it"));
+    const rows = el("div", "rows"); hits.forEach(i => rows.append(row(i, openSong)));
+    view.append(sec, rows);
+  }
+}
+
+// ---- the three questions ----
+const FEELINGS = [
+  { name: "Heartbroken", sub: "Missing someone", pt: [0.12, 0.32], c: EMO_COLOR.heartbreak },
+  { name: "Nostalgic", sub: "Thinking of old days", pt: [0.40, 0.30], c: EMO_COLOR.nostalgic },
+  { name: "Calm and chill", sub: "Easy and relaxed", pt: [0.55, 0.12], c: EMO_COLOR.mellow },
+  { name: "Romantic", sub: "Warm and in love", pt: [0.75, 0.35], c: EMO_COLOR.romantic },
+  { name: "Happy", sub: "Light and feel-good", pt: [0.85, 0.62], c: EMO_COLOR.happy },
+  { name: "Pumped up", sub: "Energy and swagger", pt: [0.80, 0.90], c: EMO_COLOR.euphoric },
+  { name: "Angry or intense", sub: "Need it loud", pt: [0.15, 0.85], c: EMO_COLOR.angry },
+];
+const ACTIVITIES = [["Long drive", "long drive"], ["Working out", "workout"], ["Party", "party"], ["Chilling at home", "chill"], ["Focusing", "focus"], ["Date night", "romantic date"], ["Wedding or festival", "wedding"], ["Going to sleep", "sleep"]];
+const LANGS = [["Hindi", "Hindi"], ["English", "English"], ["Punjabi", "Punjabi"], ["Spanish", "Spanish"], ["Anything", "any"]];
+function renderQuiz(step) {
+  const q = el("section", "quiz");
+  const bar = el("div", "steps3"); [0, 1, 2].forEach(n => bar.append(Object.assign(el("i"), { className: n <= step ? "on" : "" })));
+  const opts = el("div", "opts");
+  const title = ["How are you feeling right now?", "What are you up to?", "Which language do you want?"][step];
+  if (step === 0) FEELINGS.forEach(f => { const b = el("button", "opt"); b.type = "button"; const d = el("i", "dot"); d.style.setProperty("--c", f.c); const t = el("span"); t.append(f.name, el("small", null, f.sub)); b.append(d, t);
+    b.addEventListener("click", () => { profile.point = f.pt; profile.label = f.name.toLowerCase(); go(() => renderQuiz(1), "quiz", false); }); opts.append(b); });
+  if (step === 1) ACTIVITIES.forEach(([n, o]) => { const b = el("button", "opt", n); b.type = "button"; b.addEventListener("click", () => { profile.occasion = o; profile.occLabel = n.toLowerCase(); go(() => renderQuiz(2), "quiz", false); }); opts.append(b); });
+  if (step === 2) LANGS.forEach(([n, o]) => { const b = el("button", "opt", n); b.type = "button"; b.addEventListener("click", () => { profile.lang = o; go(renderStacks, "stacks"); }); opts.append(b); });
+  q.append(el("div", "eyebrow", "Question " + (step + 1) + " of 3"), bar, el("h2", null, title), opts);
+  view.append(q);
+}
+
+// ---- the mood map: a heat map of the whole library; tap anywhere ----
+const NS = "http://www.w3.org/2000/svg";
+function svg(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+function renderMapRoute() {
+  const W = 620, H = 400, PADX = 30, PADY = 26, GX = 18, GY = 12;
+  const wrap = el("section", "heat");
+  const card = el("div", "heatcard");
+  const s = svg("svg", { id: "heat", viewBox: "0 0 " + W + " " + H, role: "img", "aria-label": "Mood heat map. Tap a spot to choose a mood." });
+  const px = v => PADX + v * (W - 2 * PADX), py = v => PADY + (1 - v) * (H - 2 * PADY);
+  const cw = (W - 2 * PADX) / GX, ch = (H - 2 * PADY) / GY;
+  const counts = Array.from({ length: GX }, () => new Array(GY).fill(0)); let max = 1;
+  DATA.forEach((d, i) => { if (d[11] < minPop()) return; const gx = Math.min(GX - 1, Math.floor(point[i][0] * GX)), gy = Math.min(GY - 1, Math.floor(point[i][1] * GY)); max = Math.max(max, ++counts[gx][gy]); });
+  for (let gx = 0; gx < GX; gx++) for (let gy = 0; gy < GY; gy++) {
+    const a = counts[gx][gy] / max;
+    s.append(svg("rect", { x: PADX + gx * cw + 1, y: PADY + (GY - 1 - gy) * ch + 1, width: cw - 2, height: ch - 2, rx: 5, fill: "#ff7a59", "fill-opacity": (0.05 + 0.85 * Math.sqrt(a)).toFixed(2) }));
+  }
+  Object.entries(MAP).forEach(([e, [v, en]]) => {
+    s.append(svg("circle", { cx: px(v), cy: py(en), r: 4, fill: EMO_COLOR[e], stroke: "#fff", "stroke-width": 1 }));
+    const t = svg("text", { x: px(v), y: py(en) - 9, "text-anchor": "middle", "font-size": 12, "font-weight": 600, fill: "#fff", "paint-order": "stroke", stroke: "#090912", "stroke-width": 3 }); t.textContent = e; s.append(t);
+  });
+  [["SAD", PADX, H - 6, "start"], ["HAPPY", W - PADX, H - 6, "end"], ["INTENSE", W / 2, 14, "middle"], ["CALM", W / 2, H - 6, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 11, fill: "#8f8eb0", "letter-spacing": ".1em" }); t.textContent = w; s.append(t); });
+  const mark = svg("g", {}); s.append(mark);
+  card.append(s);
+  const box = el("div", "pickbox");
+  box.append(el("h3", null, "Tap the map"), el("p", "meta", "Bright squares have more songs. Left is sad, right is happy, up is intense, down is calm."));
+  const readout = el("div", "meta", "Nothing picked yet."); box.append(readout);
+  const langRow = el("div"); const ll = el("label", "meta", "Language"); ll.htmlFor = "mapLang"; ll.style.display = "block"; ll.style.marginBottom = "6px";
+  const sel = el("select"); sel.id = "mapLang"; sel.style.cssText = "width:100%;padding:10px;background:var(--bg2);border:1px solid var(--line);border-radius:10px";
+  LANGS.forEach(([n, o]) => sel.append(Object.assign(el("option", null, n), { value: o, selected: o === profile.lang })));
+  langRow.append(ll, sel); box.append(langRow);
+  const go2 = el("button", "btn go", "Show me songs →"); go2.type = "button"; go2.disabled = true; go2.style.opacity = ".5";
+  box.append(go2);
+  s.addEventListener("click", ev => {
+    const r = s.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * W, y = (ev.clientY - r.top) / r.height * H;
+    const v = Math.min(1, Math.max(0, (x - PADX) / (W - 2 * PADX))), en = Math.min(1, Math.max(0, 1 - (y - PADY) / (H - 2 * PADY)));
+    profile.point = [v, en]; profile.occasion = ""; profile.occLabel = "";
+    const nearest = Object.entries(MAP).sort((a, b) => Math.hypot(a[1][0] - v, a[1][1] - en) - Math.hypot(b[1][0] - v, b[1][1] - en))[0][0];
+    profile.label = nearest;
+    mark.replaceChildren(svg("circle", { cx: x, cy: y, r: 11, fill: "none", stroke: "#fff", "stroke-width": 2.5 }), svg("circle", { cx: x, cy: y, r: 4, fill: "#fff" }));
+    readout.textContent = "You picked a " + nearest + " mood."; go2.disabled = false; go2.style.opacity = "1";
+  });
+  go2.addEventListener("click", () => { profile.lang = sel.value; go(renderStacks, "stacks"); });
+  wrap.append(card, box); view.append(wrap);
+}
+
+// ---- stacks: themed groups of songs picked for your answers ----
+const near = (j, pt) => Math.hypot(point[j][0] - pt[0], point[j][1] - pt[1]);
+function buildStacks(P) {
+  const ok = j => DATA[j][11] >= minPop() && (P.lang === "any" || DATA[j][4] === P.lang);
+  const pool = DATA.map((_, j) => j).filter(ok);
+  const make = (id, title, sub, filter, perArtist = 2, n = 12) => {
+    const ranked = pool.filter(filter).map(j => ({ j, score: -(near(j, P.point) - 0.05 * (popScore(j) - 0.4)) })).sort((a, b) => b.score - a.score);
+    return { id, title, sub, songs: diversify(ranked, n, perArtist).map(x => x.j) };
+  };
+  const stacks = [
+    make("mood", "Made for how you feel", "Closest to your " + (P.label || "mood"), () => true),
+    P.occasion ? make("act", "For " + (P.occLabel || P.occasion), "Songs people play for this", j => DATA[j][9].includes(P.occasion) && near(j, P.point) < 0.5) : null,
+    make("hits", "Biggest hits in your mood", "The ones everyone knows", j => DATA[j][11] === 5 && near(j, P.point) < 0.45),
+    make("reel", "Reel favourites", "Trending on reels and shorts", j => DATA[j][14] >= 4 && near(j, P.point) < 0.5),
+    make("throw", "Throwbacks", "Older songs, same feeling", j => DATA[j][7] <= 2015 && near(j, P.point) < 0.4),
+    make("new", "Fresh and new", "Released in the last few years", j => DATA[j][7] >= 2022 && near(j, P.point) < 0.4),
+  ].filter(Boolean).filter(s => s.songs.length >= 3);
+  // one more stack for the style that shows up most in the first stack
+  const first = stacks[0] && stacks[0].songs;
+  if (first && first.length) {
+    const count = {}; first.forEach(j => count[DATA[j][12]] = (count[DATA[j][12]] || 0) + 1);
+    const top = Object.entries(count).sort((a, b) => b[1] - a[1])[0][0];
+    const st = make("style", "More " + (STYLE_NAME[top] || "pop") + " songs", "The sound you seem to like", j => DATA[j][12] === top && near(j, P.point) < 0.55);
+    if (st.songs.length >= 3) stacks.push(st);
+  }
+  return stacks;
+}
+function renderStacks() {
+  const head = el("div", "sec"); head.append(el("h2", null, "Picked for you"), el("span", "meta", "Open a stack, then tap a song to get songs like it"));
+  const stacks = buildStacks(profile);
+  if (!stacks.length) { view.append(soonCard("We have no songs for that exact mix yet.")); return; }
+  const grid = el("div", "stackgrid");
+  stacks.forEach(st => {
+    const c = el("button", "stackcard"); c.type = "button";
+    const m = el("div", "mosaic"); st.songs.slice(0, 4).forEach(j => m.append(art(j, "")));
+    c.append(m, el("h3", null, st.title), el("span", "meta", st.sub + " · " + st.songs.length + " songs"));
+    c.addEventListener("click", () => go(() => renderStack(st), "stack"));
+    grid.append(c);
+  });
+  view.append(head, grid);
+  prefetchArt(stacks.flatMap(s => s.songs.slice(0, 4)));
+}
+function renderStack(st) {
+  const head = el("div", "sec"); head.append(el("h2", null, st.title), el("span", "meta", st.sub));
+  const rows = el("div", "rows"); st.songs.forEach(j => rows.append(row(j, openSong)));
+  view.append(head, rows);
+  prefetchArt(st.songs.slice(0, 6));
+}
+function soonCard(text) {
+  const c = el("div", "soon"); c.append(el("h2", null, "More songs coming soon"), el("p", "meta", text + " Stay tuned!"));
+  const b = el("button", "btn go", "Back to start"); b.type = "button"; b.addEventListener("click", goHome); c.append(b); return c;
+}
+let artRun = 0;
+function prefetchArt(list) {
+  const run = ++artRun;
+  (async () => { await sleep(500); for (const j of list) { if (run !== artRun) return; if (!previewCache.has(j)) { await findPreview(j, false); await sleep(1800); } } })();
+}
+
+// ---- search results ----
+function renderResults(q, list) {
+  const head = el("div", "sec"); head.append(el("h2", null, "Songs matching “" + q + "”"), el("span", "meta", list.length + " found"));
+  const rows = el("div", "rows"); list.slice(0, 40).forEach(j => rows.append(row(j, openSong)));
+  view.append(head, rows);
+}
+
+// ---- one song: the enlarged view with five matches ----
+const NSVG = "http://www.w3.org/2000/svg", MW = 340, MH = 270, PAD = 22;
+const mx = v => PAD + v * (MW - 2 * PAD), my = v => PAD + (1 - v) * (MH - 2 * PAD);
+function buildMiniMap() {
+  const m = svg("svg", { id: "map", viewBox: "0 0 " + MW + " " + MH, role: "img", "aria-label": "Map of song moods: sad to happy across, calm to intense up" });
+  DATA.forEach((s, i) => m.append(svg("circle", { cx: mx(point[i][0]).toFixed(1), cy: my(point[i][1]).toFixed(1), r: 1.5, fill: EMO_COLOR[s[5]], opacity: 0.35 })));
+  Object.entries(MAP).forEach(([e, [v, en]]) => { const t = svg("text", { x: mx(v), y: my(en) - 6, "text-anchor": "middle", "font-size": 8.5, fill: "#8f8eb0" }); t.textContent = e; m.append(t); });
+  [["sad", PAD, MH - 4, "start"], ["happy", MW - PAD, MH - 4, "end"], ["intense", MW / 2, 10, "middle"], ["calm", MW / 2, MH - 4, "middle"]].forEach(([w, x, y, a]) => { const t = svg("text", { x, y, "text-anchor": a, "font-size": 9, fill: "#6f6e8c", "letter-spacing": ".08em" }); t.textContent = w.toUpperCase(); m.append(t); });
+  return m;
+}
+function drawOver(m, i, recs) {
+  const g = svg("g", {}), px = mx(point[i][0]), py = my(point[i][1]);
+  recs.forEach(r => g.append(svg("line", { x1: px, y1: py, x2: mx(point[r.j][0]), y2: my(point[r.j][1]), stroke: "#ffc46b", "stroke-opacity": 0.35, "stroke-width": 1 })));
+  recs.forEach((r, n) => { const x = mx(point[r.j][0]), y = my(point[r.j][1]);
+    g.append(svg("circle", { cx: x, cy: y, r: 8.5, fill: "#15152a", stroke: EMO_COLOR[DATA[r.j][5]], "stroke-width": 2 }));
+    const t = svg("text", { x, y: y + 3.4, "text-anchor": "middle", "font-size": 9.5, "font-weight": 700, fill: "#fff" }); t.textContent = n + 1; g.append(t); });
+  g.append(svg("circle", { cx: px, cy: py, r: 13, fill: "none", stroke: "#ffc46b", "stroke-width": 2 }));
+  g.append(svg("circle", { cx: px, cy: py, r: 6, fill: EMO_COLOR[DATA[i][5]], stroke: "#fff", "stroke-width": 1.5 }));
+  m.append(g);
+}
+function openSong(i) { go(() => renderSong(i), "song"); }
+function renderSong(i) {
+  const wt = weights(), me = DATA[i];
   document.documentElement.style.setProperty("--glowc", EMO_COLOR[me[5]] + "88");
   const recs = recommend(i, wt, $("variety").value, 5, minPop());
-
-  hero.replaceChildren();
+  const hero = el("section", "hero");
   const song = el("div", "song"), txt = el("div", "stxt");
-  const bp = playBtn("playbig", i, "Play"); bp.addEventListener("click", () => playSong(i));
-  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i), bp);
+  const bp = el("button", "playbig"); bp.type = "button"; bp.dataset.play = i; bp.innerHTML = ICON.play; bp.append(el("span", null, "Play")); bp.addEventListener("click", () => playSong(i));
+  const big = el("button", "btn", "Enlarge player"); big.type = "button"; big.addEventListener("click", () => openFull(i));
+  const acts = el("div", "btnrow"); acts.append(bp, big);
+  txt.append(el("div", "eyebrow", "Because you like"), el("h1", null, me[0]), el("div", "meta", me[1] + " · " + me[7] + " · " + me[4] + " · " + me[2]), moodChips(i), acts, fullLinks(i));
   song.append(art(i, "big"), txt);
-  const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches")); mc.append(h, mapSvg);
+  const mc = el("div", "mapcard"); const h = el("h2", null, "Mood map"); h.append(el("span", null, "you and your five matches"));
+  const m = buildMiniMap(); mc.append(h, m); drawOver(m, i, recs);
   hero.append(song, mc);
-  drawMap(i, recs);
 
-  cards.replaceChildren();
+  const sec = el("div", "sec"); sec.append(el("h2", null, "Five songs that feel the same"), el("span", "meta", "from five different artists"));
+  const cards = el("div", "cards");
   const mine = new Set(wordsOf(i));
   recs.forEach((r, n) => {
     const s = DATA[r.j], c = el("article", "card");
     const a = art(r.j, ""); a.append(el("span", "num", String(n + 1)));
-    const pb = playBtn("cplay", r.j); pb.addEventListener("click", () => playSong(r.j)); a.append(pb);
-    const pct = Math.round(r.score * 100);
-    const r1 = el("div", "row2"); r1.append(el("span", "pct", pct + "%"), el("span", "tier t" + s[11], TIER[s[11]]));
+    a.addEventListener("click", () => openSong(r.j));
+    const pb = el("button", "cplay"); pb.type = "button"; pb.dataset.play = r.j; pb.innerHTML = ICON.play; pb.setAttribute("aria-label", "Play"); pb.addEventListener("click", e => { e.stopPropagation(); playSong(r.j); }); a.append(pb);
+    const r1 = el("div", "row2"); r1.append(el("span", "pct", Math.round(r.score * 100) + "%"), el("span", "tier t" + s[11], TIER[s[11]]));
     const why = el("div", "why"); why.hidden = true;
     const shared = wordsOf(r.j).filter(w => mine.has(w));
-    why.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · theme and occasion " + Math.round(r.p.context * 100) + "% · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
+    why.textContent = "Tags " + Math.round(r.p.tags * 100) + "% · emotion " + Math.round(r.p.emotion * 100) + "% · style " + Math.round(r.p.style * 100) + "% (" + (STYLE_NAME[s[12]] || "pop") + ") · theme and occasion " + Math.round(r.p.context * 100) + "% · film " + (DATA[i][13] === s[13] ? "same kind" : "different kind") + " · year " + Math.round(r.p.era * 100) + "% · language " + (r.p.lang ? "same" : "different") + ". Shared words: " + (shared.join(", ") || "none") + ".";
     const wb = el("button", "whybtn", "Why this match"); wb.type = "button"; wb.addEventListener("click", () => { why.hidden = !why.hidden; });
-    c.append(a, el("div", "t", s[0]), el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j), wb, why);
+    const title = el("div", "t", s[0]); title.addEventListener("click", () => openSong(r.j));
+    c.append(a, title, el("div", "meta", s[1] + " · " + s[7]), r1, moodChips(r.j), wb, why);
     cards.append(c);
   });
-  explain(i);
-  $("q").value = labels[i];
+  view.append(hero, sec, cards);
+  if (!recs.length) cards.replaceWith(soonCard("We could not find close matches with your current settings."));
+  const how = el("details", "how"); how.append(el("summary", null, "How Moodio works")); const steps = el("div", "steps"); how.append(steps); explain(i, steps); view.append(how);
   refreshIcons();
-  // fetch real album art for the song and its matches, one at a time so the free iTunes search is not hammered
-  (async () => { await sleep(600); for (const j of [i, ...recs.map(r => r.j)]) { if (current !== i) return; if (!previewCache.has(j)) { await findPreview(j, false); await sleep(1800); } } })();
+  prefetchArt([i, ...recs.map(r => r.j)]);
 }
 
-function explain(i) {
-  const how = $("how"); how.replaceChildren();
+function explain(i, how) {
   const add = (title, body, code) => { const d = el("div", "step"); d.append(el("b", null, title)); d.append(el("span", "meta", body)); if (code) { d.append(document.createElement("br"), el("code", null, code)); } how.append(d); };
   const nz = [...vec[i].keys()].map(c => vocab[c]);
   add("1. Describe the song as text", "Genre, artists, mood tags, language and album are joined into one line, lowercase, with spaces removed inside names so \"Arijit Singh\" becomes one word.", DATA[i][3]);
@@ -483,41 +742,26 @@ function explain(i) {
   add("3. Compare two songs", "Cosine similarity multiplies the two rows, adds it up, and divides by their lengths. It gives 0 for nothing in common and 1 for identical.");
   const pt = point[i].map(n => n.toFixed(2));
   add("4. Add the emotion", "Each song has a main and a second emotion. Each emotion is a point on the mood map: how positive it feels and how intense it feels. This song sits at " + pt[0] + " positive, " + pt[1] + " intense. Songs whose points are close feel alike, so sad is near nostalgic and far from euphoric.");
-  add("5. Add theme, occasion, year, language and popularity", "Each song also has a lyric theme (what the words are about), the occasions it is played at, a release year, a language and a popularity group. Same theme and shared occasions raise the score, and so do songs from the same era (25 or more years apart counts as 0), the same language, and more popular songs. Years of songs pulled from Spotify are real release dates; the rest, and the popularity groups, are AI estimates.");
+  add("5. Add style, theme, occasion, film, year, language and popularity", "Two songs can share a mood and still be very different: a classy, peppy song is not a showy item number. So each song also has a style (for example classy groove or item number), a lyric theme, the occasions it is played at, the kind of film it comes from, a release year, a language, and a popularity score blended with how famous it is on reels. Close matches on each raise the score. Years of songs pulled from Spotify are real release dates; the other labels are AI estimates.");
   add("6. Recommend", "Final score = each factor's match multiplied by its slider, added up, and divided by the total of the sliders. Score the picked song against all " + DATA.length.toLocaleString() + " songs, hide the ones below your popularity setting, and show the 5 highest. Artist variety skips any song whose artist is already in your 5.");
 }
 
-// feeling and popularity pills
-Object.keys(MAP).forEach(e => {
-  const n = DATA.filter(s => s[5] === e && s[11] >= 3).length;
-  const b = el("button", "pill"); b.type = "button"; b.style.setProperty("--c", EMO_COLOR[e]);
-  b.append(Object.assign(el("i", "dot"), {}), e.charAt(0).toUpperCase() + e.slice(1), el("small", null, n.toLocaleString()));
-  b.addEventListener("click", () => { const pool = DATA.map((s, i) => s[5] === e && s[11] >= Math.max(minPop(), 3) ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); window.scrollTo({ top: 0, behavior: "smooth" }); });
-  $("feel").append(b);
+// ---- wiring ----
+function goHome() { trail.length = 0; currentView = null; go(renderHome, "home", false); }
+$("brand").addEventListener("click", goHome);
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const q = $("q").value.trim(); if (!q) return;
+  const list = searchSongs(q);
+  if (!list.length) { go(() => view.append(soonCard("We do not have “" + q + "” yet.")), "search"); return; }
+  if (list.length === 1 || byLabel.has(q.toLowerCase())) { openSong(list[0]); return; }
+  go(() => renderResults(q, list), "search");
 });
-[5, 4, 3, 2].forEach(level => {
-  const n = DATA.filter(s => s[11] === level).length;
-  const b = el("button", "pill"); b.type = "button";
-  b.append({ 5: "Chart hits", 4: "Popular songs", 3: "Well-known songs", 2: "Lesser-known songs" }[level], el("small", null, n.toLocaleString()));
-  b.addEventListener("click", () => { const pool = DATA.map((s, i) => s[11] === level ? i : -1).filter(i => i >= 0); show(pool[Math.floor(Math.random() * pool.length)]); window.scrollTo({ top: 0, behavior: "smooth" }); });
-  $("poptiles").append(b);
-});
-
-// controls
-const drawer = $("drawer"), scrim = $("scrim");
-const toggleDrawer = on => { drawer.classList.toggle("on", on); scrim.classList.toggle("on", on); };
-$("tuneBtn").addEventListener("click", () => toggleDrawer(true));
-$("drawerClose").addEventListener("click", () => toggleDrawer(false));
-scrim.addEventListener("click", () => toggleDrawer(false));
-document.addEventListener("keydown", e => { if (e.key === "Escape") toggleDrawer(false); });
-$("form").addEventListener("submit", e => { e.preventDefault(); const i = findSong($("q").value); if (i < 0) { $("cards").replaceChildren(el("p", "meta", "No song found. Try another name, or pick one from the list.")); return; } show(i); });
 let slideTimer = 0;
-FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).textContent = $("w_" + f).value; clearTimeout(slideTimer); slideTimer = setTimeout(() => show(current), 250); }));
-$("variety").addEventListener("change", () => show(current));
-$("minpop").addEventListener("change", () => show(current));
-$("rand").addEventListener("click", () => { const pool = popPool(); show(pool[Math.floor(Math.random() * pool.length)]); });
-$("q").addEventListener("change", () => { const i = byLabel.get($("q").value.trim().toLowerCase()); if (i != null) show(i); });
-show(Math.max(0, DATA.findIndex(s => s[0] === "Khairiyat")));
+FACTORS.forEach(f => $("w_" + f).addEventListener("input", () => { $("o_" + f).textContent = $("w_" + f).value; clearTimeout(slideTimer); slideTimer = setTimeout(() => { if (currentView && currentView.label === "song") go(currentView.render, "song", false); }, 250); }));
+["variety", "minpop"].forEach(id => $(id).addEventListener("change", () => { if (currentView) go(currentView.render, currentView.label, false); }));
+weights();
+goHome();
 </script>
 </body>
 </html>

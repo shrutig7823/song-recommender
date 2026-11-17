@@ -1,0 +1,4 @@
+{
+  "_help": "Fix a label by hand. The key is the song title and its first artist, lowercase, joined with |. Allowed: style, film (same word lists as the labels), reel and pop (1 to 5). Then run: node build_web.js songs_merged.csv",
+  "gulaabo|amit trivedi": { "style": "classy-groove" }
+}
